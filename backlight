@@ -1,0 +1,13 @@
+#!/bin/sh
+ 
+VALUE=$(cat /sys/class/leds/input*::scrolllock/brightness)
+ 
+if [ "${VALUE}" -ne 0 ]; then
+        VALUE=0
+        xset -led named "Scroll Lock"
+else
+        VALUE=1
+        xset led named "Scroll Lock"
+fi
+ 
+# echo ${VALUE} > $(sudo pwd /sys/class/leds/input*::scrolllock/brightness)

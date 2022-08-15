@@ -1,0 +1,10 @@
+#!/bin/bash
+
+mkdir -p ~/Pictures/Screenshots/
+while getopts :fs args; do 
+    case "${args}" in
+        f) scrot 'screenshot_%Y%m%d_%H%M%S.png' -e 'mv $f ~/Pictures/Screenshots/ && xclip -selection clip -t image/png -i ~/Pictures/Screenshots/$f' ;;
+        s) scrot -b -s 'screenshot_%Y%m%d_%H%M%S.png' -e 'mv $f ~/Pictures/Screenshots/ && xclip -selection clip -t image/png -i ~/Pictures/Screenshots/$f' ;;
+    esac
+done
+
