@@ -4,6 +4,8 @@
 ### For Window Managers:
 - Xmonad
 
+![shot1](screenshots/main1.png)
+
 # Used Apps
 - [Rofi](https://github.com/davatorium/rofi) Application launcher
 - [neofetch](https://github.com/dylanaraps/neofetch)
