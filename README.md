@@ -5,10 +5,13 @@
 - Xmonad
 
 ![shot1](screenshots/main1.png)
+- spectrwm
 
 # Used Apps
 - [Rofi](https://github.com/davatorium/rofi) Application launcher
-- [neofetch](https://github.com/dylanaraps/neofetch)
 - [ranger](https://github.com/ranger/ranger) TUI file manager based on Vim
 - [cmus](https://github.com/cmus/cmus) Music player
 - [kitty](https://github.com/kovidgoyal/kitty) Terminal emulator
+- [polybar](https://github.com/polybar/polybar) used in spectrwm
+- [picom](https://github.com/jonaburg/picom) jonaburg fork of picom compositor
+- [nitrogen](https://github.com/l3ib/nitrogen) background changer
