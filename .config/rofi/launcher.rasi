@@ -16,7 +16,7 @@ configuration {
     background:                 #030B16;
     background-alt:             #0A1B37;
     foreground:                 #FFFFFF;
-    selected:                   #CB43A6;
+    selected:                   #98C379;
     active:                     #095873;
     urgent:                     #2FC6D8;
 }
@@ -156,7 +156,7 @@ element normal.active {
 }
 element selected.normal {
     background-color:            @selected;
-    text-color:                  @foreground;
+    text-color:                  @background;
 }
 element selected.urgent {
     background-color:            @urgent;
