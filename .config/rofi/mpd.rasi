@@ -1,0 +1,109 @@
+/*****----- Configuration -----*****/
+configuration {
+    show-icons:                 false;
+}
+
+/*****----- Global Properties -----*****/
+* {
+    font:                       "Ubuntu Nerd Font 13";
+    background:                 #11092D;
+    background-alt:             #281657;
+    foreground:                 #FFFFFF;
+    selected:                   #6E77FF;
+    active:                     #DF5296;
+    urgent:                     #8E3596;
+}
+
+/*****----- Main Window -----*****/
+window {
+    width:                      826px;
+    border-color:               var(selected);
+    background-color:           var(background);
+}
+
+/*****----- Main Box -----*****/
+mainbox {
+    spacing:                    20px;
+    padding:                    20px;
+    background-color:           transparent;
+    children:                   ["inputbar","message","listview"];
+}
+
+/*****----- Inputbar -----*****/
+inputbar {
+    spacing:                    25px;
+    padding:                    100px 50px;
+    background-color:           transparent;
+    background-image:           url("~/.config/rofi/images/a.png", width);
+    text-color:                 var(foreground);
+    children:                   ["textbox-prompt-colon","prompt"];
+}
+textbox-prompt-colon {
+    expand:                     false;
+    str:                        "";
+    padding:                    10px 12px;
+    background-color:           var(urgent);
+    text-color:                 var(background);
+}
+prompt {
+    padding:                    10px;
+    background-color:           var(selected);
+    text-color:                 var(background);
+}
+
+/*****----- Message -----*****/
+message {
+    margin:                     0px;
+    padding:                    10px;
+    background-color:           var(background-alt);
+    text-color:                 var(foreground);
+}
+textbox {
+    background-color:           inherit;
+    text-color:                 inherit;
+    vertical-align:             0.5;
+    horizontal-align:           0.5;
+}
+
+/*****----- Listview -----*****/
+listview {
+    layout:                     horizontal;
+    spacing:                    20px;
+    background-color:           transparent;
+} 
+
+/*****----- Elements -----*****/
+element {
+    width:                      95px;
+    padding:                    25px;
+    border-radius:              0px;
+    border-color:               var(selected);
+    background-color:           var(background-alt);
+    text-color:                 var(foreground);
+    cursor:                     pointer;
+}
+element-text {
+    font:                       "feather 24";
+    background-color:           transparent;
+    text-color:                 inherit;
+    cursor:                     inherit;
+    vertical-align:             0.5;
+    horizontal-align:           0.5;
+}
+
+element normal.urgent,
+element alternate.urgent {
+    background-color:           var(urgent);
+    text-color:                 var(background);
+}
+element normal.active,
+element alternate.active {
+    background-color:           var(selected);
+    text-color:                 var(background);
+}
+element selected {
+    border:                     1px solid;
+}
+
+/* vim: ft=sass
+
