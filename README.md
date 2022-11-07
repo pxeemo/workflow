@@ -1,11 +1,9 @@
 <h1 align="center">Dotfiles of <a href="https://github.com/pexemo">pexemo</a>!</h1>
 <p align="center">My Linux distribution configuration files</p>
 
-### For Window Managers:
-- Xmonad
+## For spectrwm:
 
 ![shot1](screenshots/main1.png)
-- spectrwm
 
 # Used Apps
 - [Rofi](https://github.com/davatorium/rofi) Application launcher
