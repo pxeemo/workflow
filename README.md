@@ -8,7 +8,7 @@
 # Used Apps
 - [Rofi](https://github.com/davatorium/rofi) Application launcher
 - [ranger](https://github.com/ranger/ranger) TUI file manager based on Vim
-- [cmus](https://github.com/cmus/cmus) Music player
+- [ncmpcpp](https://github.com/ncmpcpp/ncmpcpp) Music player with [MPD](https://github.com/MusicPlayerDaemon/MPD) (controled by [mpc](https://musicpd.org/doc/mpc/html/) on rofi)
 - [kitty](https://github.com/kovidgoyal/kitty) Terminal emulator
 - [polybar](https://github.com/polybar/polybar) used in spectrwm
 - [picom](https://github.com/jonaburg/picom) jonaburg fork of picom compositor
