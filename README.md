@@ -13,3 +13,4 @@
 - [polybar](https://github.com/polybar/polybar) used in spectrwm
 - [picom](https://github.com/jonaburg/picom) jonaburg fork of picom compositor
 - [nitrogen](https://github.com/l3ib/nitrogen) background changer
+- [lxpolkit](https://github.com/lxde/lxsession) for authenticatins
