@@ -1,0 +1,7 @@
+include catppuccin-mocha
+
+set recolor true
+# set recolor-keephue true
+# set recolor-reverse-video true
+
+map i set recolor

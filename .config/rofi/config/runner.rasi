@@ -1,18 +1,13 @@
 configuration {
     show-icons:                     false;
-    display-drun: 		            "";
-    drun-display-format:            "{icon} {name}";
+    display-run: 		            "";
     disable-history:                false;
     click-to-exit: 		            true;
-    modes:                          "run,drun,emoji";
     location:                       0;
 }
 
-@import "config/font.rasi"
-@import "config/colors.rasi"
-
-/* Line Responsible For Button Layouts */
-/* BUTTON = FALSE */
+@import "font.rasi"
+@import "colors.rasi"
 
 window {
     transparency:                   "real";
@@ -21,7 +16,8 @@ window {
     border:                         2px;
     border-color:                   @BDR;
     border-radius:                  10px;
-    width:                          400px;
+    width:                          350px;
+    location:                       center;
     anchor:                         center;
     x-offset:                       0;
     y-offset:                       0;
@@ -29,23 +25,19 @@ window {
 
 prompt {
     enabled: 			            true;
-    margin: 			            0px;
     padding: 			            8px;
     background-color: 		        @BG;
-    text-color: 		            @FG;
-    border:                  	    2px;
-    border-color:                   @BDR;
-    border-radius:                  10px;
+    text-color: 		            @IMG;
 }
 
 textbox-prompt-colon {
     expand: 			            false;
-    str: 			                "O";
+    str: 			                "ﲵ";
     border-radius:                  100%;
     background-color:               @BG;
     text-color:                     @FG;
-    padding:                        8px 12px;
-    font:			                "Iosevka Nerd Font 10";
+    padding:                        8px 12px 8px 12px;
+	font:							"Iosevka Nerd Font 10";
 }
 
 entry {
@@ -54,23 +46,23 @@ entry {
     placeholder-color:              @FG;
     expand:                         true;
     horizontal-align:               0;
-    placeholder:                    "Search...";
+    placeholder:                    "Run...";
     blink:                          true;
-    border:                  	    2px;
-    border-color:                   @BDR;
+    border:                  		0px 0px 2px 0px;
+    border-color:                  	@BDR;
     border-radius:                  10px;
     padding:                        8px;
 }
 
 inputbar {
-	children: 						[ textbox-prompt-colon, prompt ];
+	children: 						[ textbox-prompt-colon, prompt, entry ];
     background-color:               @BG;
     text-color:                     @FG;
     expand:                         false;
-    border:                  		0px;
+    border:                  		0px 0px 0px 0px;
     border-radius:                  0px;
     border-color:                  	@BDR;
-    margin:                         0px;
+    margin:                         0px 0px 0px 0px;
     padding:                        0px;
     position:                       center;
 }
@@ -87,7 +79,7 @@ listview {
     columns:                        1;
     lines:							5;
     spacing:                        4px;
-    cycle:                          true;
+    cycle:                          false;
     dynamic:                        true;
     layout:                         vertical;
 }
@@ -103,7 +95,7 @@ element {
     background-color:               @BG;
     text-color:                     @FG;
     orientation:                    horizontal;
-    border-radius:                  10px;
+    border-radius:                  4px;
     padding:                        6px 6px 6px 6px;
 }
 
@@ -120,7 +112,20 @@ element-text {
     expand:                         true;
     horizontal-align:               0;
     vertical-align:                 0.5;
-    margin:                         2px 0px 2px 6px;
+    margin:                         2px 0px 2px 2px;
+}
+
+element normal.urgent,
+element alternate.urgent {
+    background-color:               @UGT;
+    text-color:                     @FG;
+    border-radius:                  9px;
+}
+
+element normal.active,
+element alternate.active {
+    background-color:               @BGA;
+    text-color:                     @FG;
 }
 
 element selected {
@@ -131,24 +136,12 @@ element selected {
     border-color:                  	@BDR;
 }
 
-element.active,
-element.selected.urgent {
-  background-color: @ON;
-  text-color: @BG;
-  border-color: @ON;
+element selected.urgent {
+    background-color:               @UGT;
+    text-color:                     @FG;
 }
 
-element.selected.urgent {
-  border-color: @BDR;
-}
-
-element.urgent,
-element.selected.active {
-  background-color: @OFF;
-  text-color: @BG;
-  border-color: @OFF;
-}
-
-element.selected.active {
-  border-color: @BDR;
+element selected.active {
+    background-color:               @BGA;
+    color:                          @FG;
 }
