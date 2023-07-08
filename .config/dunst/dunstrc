@@ -1,0 +1,36 @@
+[global]
+origin = top-right 
+offset = 10x10 
+
+corner_radius       = 10
+icon_corner_radius  = 8
+padding             = 15
+horizontal_padding  = 15
+text_icon_padding   = 10
+frame_width         = 2
+separator_height    = 1
+
+font        = "Product Sans 11"
+format      = "<b>%a\n</b>%s:\n%b"
+icon_theme  = "Reversral-purple-dark"
+icon_path   = "/usr/share/icons/gnome/16x16/status/:/usr/share/icons/gnome/16x16/devices/"
+dmenu       = "/usr/bin/rofi -dmenu -p dunst"
+
+enable_recursive_icon_lookup  = true
+separator_color               = frame
+frame_color                   = "#893bff"
+
+[urgency_low]
+background = "#1E1E2E"
+foreground = "#CDD6F4"
+
+[urgency_normal]
+background = "#1E1E2E"
+foreground = "#CDD6F4"
+
+[urgency_critical]
+background = "#1E1E2E"
+foreground = "#CDD6F4"
+frame_color = "#FAB387"
+
+# vim: ft=ini:

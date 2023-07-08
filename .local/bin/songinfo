@@ -1,0 +1,10 @@
+#!/bin/sh
+
+music_dir="`xdg-user-dir MUSIC`"
+previewdir="`xdg-user-dir CONFIG`/ncmpcpp/previews"
+filename="`mpc --format \"$music_dir\"/%file% current`"
+previewname="$previewdir/`mpc --format %album% current | base64`.png"
+
+[ -e "$previewname" ] || ffmpeg -y -i "$filename" -an -vf scale=128:128 "$previewname" > /dev/null 2>&1
+
+notify-send -h string:history_ignore:true -a MPC -r 27072 "Now Playing" "`mpc --format '%title% \n%artist% - %album%' current`" -i "$previewname"
