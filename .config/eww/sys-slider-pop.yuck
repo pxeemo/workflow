@@ -1,0 +1,74 @@
+;; Volume
+(defpoll current-volume-state
+  :interval "99h"
+  "pamixer --get-volume"
+)
+
+(defwidget volume-slider []
+(overlay
+  (scale
+      :class "volume-slider"
+      :value "${current-volume-state}"
+      :max 101
+      :min 0
+      :orientation "v"
+      :flipped true
+      :onchange "pamixer --set-volume {}"
+    )
+  (label
+      :class "slider-icon"
+      :yalign 0.96
+      :text "󰎈"
+    )
+  )
+)
+
+(defwindow volume-pop
+  :class "volume-pop"
+  :exclusive false
+  :monitor 0
+  :geometry (geometry :x "15px" :y "0%"
+    :width "36px" :height "180px" :anchor "center right")
+  :stacking "overlay"
+  :focusable false
+  :namespace "volume-pop"
+(volume-slider)
+)
+
+;; Brightness
+(defpoll current-brightness-state
+  :interval "99h"
+  "brightnessctl get"
+)
+
+(defwidget brightness-slider []
+(overlay
+  (scale
+      :class "brightness-slider"
+      :value "${current-brightness-state}"
+      :max 938
+      :min 9
+      :orientation "v"
+      :flipped true
+      :onchange "brightnessctl set {}"
+    )
+  (label
+      :class "slider-icon"
+      :yalign 0.95
+      :xalign 0.44
+      :text ""
+    )
+  )
+)
+
+(defwindow brightness-pop
+  :class "brightness-pop"
+  :exclusive false
+  :monitor 0
+  :geometry (geometry :x "15px" :y "0%"
+    :width "36px" :height "180px" :anchor "center left")
+  :stacking "overlay"
+  :focusable false
+  :namespace "brightness-pop"
+(brightness-slider)
+)

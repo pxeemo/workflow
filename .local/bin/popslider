@@ -1,0 +1,34 @@
+#!/bin/bash
+
+slider="$1-pop"
+shift
+lockfile="/tmp/${slider}.lock"
+
+if [[ "${slider}" == "brightness-pop" ]]; then
+    brightnessctl -q -n9 set $@
+    eww update current-brightness-state=$(brightnessctl get)
+else 
+    eww update current-volume-state=$(pamixer --get-volume $@)
+fi
+
+if [[ -f ${lockfile} ]]; then
+    echo $(( "$(cat ${lockfile})"+1 )) > ${lockfile}
+    exit 0
+fi
+
+echo 1 > ${lockfile}
+eww open "${slider}"
+laststate=0
+
+while true; do
+    currentstate="$(cat ${lockfile})"
+    if [[ ${currentstate} -eq ${laststate} ]]; then
+        eww close "${slider}"
+        break
+    else
+        laststate=${currentstate}
+    fi
+    sleep 3
+done
+
+rm ${lockfile}

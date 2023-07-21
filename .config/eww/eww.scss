@@ -1,0 +1,39 @@
+.volume-pop,
+.brightness-pop {
+	background: rgba(0,0,0,0);
+}
+.volume-slider,
+.brightness-slider {
+	border-radius: 999px;
+	border: 2px solid #893bff;
+	min-width: 28px;
+}
+.volume-slider trough,
+.brightness-slider trough {
+	background: #1e1e2e;
+	min-width: 24px;
+	padding: 16px 4px 16px 4px;
+	border-radius: 999px;
+}
+.volume-slider .bottom,
+.brightness-slider .bottom {
+	background: #893bff;
+	margin: -12px 0 -12px 0;
+	min-width: 10px;
+	border-radius: 999px;
+	transition-duration: 250ms;
+}
+.volume-slider slider,
+.brightness-slider slider {
+	background: #893bff;
+	min-width: 24px;
+	min-height: 24px;
+	box-shadow: none;
+}
+.volume-slider slider:hover,
+.brightness-slider slider:hover {
+	box-shadow: 0 0 4px 4px rgba(137,59,255,0.5);
+}
+.slider-icon {
+	color: #0e0e1e;
+}

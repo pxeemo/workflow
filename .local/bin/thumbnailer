@@ -1,0 +1,51 @@
+#!/usr/bin/env bash
+
+if ! [ -f "$1" ]; then
+    exit 1
+fi
+
+cache="$HOME/.cache/thumbnails"
+index="$cache/index.json"
+file="$(realpath "$1")"
+mime="$(file -Lb --mime-type "$file")"
+
+mkdir -p "$cache"
+
+if [ -f "$index" ]; then
+    thumbnail="$(jq -r ". \"$file\"" <"$index")"
+    if [[ "$thumbnail" != "null" ]]; then
+        if [[ ! -f "$cache/$thumbnail" ]]; then
+            exit 1
+        fi
+        echo "$cache/$thumbnail"
+        exit 0
+    fi
+fi
+
+thumbnail="$(uuidgen).jpg"
+
+case $mime in
+    video/*)
+        if ! ffmpegthumbnailer -i "$file" -o "$cache/$thumbnail" -s 0 2>/dev/null; then
+            exit 1
+        fi
+        ;;
+    image/svg*)
+        if ! rsvg-convert --keep-aspect-ratio --width "768" "$file" -o "$cache/$thumbnail" >/dev/null; then
+            exit 1
+        fi
+        ;;
+    *)
+        echo "$file"
+        exit 0
+    ;;
+esac
+
+
+if [[ ! -f "$index" ]]; then
+    echo "{\"$file\": \"$thumbnail\"}" >"$index"
+fi
+json="$(jq -r --arg "$file" "$thumbnail" ". + {\"$file\": \"$thumbnail\"}" <"$index")"
+echo "$json" >"$index"
+
+echo "$cache/$thumbnail"

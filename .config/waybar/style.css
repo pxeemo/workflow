@@ -136,79 +136,80 @@ label:focus {
     margin: 4px 0;
     border-radius: 99px;
     color: rgb(147,139,255);
-    box-shadow: inset 0px 0px 4px 2px rgba(147,139,255, .8);
+    box-shadow: inset 0px 0px 4px 2px rgba(147,139,255,1);
     transition: all .5s;
 }
 
 #pulseaudio.muted {
     color: #508f72;
-    box-shadow: inset 0px 0px 4px 2px rgba(80, 143, 114, .8);
+    box-shadow: inset 0px 0px 4px 2px rgba(80,143,114,1);
 }
 
 #network {
     margin: 4px 0;
     border-radius: 99px;
     color: rgb(244, 201, 11);
-    box-shadow: inset 0px 0px 4px 2px rgba(244, 201, 11, .8);
+    box-shadow: inset 0px 0px 4px 2px rgba(244,201,11,1);
 }
 
 #network.disconnected {
     color: @red;
-    box-shadow: inset 0px 0px 4px 2px rgba(250, 50, 47, .8);
+    box-shadow: inset 0px 0px 4px 2px rgba(250,50,47,1);
 }
 
 #backlight {
     margin: 4px 0;
     border-radius: 99px;
     color: rgb(181, 224, 242);
-    box-shadow: inset 0px 0px 4px 2px rgba(181, 224, 242, .8);
+    box-shadow: inset 0px 0px 4px 2px rgba(181,224,242,1);
 }
 
 #language {
     margin: 4px 0;
     border-radius: 99px;
     color: rgb(28, 151, 170);
-    box-shadow: inset 0px 0px 4px 2px rgba(28, 151, 170, .8);
+    box-shadow: inset 0px 0px 4px 2px rgba(28,151,170,1);
 }
 
 #battery {
     margin: 4px 0;
     border-radius: 99px;
     color: #ffffff;
-    box-shadow: inset 0px 0px 4px 2px rgba(255, 255, 255, .8);
+    box-shadow: inset 0px 0px 4px 2px rgba(255,255,255,1);
     transition: all .5s;
 }
 
-#battery.full, #battery.great {
+#battery.full, 
+#battery.great {
     color: rgb(166, 211, 84);
-    box-shadow: inset 0px 0px 4px 2px rgba(166, 211, 84, .8);
+    box-shadow: inset 0px 0px 4px 2px rgba(166,211,84,1);
 }
 
 #battery.good {
     color: @yellow;
-    box-shadow: inset 0px 0px 4px 2px rgba(255, 238, 0, .8);
+    box-shadow: inset 0px 0px 4px 2px rgba(255,238,0,1);
 }
 
 #battery.warning {
     color: #db620b;
-    box-shadow: inset 0px 0px 4px 2px rgba(219, 98, 11, .8);
+    box-shadow: inset 0px 0px 4px 2px rgba(219,98,11,1);
 }
 
 #battery.charging, #battery.plugged {
     color: #933bff;
-    box-shadow: inset 0px 0px 4px 2px rgba(147, 59, 255, .8);
+    box-shadow: inset 0px 0px 4px 2px rgba(147,59,255,1);
 }
 
 @keyframes blink {
     to {
         color: #ffffff;
-        box-shadow: inset 0px 0px 4px 2px rgba(255, 255, 255, .8);
+        box-shadow: inset 0px 0px 4px 2px rgba(255,255,255,1);
     }
 }
 
 #battery.critical:not(.charging) {
     color: @red;
-    box-shadow: inset 0px 0px 4px 2px rgba(250, 50, 47, .8);
+    box-shadow: inset 0px 0px 4px 2px rgba(250,50,47,1);
     animation-name: blink;
     animation-duration: 0.5s;
     animation-timing-function: linear;
