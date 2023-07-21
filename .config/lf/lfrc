@@ -1,0 +1,128 @@
+# vim:ft=conf
+set icons
+set hidden
+set previewer '~/.config/lf/lf_kitty_preview'
+set cleaner '~/.config/lf/lf_kitty_clean'
+set mouse
+# set drawbox
+# set ratios 1:2:3
+set shell sh
+set shellopts '-eu'
+set ifs "\n"
+set scrolloff 8
+set cursorpreviewfmt "\033[7;2m"
+
+map <enter> shell
+map ` !true
+
+# execute current file (must be executable)
+map x $$f
+map X !$f
+
+# dedicated keys for file opener actions
+map o &mimeopen $f
+map O $mimeopen --ask $f
+
+# define a custom 'open' command
+# This command is called when current file is not a directory. You may want to
+# use either file extensions and/or mime types here. Below uses an editor for
+# text files and a file opener for the rest.
+cmd open &{{
+    case $(file --mime-type -Lb $f) in
+        text/*) lf -remote "send $id \$$EDITOR \$fx";;
+        *) for f in $fx; do $OPENER $f > /dev/null 2> /dev/null & done;;
+    esac
+}}
+
+# mkdir command. See wiki if you want it to select created dir
+map a :push %mkdir<space>
+
+## autojump
+# cmd aj %lf -remote "send $id cd '$(autojump $1 } sed 's/\\/\\\\/g;s/"/\\"/g')'"
+# map a push :aj<space>
+
+# define a custom 'rename' command without prompt for overwrite
+# cmd rename %[ -e $1 ] && printf "file exists" || mv $f $1
+# map r push :rename<space>
+
+# make sure trash folder exists
+# %mkdir -p ~/.trash
+
+# move current file or selected files to trash folder
+# (also see 'man mv' for backup/overwrite options)
+cmd trash %set -f; mv $fx ~/.local/share/Trash/
+
+# define a custom 'delete' command
+# cmd delete ${{
+#     set -f
+#     printf "$fx\n"
+#     printf "delete?[y/n]"
+#     read ans
+#     [ "$ans" = "y" ] && rm -rf $fx
+# }}
+
+# use '<delete>' key for either 'trash' or 'delete' command
+map <delete> trash
+map D trash
+# map <delete> delete
+
+# extract the current file with the right command
+# (xkcd link: https://xkcd.com/1168/)
+cmd extract ${{
+    set -f
+    atool -x $fx
+}}
+
+# compress current file or selected files with tar and gunzip
+cmd tar ${{
+    set -f
+    mkdir $1
+    cp -r $fx $1
+    tar czf $1.tar.gz $1
+    rm -rf $1
+}}
+
+# compress current file or selected files with zip
+cmd zip ${{
+    set -f
+    mkdir $1
+    cp -r $fx $1
+    zip -r $1.zip $1
+    rm -rf $1
+}}
+
+# edit config
+cmd edit-config ${{
+    $EDITOR ~/.config/lf/lfrc
+    lf -remote "send $id source ~/.config/lf/lfrc"
+}}
+
+map C edit-config
+map J :updir; set dironly true; down; set dironly false; open
+map K :updir; set dironly true; up; set dironly false; open
+
+
+cmd on-cd &{{
+    case "$PWD" in
+        $HOME/dls/tg)
+            lf -remote "send $id set user_prev_sortby $lf_sortby"
+            lf -remote "send $id set sortby time"
+            lf -remote "send $id set reverse"
+
+            lf -remote "send $id echomsg changed sort to time accending"
+            ;;
+        *)
+            # restore sorting on directory exit
+            if [[ "$lf_user_prev_sortby" != "" ]]; then
+                lf -remote "send $id set sortby $lf_user_prev_sortby"
+                lf -remote "send $id set noreverse"
+
+                lf -remote "send $id echomsg restored sort to $lf_user_prev_sortby"
+                lf -remote "send $id set user_prev_sortby ''"
+            fi
+            ;;
+    esac
+}}
+
+# run on startup too
+on-cd

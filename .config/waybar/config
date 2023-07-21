@@ -54,7 +54,7 @@
         "format": "{icon} {volume}%",
         "format-bluetooth": "{icon}󰂰 {volume}%",
         "format-bluetooth-muted": "󰝟{icon}󰂰",
-        "format-muted": "{icon} Mute",
+        "format-muted": "󰝟 Mute",
         "format-alt": "{icon}",
         "format-icons": {
             "headphone": "󰋋",
@@ -62,7 +62,6 @@
             "phone": "󰏲",
             "portable": "󱡏",
             "car": "",
-            "muted": "󰝟",
             "default": ["󰕿", "󰖀", "󰕾"]
         },
         "on-click-right": "pavucontrol",
@@ -91,8 +90,7 @@
     },
     "battery": {
         "states": {
-            "full": 100,
-            "great": 99,
+            "great": 100,
             "good": 70,
             "warning": 30,
             "critical": 15
