@@ -157,19 +157,16 @@
 #def_key "mouse"
 #  mouse_event
 #
-#def_key "up"
-#  scroll_up
-#
-#def_key "shift-up"
-#  select_item
-#  scroll_up
-#
-#def_key "down"
-#  scroll_down
-#
-#def_key "shift-down"
-#  select_item
-#  scroll_down
+def_key "k"
+  scroll_up
+def_key "K"
+  select_item
+  scroll_up
+def_key "j"
+  scroll_down
+def_key "J"
+  select_item
+  scroll_down
 #
 #def_key "["
 #  scroll_up_album
@@ -219,35 +216,30 @@
 #def_key "space"
 #  toggle_visualization_type
 #
-#def_key "delete"
-#  delete_playlist_items
-#
-#def_key "delete"
-#  delete_browser_items
-#
-#def_key "delete"
-#  delete_stored_playlist
-#
-#def_key "right"
-#  next_column
-#
-#def_key "right"
-#  slave_screen
-#
-#def_key "right"
-#  volume_up
+def_key "D"
+  delete_playlist_items
+def_key "D"
+  delete_browser_items
+def_key "D"
+  delete_stored_playlist
+
+def_key "l"
+  next_column
+def_key "l"
+  slave_screen
+
+def_key "0"
+  volume_up
 #
 #def_key "+"
 #  volume_up
 #
-#def_key "left"
-#  previous_column
-#
-#def_key "left"
-#  master_screen
-#
-#def_key "left"
-#  volume_down
+def_key "h"
+  previous_column
+def_key "h"
+  master_screen
+def_key "9"
+  volume_down
 #
 #def_key "-"
 #  volume_down
@@ -330,11 +322,10 @@
 #def_key "backspace"
 #  play
 #
-#def_key "f"
-#  seek_forward
-#
-#def_key "b"
-#  seek_backward
+def_key "l"
+  seek_forward
+def_key "h"
+  seek_backward
 #
 #def_key "r"
 #  toggle_repeat
@@ -444,8 +435,8 @@
 #def_key "g"
 #  jump_to_position_in_song
 #
-#def_key "l"
-#  show_lyrics
+def_key "f"
+  show_lyrics
 #
 #def_key "ctrl-v"
 #  select_range
