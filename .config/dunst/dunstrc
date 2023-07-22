@@ -198,7 +198,7 @@
 
     # Set icon theme (only used for recursive icon lookup)
     icon_theme = Adwaita
-    icon_corner_radius = 16
+    icon_corner_radius = 6
     # You can also set multiple icon themes, with the leftmost one being used first.
     # icon_theme = "Adwaita, breeze"
 
@@ -211,7 +211,7 @@
     min_icon_size = 32
 
     # Scale larger icons down to this size, set to 0 to disable
-    max_icon_size = 96
+    max_icon_size = 86
 
     # Paths to default icons (only neccesary when not using recursive icon lookup)
     icon_path = /usr/share/icons/gnome/16x16/status/:/usr/share/icons/gnome/16x16/devices/
@@ -247,7 +247,7 @@
     # corners.
     # The radius will be automatically lowered if it exceeds half of the
     # notification height to avoid clipping text and/or icons.
-    corner_radius = 20
+    corner_radius = 18
 
     # Ignore the dbus closeNotification message.
     # Useful to enforce the timeout set by dunst configuration. Without this
