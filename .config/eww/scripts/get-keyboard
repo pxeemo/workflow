@@ -1,6 +1,6 @@
 #!/bin/bash
 
-hyprctl devices -j | jq -r '.keyboards[3].active_keymap' | sed -e 's/English.*/EN/' -e 's/Persian/FA/'
+hyprctl devices -j | jq -r '.keyboards[3].active_keymap'
 socat -u UNIX-CONNECT:/tmp/hypr/$HYPRLAND_INSTANCE_SIGNATURE/.socket2.sock - | while read -r line; do
-    hyprctl devices -j | jq -r '.keyboards[3].active_keymap' | sed -e 's/English.*/EN/' -e 's/Persian/FA/'
+    echo $line | awk -F, '/^activelayout/{print$NF}'
 done
