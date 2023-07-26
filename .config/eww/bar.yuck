@@ -1,32 +1,58 @@
-(deflisten volperc
-    `./scripts/get-volume`)
-(defwidget volume []
-    (label
-        :text {
-            volperc == '[MUTED]' ? '󰝟 Mute' : 
-            volperc < 33 ? '󰕿 ${volperc}%' :
-            volperc < 66 ? '󰖀 ${volperc}%' :
-            '󰕾 ${volperc}%'
-        }))
+(defpoll song           :interval "2s"  "./scripts/music-info --song")
+(defpoll song_artist    :interval "2s"  "./scripts/music-info --artist")
+(defpoll current_status :interval "1s"  "./scripts/music-info --time")
+(defpoll song_status    :interval "2s"  "./scripts/music-info --status")
+(defpoll cover_art      :interval "2s"  "./scripts/music-info --cover")
+(defvar music-reveal  false)
 
-(defpoll net :interval '5s'
-    `nmcli --terse --fields SIGNAL,ACTIVE device wifi | awk -F: '{if($2=="yes")print$1}'`)
-(defpoll essid :interval '5s' :initial "N/A"
-    `nmcli connection | awk '/wlp/{print$1}'`)
+(defwidget music []
+(box :vexpand false :hexpand false :oreintation "h" :space-evenly false :class "song" :spacing 6
+    (eventbox :onhover "eww update music-reveal=true"
+            :onhoverlost "eww update music-reveal=false"
+        (box :orientation "h" :space-evenly false
+                :vexpand false :hexpand false
+            (revealer :transition "slideleft"
+                    :reveal music-reveal
+                    :duration "250ms"
+                (box :vexpand false :hexpand false :oreintation "h" :class "song-btn"
+                    (button :onclick "./scripts/music-info --prev" "󰒮")))
+            (circular-progress :value current_status :thickness 4
+                (box :class "song-cover-art" :style "background-image: url('${cover_art}');"
+                    (revealer :transition "crossfade"
+                            :reveal music-reveal
+                            :duration "250ms"
+                        (box :vexpand false :hexpand false :oreintation "h" :class "song-btn"
+                            (button :onclick "./scripts/music-info --toggle" song_status)))))
+            (revealer :transition "slideright"
+                    :reveal music-reveal
+                    :duration "250ms"
+                (box :vexpand false :hexpand false :oreintation "h" :class "song-btn"
+                    (button :onclick `./scripts/music-info --next` "󰒭")))))
+    (button :wrap "true" :onclick `./scripts/pop music` song)))
+
+(deflisten volperc `./scripts/get-volume`)
+(defwidget volume []
+(label :text {
+        volperc == '[MUTED]' ? '󰝟 Mute' : 
+        volperc < 33 ? '󰕿 ${volperc}%' :
+        volperc < 66 ? '󰖀 ${volperc}%' :
+        '󰕾 ${volperc}%'
+    }))
+
+(defpoll net    :interval '5s' `nmcli --terse --fields SIGNAL,ACTIVE device wifi | awk -F: '{if($2=="yes")print$1}'`)
+(defpoll essid  :interval '5s' :initial "N/A" `nmcli connection | awk '/wlp/{print$1}'`)
 (defwidget network []
-(label 
-        :text  {
-            net == '' ? '󰤨' :
-            net < 26 ? '󰤟' :
-            net < 51 ? '󰤢' :
-            net < 76 ? '󰤥' :
-            '󰤨' }
+(label :text  {
+        net == '' ? '󰤨' :
+        net < 26 ? '󰤟' :
+        net < 51 ? '󰤢' :
+        net < 76 ? '󰤥' :
+        '󰤨' }
         :tooltip '${essid} (${net}%)'))
 
 (deflisten lightperc "./scripts/get-brightness")
 (defwidget brightness []
-    (label
-        :text   {
+(label :text   {
             lightperc < 33 ? '󰃜 ${lightperc}%' :
             lightperc < 67 ? '󰃛 ${lightperc}%' :
             '󰃚 ${lightperc}%'
@@ -36,8 +62,7 @@
 (deflisten powerstate "./scripts/get-power --state")
 (deflisten powerperc "./scripts/get-power --percentage")
 (defwidget power []
-    (label
-        :text   {
+(label :text   {
             powerperc < 10 ? '󰁺 ${powerperc}%' :
             powerperc < 20 ? '󰁻 ${powerperc}%' :
             powerperc < 30 ? '󰁼 ${powerperc}%' :
@@ -51,48 +76,64 @@
         }
         :tooltip '${powerstate}'))
 
-(deflisten layout "scripts/get-keyboard")
+(deflisten layout "./scripts/get-keyboard")
 (defwidget keyboard []
-(label 
-        :text {
-            layout == 'English (US)' ? 'EN' : 
-            layout == 'Persian' ? 'FA' : 
-            '??'
-        }))
+(label :text {
+        layout == 'English (US)' ? 'EN' : 
+        layout == 'Persian' ? 'FA' : 
+        '??'
+    }))
 
 (deflisten win-title :initial "..." `sh ~/.config/eww/scripts/get-window-title`)
 (defwidget window []
-(box
+(box 
     (label :text "${win-title}")))
 
-(defpoll time
-    :interval "1s"
-    'date +%H:%M')
 (deflisten workspaces :initial "[]" "bash ~/.config/eww/scripts/get-workspaces")
 (deflisten current_workspace :initial "1" "bash ~/.config/eww/scripts/get-active-workspace")
 
 (defwidget workspaces []
-(eventbox :onscroll "bash ~/.config/eww/scripts/change-active-workspace {} ${current_workspace}" :class "workspaces-widget"
+(eventbox 
+        :onscroll "./scripts/change-active-workspace {} ${current_workspace}" 
+        :class "workspaces-widget"
     (box :space-evenly true
         (label :text "${workspaces}${current_workspace}" :visible false)
         (for workspace in workspaces
             (eventbox :onclick "hyprctl dispatch workspace ${workspace.id}"
-                (box :class "workspace-entry ${workspace.id == current_workspace ? "current" : ""} ${workspace.windows > 0 ? "occupied" : "empty"}"
-                    (label :text "${workspace.id}")))))))
+                (box :class "workspace-entry ${workspace.id == current_workspace ? "current" : ""}"
+                    (label :text "${workspace.id == current_workspace ? "󰮯" : "󰇘"}" :xalign 0.5)))))))
 
+(defpoll time       :interval "1s" 'jdate +%R')
+(defpoll weekday    :interval "5m" `jdate +%G`)
+(defpoll dayofmonth :interval "5m" `jdate +%e\\ %V`)
+(defvar showdate false)
 (defwidget clock []
-    "${time}")
+(eventbox :class "clock"
+        :timeout        '50ms'
+        :onhover        'eww update showdate=true'
+        :onhoverlost    'eww update showdate=false'
+    (box :space-evenly false
+        (revealer :transition "slideleft" :reveal "${showdate}" :duration "200ms" :class "date"
+            (overlay
+                (label :yalign 0 :xalign 1 :text "${weekday}")
+                (label :yalign 1 :xalign 1 :text "${dayofmonth}")
+                )
+            )
+        (label :text "${time}"))))
 
 (defwidget bar []
-(centerbox
-    (window)
+(centerbox :class "bar"
+    (box :space-evenly false
+        (window)
+        (music)
+        )
     (workspaces)
-    (box
-        (volume)
+    (box :space-evenly false :halign "end" :spacing "10"
         (network)
+        (volume)
         (keyboard)
-        (brightness)
-        (power)
+            ;; (brightness)
+            ;; (power)
         (clock))))
 
 (defwindow bar
