@@ -1,0 +1,8 @@
+#!/bin/bash
+
+brightnessctl -m | awk -F ',|%' '{print$4}'
+udevadm monitor --udev | while read -r line; do
+    if echo $line | grep backlight >/dev/null; then
+        brightnessctl -m | awk -F ',|%' '{print$4}'
+    fi
+done
