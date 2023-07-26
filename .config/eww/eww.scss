@@ -37,3 +37,446 @@
 .slider-icon {
 	color: #0e0e1e;
 }
+
+
+/** EWW.SCSS
+Created by saimoom **/
+// selection_foreground    #fffffF
+// selection_background    #6C7086
+// cursor                  #f5e0dc
+// cursor_text_color       #100f18
+// url_color               #893bff
+// active_border_color     #893bff
+// inactive_border_color   #403056
+// bell_border_color       #F9E2AF
+// active_tab_foreground   #11111B
+// active_tab_background   #CBA6F7
+// inactive_tab_foreground #CDD6F4
+// inactive_tab_background #181825
+// tab_bar_background      #11111B
+// mark1_foreground #1E1E2E
+// mark1_background #B4BEFE
+// mark2_foreground #1E1E2E
+// mark2_background #CBA6F7
+// mark3_foreground #1E1E2E
+// mark3_background #74C7EC
+// # black
+// color0 #45475A
+// color8 #585B70
+// # red
+// color1 #da4240
+// color9 #da3230
+// # green
+// color2  #36d381
+// color10 #26e354
+// # yellow
+// color3  #b7bF58
+// color11 #E7FA40
+// # blue
+// color4  #893BFF
+// color12 #936DFF
+// # magenta
+// color5  #d570E7
+// color13 #F572E7
+// # cyan
+// color6  #5492f5
+// color14 #74b2f5
+// # white
+// color7  #BAC2DE
+// color15 #A6ADC8
+$foreground: #cdd6f4;
+$gray: #aaaaaa;
+$foreground-alt: #22242b;
+$background: #0e1419;
+$black: #000000;
+$red: #da3230;
+$green: #b8cc52;
+$yellow: #E7FA40;
+$blue: #893BFF;
+$magenta: #d570E7;
+$cyan: #36a3d9;
+$white: #ffffff;
+
+$primary-font: "Albert Sans Medium";
+$secondary-font: "Material Design Icons";
+$feather: "icomoon-feather";
+
+
+// * {
+//   all: unset;
+// }
+
+window {
+  background-color: #1e1e2e;
+  font-family: $primary-font, $secondary-font;
+}
+/** General **/
+.bar {
+  font-size: 14px;
+  margin: 0 11px;
+}
+
+.song {
+  color: $blue;
+  font-weight : bold;
+  margin : 0px 10px;
+}
+.song button {
+	background-color: inherit;
+}
+.song-cover-art {
+  background-size: cover;
+  background-position: center;
+  min-height: 32px;
+  min-width: 32px;
+  border-radius: 100px;
+}
+.song-btn button {
+  font-family: $secondary-font;
+  font-size : 22px;
+  background-color: inherit;
+}
+
+.workspaces-widget {
+  font-family: $secondary-font;
+  font-size: 22px;
+  padding: 2px;
+}
+.workspace-entry {
+  padding: 0px 3px;
+  margin: 4px 1px;
+  border-radius: 999px;
+  // background-color: $blue;
+}
+.workspace-entry.current {
+  color: $yellow;
+}
+
+.volume_icon {
+  font-family: $feather;
+  font-size: 22px;
+  color: $green;
+}
+.volbar trough highlight {
+  background-image: linear-gradient(to right,
+                                    $green 30%,
+                                    $green 60%,
+                                    $red 100% *50);
+  border-radius: 10px;
+}
+
+.wifi_icon {
+  font-family: $feather;
+  font-size: 20px;
+  color: $green;
+}
+.wifi_essid {
+  color: $cyan;
+}
+
+
+/** tooltip!! **/
+tooltip.background {
+  background-color: $background;
+  font-size: 18px;
+  border-radius: 10px;
+  color: $gray;
+}
+
+tooltip label {
+  margin: 6px;
+}
+
+
+/** Widgets **/
+
+.clock_sep {
+  font-size: 16px;
+  color: $gray;
+  margin: 0px 2px;
+}
+.clock_time, .clock_minute {
+  font-size: 23px;
+}
+.clock_minute {
+  color: $blue;
+  margin-right: 10px;
+}
+.clock {
+  font-size: 24px;
+  font-weight: bold;
+}
+.date {
+  font-family: "IRNazanin";
+  font-weight: normal;
+  font-size: 14px;
+  // font-weight: bold;
+  padding: 4px 6px;
+  // line-height: 1.2;
+}
+
+
+.membar {
+  color: $red;
+  background-color: $foreground-alt;
+  border-radius: 10px;
+}
+.iconmem {
+  color: $red;
+}
+
+.cpubar {
+  color: $gray;
+  background-color: $foreground-alt;
+  border-radius: 10px;
+}
+.iconcpu {
+  color: $gray;
+}
+
+.iconcpu, .iconmem {
+  font-size: 15px;
+  margin: 10px;
+}
+
+
+.separ {
+  color: #3e424f;
+  font-weight: bold;
+  font-size: 22px;
+  margin: 0px 8px 0px 8px;
+}
+
+.mem_module {
+  background-color: #0f0f17;
+  border-radius: 16px;
+  margin: 0px 10px 0px 3px;
+}
+.cpu_module {
+  background-color: #0f0f17;
+  border-radius: 16px;
+  margin: 0px 10px 0px 10px;
+}
+
+
+scale trough {
+  all: unset;
+  background-color: $foreground-alt;
+  box-shadow: 0 2px 3px 2px #06060b;
+  border-radius: 10px;
+  min-height: 8px;
+  min-width: 70px;
+  margin: 0px 10px 0px 0px;
+}
+
+// Calendar
+.cal_win {
+  background-color: #0f0f17;
+  font-family: $primary-font;
+  font-size: 18px;
+  font-weight: normal;
+  border: 1px solid $blue;
+  border-radius: 10px;
+
+  .cal-in {
+    padding: 0px 10px 0px 10px;
+    color: #bfc9db;
+
+    .cal {
+       &.highlight {
+        padding: 20px;
+      }
+
+      padding: 5px 5px 5px 5px;
+      margin-left: 10px;
+    }
+  }
+}
+
+calender {
+  color: #bfc9db;
+}
+calendar:selected {
+  color: #a1bdce;
+}
+
+calendar.header {
+  color: #a1bdce;
+  font-weight: bold;
+}
+
+calendar.button {
+  color: #afbea2;
+}
+
+calendar.highlight {
+  color: #a1bdce;
+  font-weight: bold;
+}
+
+calendar:indeterminate {
+  color: #bfc9db;
+}
+
+
+
+.sys_sep {
+  color: #38384d;
+  font-size: 18;
+  margin: 0px 10px 0px 10px;
+}
+.sys_text_cpu_sub, .sys_text_mem_sub {
+  font-size: 16pt;
+  color: #bbc5d7;
+  margin: 5px 0px 0px 25px;
+}
+.sys_text_cpu, .sys_text_mem {
+  font-size: 21pt;
+  font-weight: bold;
+  margin: 14px 0px 0px 25px;
+}
+.sys_icon_cpu, .sys_icon_mem {
+  font-size: 30;
+  margin: 30px;
+}
+.sys_win {
+  background-color: #0f0f17;
+  border-radius: 16px;
+  border: 1px solid $blue;
+}
+.sys_cpu {
+  color: #afbea2;
+  background-color: #38384d;
+  border-radius: 10px;
+}
+.sys_mem {
+  color: #e4c9af;
+  background-color: #38384d;
+  border-radius: 10px;
+}
+.sys_icon_cpu, .sys_text_cpu {
+  color: #afbea2;
+}
+.sys_icon_mem, .sys_text_mem {
+  color: #e4c9af;
+}
+.sys_cpu_box {
+  border-radius: 16px;
+  margin: 15px 10px 10px 20px;
+}
+.sys_mem_box {
+  border-radius: 16px;
+  margin: 10px 10px 15px 20px;
+}
+
+
+
+.music_pop {
+  background-color: #0f0f17;
+  border-radius: 16px;
+  border: 1px solid $blue;
+}
+.music_cover_art {
+  background-size: cover;
+  background-position: center;
+  min-height: 100px;
+  box-shadow: 5px 5px 5px 5px #06060b;
+  min-width: 170px;
+  margin: 20px;
+  border-radius: 20px;
+}
+
+.music {
+  color: $blue;
+  font-size : 20px;
+  font-weight : bold;
+  margin : 20px 0px 0px -15px;
+}
+
+.music_artist {
+  color: $blue;
+  font-size : 16px;
+  font-weight : normal;
+  margin : 0px;
+}
+
+.music_btn_prev, .music_btn_play, .music_btn_next {
+  font-family: Iosevka Nerd Font;
+  margin: 0px;
+  font-weight : normal;
+}
+.music_btn_prev {
+  color: $blue;
+  font-size : 32px;
+}
+.music_btn_play {
+  color: $red;
+  font-size : 48px;
+}
+.music_btn_next {
+  color: $blue;
+  font-size : 32px;
+}
+
+.music_bar scale trough highlight {
+  all: unset;
+  border-radius: 24px;
+  background-image: linear-gradient(to right,
+                                    $red 30%,
+                                    $cyan 50%,
+                                    $green 100% *50);
+}
+.music_bar scale trough {
+  all: unset;
+  background-color: $foreground-alt;
+  box-shadow: 0 6px 5px 2px #06060b;
+  border-radius: 24px;
+  min-height: 14px;
+  min-width: 190px;
+  margin : -10px 10px 20px 0px;
+}
+
+.audio-box {
+  background-color: #0f0f17;
+  border-radius: 16px;
+  border: 1px solid $blue;
+}
+.speaker_icon {
+background-size: cover;
+background-image: url('images/speaker.png');
+background-position: center;
+min-height: 70px;
+min-width: 75px;
+margin: 10px 20px 5px 20px;
+border-radius: 12px;
+}
+
+.speaker_text {
+color: #a1bdce;
+font-size : 26px;
+font-weight : bold;
+margin: 20px 0px 0px 0px;
+}
+
+.speaker_bar scale trough highlight {
+all: unset;
+background-image: linear-gradient(to right, #afcee0 30%, #a1bdce 50%, #77a5bf 100% *50);
+border-radius: 24px;
+}
+.speaker_bar scale trough {
+all: unset;
+background-color: #232232;
+box-shadow: 0 6px 5px 2px #06060b;
+border-radius: 24px;
+min-height: 13px;
+min-width: 120px;
+margin : 0px 0px 5px 0px;
+}
+
+
+
+.audio_sep {
+color: #38384d;
+font-size: 18pt;
+margin : 0px 0px 0px 0px;
+}
