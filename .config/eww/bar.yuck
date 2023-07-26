@@ -1,20 +1,18 @@
-(deflisten vol
+(deflisten volperc
     `./scripts/get-volume`)
-
 (defwidget volume []
     (label
         :text {
-            vol == '[MUTED]' ? '󰝟 Mute' : 
-            vol < 33 ? '󰕿 ${vol}' :
-            vol < 66 ? '󰖀 ${vol}' :
-            '󰕾 ${vol}' }))
+            volperc == '[MUTED]' ? '󰝟 Mute' : 
+            volperc < 33 ? '󰕿 ${volperc}%' :
+            volperc < 66 ? '󰖀 ${volperc}%' :
+            '󰕾 ${volperc}%'
+        }))
 
 (defpoll net :interval '5s'
     `nmcli --terse --fields SIGNAL,ACTIVE device wifi | awk -F: '{if($2=="yes")print$1}'`)
-
 (defpoll essid :interval '5s' :initial "N/A"
     `nmcli connection | awk '/wlp/{print$1}'`)
-
 (defwidget network []
 (label 
         :text  {
@@ -25,8 +23,35 @@
             '󰤨' }
         :tooltip '${essid} (${net}%)'))
 
-(deflisten layout "scripts/get-keyboard")
+(deflisten lightperc "./scripts/get-brightness")
+(defwidget brightness []
+    (label
+        :text   {
+            lightperc < 33 ? '󰃜 ${lightperc}%' :
+            lightperc < 67 ? '󰃛 ${lightperc}%' :
+            '󰃚 ${lightperc}%'
+        }))
 
+
+(deflisten powerstate "./scripts/get-power --state")
+(deflisten powerperc "./scripts/get-power --percentage")
+(defwidget power []
+    (label
+        :text   {
+            powerperc < 10 ? '󰁺 ${powerperc}%' :
+            powerperc < 20 ? '󰁻 ${powerperc}%' :
+            powerperc < 30 ? '󰁼 ${powerperc}%' :
+            powerperc < 40 ? '󰁽 ${powerperc}%' :
+            powerperc < 50 ? '󰁾 ${powerperc}%' :
+            powerperc < 60 ? '󰁿 ${powerperc}%' :
+            powerperc < 70 ? '󰂀 ${powerperc}%' :
+            powerperc < 80 ? '󰂁 ${powerperc}%' :
+            powerperc < 90 ? '󰂂 ${powerperc}%' :
+            '󰁹 ${powerperc}%'
+        }
+        :tooltip '${powerstate}'))
+
+(deflisten layout "scripts/get-keyboard")
 (defwidget keyboard []
 (label 
         :text {
@@ -35,10 +60,10 @@
             '??'
         }))
 
-(deflisten window :initial "..." `sh ~/.config/eww/scripts/get-window-title`)
-(defwidget window_w []
+(deflisten win-title :initial "..." `sh ~/.config/eww/scripts/get-window-title`)
+(defwidget window []
 (box
-    (label :text "${window}")))
+    (label :text "${win-title}")))
 
 (defpoll time
     :interval "1s"
@@ -60,12 +85,14 @@
 
 (defwidget bar []
 (centerbox
-    (window_w)
+    (window)
     (workspaces)
     (box
         (volume)
         (network)
         (keyboard)
+        (brightness)
+        (power)
         (clock))))
 
 (defwindow bar
