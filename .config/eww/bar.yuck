@@ -1,12 +1,17 @@
+(deflisten win-title :initial "..." `bash ~/.config/eww/scripts/get-window-title`)
+(defwidget window []
+(box 
+    (label :text "${win-title}")))
+
+
 (defpoll song           :interval "2s"  "./scripts/music-info --song")
 (defpoll song_artist    :interval "2s"  "./scripts/music-info --artist")
 (defpoll current_status :interval "1s"  "./scripts/music-info --time")
 (defpoll song_status    :interval "2s"  "./scripts/music-info --status")
 (defpoll cover_art      :interval "2s"  "./scripts/music-info --cover")
 (defvar music-reveal  false)
-
 (defwidget music []
-(box :vexpand false :hexpand false :oreintation "h" :space-evenly false :class "song" :spacing 6
+(box :vexpand false :hexpand false :oreintation "h" :space-evenly false :class "song" :spacing 4
     (eventbox :onhover "eww update music-reveal=true"
             :onhoverlost "eww update music-reveal=false"
         (box :orientation "h" :space-evenly false
@@ -30,6 +35,25 @@
                     (button :onclick `./scripts/music-info --next` "󰒭")))))
     (button :wrap "true" :onclick `./scripts/pop music` song)))
 
+
+(deflisten workspaces :initial "[]" `bash ~/.config/eww/scripts/get-workspaces`)
+(deflisten current_workspace :initial "1" `bash ~/.config/eww/scripts/get-active-workspace`)
+(defwidget workspaces []
+(eventbox :onscroll "./scripts/change-active-workspace {} ${current_workspace}" 
+        :class "workspaces-widget"
+    (box :space-evenly true :spacing 2
+        (label :text "${workspaces}${current_workspace}" :visible false)
+        (for workspace in workspaces
+            (button :onclick "hyprctl dispatch workspace ${workspace.id}" :class "workspace-entry"
+                (box :class "${workspace.id == current_workspace ? "current" : ""} ${workspace.urgent == "1" ? "urgent" : ""}"
+                    (label :text {
+                            workspace.id == current_workspace ? "󰮯" : 
+                            workspace.urgent == "1" ? "󰊠" : 
+                            "󰇘"
+                        } 
+                            :xalign 0.5)))))))
+
+
 (deflisten volperc `./scripts/get-volume`)
 (defwidget volume []
 (label :text {
@@ -38,6 +62,7 @@
         volperc < 66 ? '󰖀 ${volperc}%' :
         '󰕾 ${volperc}%'
     }))
+
 
 (defpoll net    :interval '5s' `nmcli --terse --fields SIGNAL,ACTIVE device wifi | awk -F: '{if($2=="yes")print$1}'`)
 (defpoll essid  :interval '5s' :initial "N/A" `nmcli connection | awk '/wlp/{print$1}'`)
@@ -49,6 +74,7 @@
         net < 76 ? '󰤥' :
         '󰤨' }
         :tooltip '${essid} (${net}%)'))
+
 
 (deflisten lightperc "./scripts/get-brightness")
 (defwidget brightness []
@@ -76,32 +102,17 @@
         }
         :tooltip '${powerstate}'))
 
+
 (deflisten layout "./scripts/get-keyboard")
 (defwidget keyboard []
-(label :text {
-        layout == 'English (US)' ? 'EN' : 
-        layout == 'Persian' ? 'FA' : 
-        '??'
-    }))
+(button :onclick `hyprctl switchxkblayout at-translated-set-2-keyboard next` :class 'circ-btn'
+    (image :path {
+            layout == 'English (US)' ? './images/en-layout.svg' : 
+            layout == 'Persian' ? './images/fa-layout.svg' : 
+            '??'
+        }
+            :image-width "16")))
 
-(deflisten win-title :initial "..." `sh ~/.config/eww/scripts/get-window-title`)
-(defwidget window []
-(box 
-    (label :text "${win-title}")))
-
-(deflisten workspaces :initial "[]" "bash ~/.config/eww/scripts/get-workspaces")
-(deflisten current_workspace :initial "1" "bash ~/.config/eww/scripts/get-active-workspace")
-
-(defwidget workspaces []
-(eventbox 
-        :onscroll "./scripts/change-active-workspace {} ${current_workspace}" 
-        :class "workspaces-widget"
-    (box :space-evenly true
-        (label :text "${workspaces}${current_workspace}" :visible false)
-        (for workspace in workspaces
-            (eventbox :onclick "hyprctl dispatch workspace ${workspace.id}"
-                (box :class "workspace-entry ${workspace.id == current_workspace ? "current" : ""}"
-                    (label :text "${workspace.id == current_workspace ? "󰮯" : "󰇘"}" :xalign 0.5)))))))
 
 (defpoll time       :interval "1s" 'jdate +%R')
 (defpoll weekday    :interval "5m" `jdate +%G`)
@@ -131,16 +142,16 @@
     (box :space-evenly false :halign "end" :spacing "10"
         (network)
         (volume)
+        (brightness)
+        (power)
         (keyboard)
-            ;; (brightness)
-            ;; (power)
         (clock))))
 
 (defwindow bar
     :exclusive true
     :monitor 0
     :geometry (geometry :x "0%" :y "0%"
-        :width "100%" :height "36px" :anchor "bottom center")
+        :width "100%" :height "36px" :anchor "top center")
     :stacking "fg"
     :focusable false
     :namespace "eww"

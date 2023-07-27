@@ -1,7 +1,7 @@
 #!/bin/bash
 
 function spaces {
-    hyprctl workspaces -j | jq --arg urgent "$1" -Mc 'map({id: .id | tostring, urgent: (if .id == $urgent then "1" else "0" end)}) | .=sort_by(.id)'
+    hyprctl workspaces -j | jq --arg urgent "$1" -Mc 'map({id: .id | tostring, urgent: (if .id | tostring == $urgent then "1" else "0" end)}) | .=sort_by(.id)'
 }
 
 spaces

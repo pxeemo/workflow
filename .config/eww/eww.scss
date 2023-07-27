@@ -69,9 +69,6 @@ Created by saimoom **/
 // # green
 // color2  #36d381
 // color10 #26e354
-// # yellow
-// color3  #b7bF58
-// color11 #E7FA40
 // # blue
 // color4  #893BFF
 // color12 #936DFF
@@ -81,9 +78,6 @@ Created by saimoom **/
 // # cyan
 // color6  #5492f5
 // color14 #74b2f5
-// # white
-// color7  #BAC2DE
-// color15 #A6ADC8
 $foreground: #cdd6f4;
 $gray: #aaaaaa;
 $foreground-alt: #22242b;
@@ -95,7 +89,7 @@ $yellow: #E7FA40;
 $blue: #893BFF;
 $magenta: #d570E7;
 $cyan: #36a3d9;
-$white: #ffffff;
+$white: #BAC2DE;
 
 $primary-font: "Albert Sans Medium";
 $secondary-font: "Material Design Icons";
@@ -107,13 +101,18 @@ $feather: "icomoon-feather";
 // }
 
 window {
-  background-color: #1e1e2e;
+  background-color: rgba(30,30,46,0.4);
   font-family: $primary-font, $secondary-font;
+}
+button  {
+  padding: 0 10px;
+  margin: 2px 0;
+  border-radius: 999px;
 }
 /** General **/
 .bar {
   font-size: 14px;
-  margin: 0 11px;
+  margin: 2px 11px;
 }
 
 .song {
@@ -122,361 +121,63 @@ window {
   margin : 0px 10px;
 }
 .song button {
-	background-color: inherit;
+	// padding: 0 6px;
+	// background-color: inherit;
 }
 .song-cover-art {
   background-size: cover;
   background-position: center;
-  min-height: 32px;
-  min-width: 32px;
+  min-height: 30px;
+  min-width: 30px;
   border-radius: 100px;
 }
 .song-btn button {
   font-family: $secondary-font;
   font-size : 22px;
   background-color: inherit;
+  margin: 4px 2px;
+  padding: 0 2px;
 }
 
 .workspaces-widget {
   font-family: $secondary-font;
-  font-size: 22px;
-  padding: 2px;
+  font-size: 20px;
 }
 .workspace-entry {
-  padding: 0px 3px;
-  margin: 4px 1px;
+  margin: 2px 0;
   border-radius: 999px;
-  // background-color: $blue;
+  padding: 2px 4px;
+  background-color: inherit;
 }
-.workspace-entry.current {
+.workspace-entry .current {
   color: $yellow;
 }
-
-.volume_icon {
-  font-family: $feather;
-  font-size: 22px;
-  color: $green;
+.workspace-entry .urgent {
+  color: $red;
 }
-.volbar trough highlight {
-  background-image: linear-gradient(to right,
-                                    $green 30%,
-                                    $green 60%,
-                                    $red 100% *50);
-  border-radius: 10px;
-}
-
-.wifi_icon {
-  font-family: $feather;
-  font-size: 20px;
-  color: $green;
-}
-.wifi_essid {
-  color: $cyan;
-}
-
-
-/** tooltip!! **/
-tooltip.background {
-  background-color: $background;
-  font-size: 18px;
-  border-radius: 10px;
-  color: $gray;
-}
-
-tooltip label {
-  margin: 6px;
-}
-
 
 /** Widgets **/
 
-.clock_sep {
-  font-size: 16px;
-  color: $gray;
-  margin: 0px 2px;
-}
-.clock_time, .clock_minute {
-  font-size: 23px;
-}
-.clock_minute {
-  color: $blue;
-  margin-right: 10px;
+.circ-btn {
+  border-radius: 999px;
+  padding: 0 5px;
+  margin: 3px 0;
 }
 .clock {
   font-size: 24px;
   font-weight: bold;
 }
 .date {
-  font-family: "IRNazanin";
+  font-family: "Vazirmatn FD";
   font-weight: normal;
-  font-size: 14px;
-  // font-weight: bold;
-  padding: 4px 6px;
-  // line-height: 1.2;
+  font-size: 11px;
+  padding: 2px 6px;
 }
 
-
-.membar {
-  color: $red;
-  background-color: $foreground-alt;
+/** tooltip!! **/
+tooltip.background {
+  background-color: $background;
+  font-size: 12px;
   border-radius: 10px;
-}
-.iconmem {
-  color: $red;
-}
-
-.cpubar {
   color: $gray;
-  background-color: $foreground-alt;
-  border-radius: 10px;
-}
-.iconcpu {
-  color: $gray;
-}
-
-.iconcpu, .iconmem {
-  font-size: 15px;
-  margin: 10px;
-}
-
-
-.separ {
-  color: #3e424f;
-  font-weight: bold;
-  font-size: 22px;
-  margin: 0px 8px 0px 8px;
-}
-
-.mem_module {
-  background-color: #0f0f17;
-  border-radius: 16px;
-  margin: 0px 10px 0px 3px;
-}
-.cpu_module {
-  background-color: #0f0f17;
-  border-radius: 16px;
-  margin: 0px 10px 0px 10px;
-}
-
-
-scale trough {
-  all: unset;
-  background-color: $foreground-alt;
-  box-shadow: 0 2px 3px 2px #06060b;
-  border-radius: 10px;
-  min-height: 8px;
-  min-width: 70px;
-  margin: 0px 10px 0px 0px;
-}
-
-// Calendar
-.cal_win {
-  background-color: #0f0f17;
-  font-family: $primary-font;
-  font-size: 18px;
-  font-weight: normal;
-  border: 1px solid $blue;
-  border-radius: 10px;
-
-  .cal-in {
-    padding: 0px 10px 0px 10px;
-    color: #bfc9db;
-
-    .cal {
-       &.highlight {
-        padding: 20px;
-      }
-
-      padding: 5px 5px 5px 5px;
-      margin-left: 10px;
-    }
-  }
-}
-
-calender {
-  color: #bfc9db;
-}
-calendar:selected {
-  color: #a1bdce;
-}
-
-calendar.header {
-  color: #a1bdce;
-  font-weight: bold;
-}
-
-calendar.button {
-  color: #afbea2;
-}
-
-calendar.highlight {
-  color: #a1bdce;
-  font-weight: bold;
-}
-
-calendar:indeterminate {
-  color: #bfc9db;
-}
-
-
-
-.sys_sep {
-  color: #38384d;
-  font-size: 18;
-  margin: 0px 10px 0px 10px;
-}
-.sys_text_cpu_sub, .sys_text_mem_sub {
-  font-size: 16pt;
-  color: #bbc5d7;
-  margin: 5px 0px 0px 25px;
-}
-.sys_text_cpu, .sys_text_mem {
-  font-size: 21pt;
-  font-weight: bold;
-  margin: 14px 0px 0px 25px;
-}
-.sys_icon_cpu, .sys_icon_mem {
-  font-size: 30;
-  margin: 30px;
-}
-.sys_win {
-  background-color: #0f0f17;
-  border-radius: 16px;
-  border: 1px solid $blue;
-}
-.sys_cpu {
-  color: #afbea2;
-  background-color: #38384d;
-  border-radius: 10px;
-}
-.sys_mem {
-  color: #e4c9af;
-  background-color: #38384d;
-  border-radius: 10px;
-}
-.sys_icon_cpu, .sys_text_cpu {
-  color: #afbea2;
-}
-.sys_icon_mem, .sys_text_mem {
-  color: #e4c9af;
-}
-.sys_cpu_box {
-  border-radius: 16px;
-  margin: 15px 10px 10px 20px;
-}
-.sys_mem_box {
-  border-radius: 16px;
-  margin: 10px 10px 15px 20px;
-}
-
-
-
-.music_pop {
-  background-color: #0f0f17;
-  border-radius: 16px;
-  border: 1px solid $blue;
-}
-.music_cover_art {
-  background-size: cover;
-  background-position: center;
-  min-height: 100px;
-  box-shadow: 5px 5px 5px 5px #06060b;
-  min-width: 170px;
-  margin: 20px;
-  border-radius: 20px;
-}
-
-.music {
-  color: $blue;
-  font-size : 20px;
-  font-weight : bold;
-  margin : 20px 0px 0px -15px;
-}
-
-.music_artist {
-  color: $blue;
-  font-size : 16px;
-  font-weight : normal;
-  margin : 0px;
-}
-
-.music_btn_prev, .music_btn_play, .music_btn_next {
-  font-family: Iosevka Nerd Font;
-  margin: 0px;
-  font-weight : normal;
-}
-.music_btn_prev {
-  color: $blue;
-  font-size : 32px;
-}
-.music_btn_play {
-  color: $red;
-  font-size : 48px;
-}
-.music_btn_next {
-  color: $blue;
-  font-size : 32px;
-}
-
-.music_bar scale trough highlight {
-  all: unset;
-  border-radius: 24px;
-  background-image: linear-gradient(to right,
-                                    $red 30%,
-                                    $cyan 50%,
-                                    $green 100% *50);
-}
-.music_bar scale trough {
-  all: unset;
-  background-color: $foreground-alt;
-  box-shadow: 0 6px 5px 2px #06060b;
-  border-radius: 24px;
-  min-height: 14px;
-  min-width: 190px;
-  margin : -10px 10px 20px 0px;
-}
-
-.audio-box {
-  background-color: #0f0f17;
-  border-radius: 16px;
-  border: 1px solid $blue;
-}
-.speaker_icon {
-background-size: cover;
-background-image: url('images/speaker.png');
-background-position: center;
-min-height: 70px;
-min-width: 75px;
-margin: 10px 20px 5px 20px;
-border-radius: 12px;
-}
-
-.speaker_text {
-color: #a1bdce;
-font-size : 26px;
-font-weight : bold;
-margin: 20px 0px 0px 0px;
-}
-
-.speaker_bar scale trough highlight {
-all: unset;
-background-image: linear-gradient(to right, #afcee0 30%, #a1bdce 50%, #77a5bf 100% *50);
-border-radius: 24px;
-}
-.speaker_bar scale trough {
-all: unset;
-background-color: #232232;
-box-shadow: 0 6px 5px 2px #06060b;
-border-radius: 24px;
-min-height: 13px;
-min-width: 120px;
-margin : 0px 0px 5px 0px;
-}
-
-
-
-.audio_sep {
-color: #38384d;
-font-size: 18pt;
-margin : 0px 0px 0px 0px;
 }
