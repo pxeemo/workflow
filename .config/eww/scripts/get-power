@@ -3,7 +3,7 @@
 function get {
     case $1 in
         -s|--state)
-            upower -i /org/freedesktop/UPower/devices/battery_BAT0 | awk '/state/{print$2}'
+            upower -i /org/freedesktop/UPower/devices/battery_BAT0 | grep -ce 'state: *charging' # 1 if charging
             ;;
         -p|--percentage)
             upower -i /org/freedesktop/UPower/devices/battery_BAT0 | awk -F ' +|%' '/percentage/{print$3}'

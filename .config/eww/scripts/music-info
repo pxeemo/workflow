@@ -4,7 +4,7 @@
 ## Get data
 STATUS="$(mpc status)"
 COVER="/tmp/.music_cover.png"
-MUSIC_DIR="`xdg-user-dir MUSIC`"
+MUSIC_DIR="$(xdg-user-dir MUSIC)"
 
 ## Get status
 get_status() {
@@ -63,14 +63,19 @@ get_ttime() {
 
 ## Get cover
 get_cover() {
-	ffmpeg -i "${MUSIC_DIR}/$(mpc current -f %file%)" "${COVER}" -y &> /dev/null
+	previewdir="$(xdg-user-dir CACHE)/thumbnails/music"
+	previewname="$previewdir/$(mpc --format %album% current | base64).png"
+	filename="$(mpc --format "$MUSIC_DIR"/%file% current)"
+
+	mkdir -p $previewdir
+	[ -e "$previewname" ] || ffmpeg -y -i "$filename" -an -vf scale=128:128 "$previewname" > /dev/null 2>&1
 	STATUS=$?
 
 	# Check if the file has a embbeded album art
 	if [ "$STATUS" -eq 0 ];then
-		echo "$COVER"
+		echo "$previewname"
 	else
-		echo "images/music.png"
+		echo "./images/music.svg"
 	fi
 }
 

@@ -48,70 +48,85 @@
                 (box :class "${workspace.id == current_workspace ? "current" : ""} ${workspace.urgent == "1" ? "urgent" : ""}"
                     (label :text {
                             workspace.id == current_workspace ? "󰮯" : 
-                            workspace.urgent == "1" ? "󰊠" : 
-                            "󰇘"
-                        } 
+                            workspace.urgent == "1"           ? "󰊠" : 
+                                                                "󰇘" } 
                             :xalign 0.5)))))))
-
-
-(deflisten volperc `./scripts/get-volume`)
-(defwidget volume []
-(label :text {
-        volperc == '[MUTED]' ? '󰝟 Mute' : 
-        volperc < 33 ? '󰕿 ${volperc}%' :
-        volperc < 66 ? '󰖀 ${volperc}%' :
-        '󰕾 ${volperc}%'
-    }))
 
 
 (defpoll net    :interval '5s' `nmcli --terse --fields SIGNAL,ACTIVE device wifi | awk -F: '{if($2=="yes")print$1}'`)
 (defpoll essid  :interval '5s' :initial "N/A" `nmcli connection | awk '/wlp/{print$1}'`)
 (defwidget network []
-(label :text  {
-        net == '' ? '󰤨' :
-        net < 26 ? '󰤟' :
-        net < 51 ? '󰤢' :
-        net < 76 ? '󰤥' :
-        '󰤨' }
-        :tooltip '${essid} (${net}%)'))
+(box :class "circ-btn"
+    (image :image-width "23"
+            :path {
+        net == '' ? './images/wifi-7.svg' :
+        net < 14 ? './images/wifi-1.svg' :
+        net < 29 ? './images/wifi-2.svg' :
+        net < 43 ? './images/wifi-3.svg' :
+        net < 57 ? './images/wifi-4.svg' :
+        net < 71 ? './images/wifi-5.svg' :
+        net < 86 ? './images/wifi-6.svg' :
+                   './images/wifi-7.svg' }
+        :tooltip '${essid} (${net}%)')))
+
+
+(deflisten volperc `./scripts/get-volume`)
+(defwidget volume []
+(box :class "circ-btn"
+    (image :image-width "23"
+            :path {
+                volperc == '[MUTED]' ? './images/volume-0.svg' :
+                volperc < 25 ? './images/volume-1.svg' :
+                volperc < 50 ? './images/volume-2.svg' :
+                volperc < 75 ? './images/volume-3.svg' :
+                               './images/volume-4.svg'
+            })))
 
 
 (deflisten lightperc "./scripts/get-brightness")
 (defwidget brightness []
-(label :text   {
-            lightperc < 33 ? '󰃜 ${lightperc}%' :
-            lightperc < 67 ? '󰃛 ${lightperc}%' :
-            '󰃚 ${lightperc}%'
-        }))
+(box :class "circ-btn"
+    (image :image-width '22'
+            :path {
+                lightperc < 33 ? './images/light-60.svg' :
+                lightperc < 67 ? './images/light-120.svg' :
+                './images/light-180.svg'
+            })))
 
 
 (deflisten powerstate "./scripts/get-power --state")
 (deflisten powerperc "./scripts/get-power --percentage")
+(defpoll powerdetails :interval '1m' `acpi | cut -d' ' -f5-`)
 (defwidget power []
-(label :text   {
-            powerperc < 10 ? '󰁺 ${powerperc}%' :
-            powerperc < 20 ? '󰁻 ${powerperc}%' :
-            powerperc < 30 ? '󰁼 ${powerperc}%' :
-            powerperc < 40 ? '󰁽 ${powerperc}%' :
-            powerperc < 50 ? '󰁾 ${powerperc}%' :
-            powerperc < 60 ? '󰁿 ${powerperc}%' :
-            powerperc < 70 ? '󰂀 ${powerperc}%' :
-            powerperc < 80 ? '󰂁 ${powerperc}%' :
-            powerperc < 90 ? '󰂂 ${powerperc}%' :
-            '󰁹 ${powerperc}%'
-        }
-        :tooltip '${powerstate}'))
+(box :class "circ-btn"
+    (image :image-width "22"
+            :tooltip '${powerperc}% ${powerstate == "1" ? "charging" : 
+                "not charging"}${powerdetails != "" ? " (${powerdetails})" : ""}'
+            :path {
+                powerperc < 10 ? './images/battery-${powerstate}-10.svg' :
+                powerperc < 20 ? './images/battery-${powerstate}-20.svg' :
+                powerperc < 30 ? './images/battery-${powerstate}-30.svg' :
+                powerperc < 40 ? './images/battery-${powerstate}-40.svg' :
+                powerperc < 50 ? './images/battery-${powerstate}-50.svg' :
+                powerperc < 60 ? './images/battery-${powerstate}-60.svg' :
+                powerperc < 70 ? './images/battery-${powerstate}-70.svg' :
+                powerperc < 80 ? './images/battery-${powerstate}-80.svg' :
+                powerperc < 90 ? './images/battery-${powerstate}-90.svg' :
+                powerperc < 99 ? './images/battery-${powerstate}-99.svg' :
+                './images/battery-full.svg'
+            })))
 
 
 (deflisten layout "./scripts/get-keyboard")
 (defwidget keyboard []
 (button :onclick `hyprctl switchxkblayout at-translated-set-2-keyboard next` :class 'circ-btn'
-    (image :path {
-            layout == 'English (US)' ? './images/en-layout.svg' : 
-            layout == 'Persian' ? './images/fa-layout.svg' : 
-            '??'
-        }
-            :image-width "16")))
+    (image :image-width "22"
+            :tooltip "${layout} layout"
+            :path {
+                layout == 'English (US)' ? './images/keyboard-en-layout.svg' : 
+                layout == 'Persian'      ? './images/keyboard-fa-layout.svg' : 
+                '??'
+            })))
 
 
 (defpoll time       :interval "1s" 'jdate +%R')
@@ -119,15 +134,15 @@
 (defpoll dayofmonth :interval "5m" `jdate +%e\\ %V`)
 (defvar showdate false)
 (defwidget clock []
-(eventbox :class "clock"
+(eventbox
         :timeout        '50ms'
         :onhover        'eww update showdate=true'
         :onhoverlost    'eww update showdate=false'
-    (box :space-evenly false
+    (box :space-evenly false :class "clock"
         (revealer :transition "slideleft" :reveal "${showdate}" :duration "200ms" :class "date"
-            (overlay
+            (overlay :width "56"
                 (label :yalign 0 :xalign 1 :text "${weekday}")
-                (label :yalign 1 :xalign 1 :text "${dayofmonth}")
+                (label :yalign 1 :xalign 0 :text "${dayofmonth}")
                 )
             )
         (label :text "${time}"))))
@@ -139,7 +154,7 @@
         (music)
         )
     (workspaces)
-    (box :space-evenly false :halign "end" :spacing "10"
+    (box :space-evenly false :halign "end"
         (network)
         (volume)
         (brightness)
