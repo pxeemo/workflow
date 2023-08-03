@@ -107,6 +107,7 @@ fi      00      # FILE
 # image formats (dircolors defaults)
 *.jpg   01;35
 *.jpeg  01;35
+*.webp  01;35
 *.mjpg  01;35
 *.mjpeg 01;35
 *.gif   01;35

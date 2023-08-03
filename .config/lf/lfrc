@@ -36,6 +36,14 @@ cmd open &{{
 
 # mkdir command. See wiki if you want it to select created dir
 map a :push %mkdir<space>
+map ; :push :
+cmd yank-dirname $dirname -- "$f" | head -c-1 | wl-copy
+cmd yank-path $printf '%s' "$fx" | wl-copy
+cmd yank-basename $basename -a -- $fx | head -c-1 | wl-copy
+
+# cache clean
+cmd cleancache %set -f; rm -rf ~/.cache/thumbnails; echo "thumbnails reseted"
+map i cleancache
 
 ## autojump
 # cmd aj %lf -remote "send $id cd '$(autojump $1 } sed 's/\\/\\\\/g;s/"/\\"/g')'"
@@ -50,7 +58,19 @@ map a :push %mkdir<space>
 
 # move current file or selected files to trash folder
 # (also see 'man mv' for backup/overwrite options)
-cmd trash %set -f; mv $fx ~/.local/share/Trash/
+cmd trash %{{
+    set -f 
+    mkdir -p ~/.trash
+    for file in $fx; do
+        if [ -e "$HOME/.trash/$file" ]; then
+            rm -rf "$HOME/.Trash/$file"
+            mv -f "$file" "$HOME/.Trash/"
+        else
+            mv -f "$file" "$HOME/.Trash/"
+        fi
+        echo "Moved '$file' to trash."
+    done
+}}
 
 # define a custom 'delete' command
 # cmd delete ${{
@@ -62,7 +82,7 @@ cmd trash %set -f; mv $fx ~/.local/share/Trash/
 # }}
 
 # use '<delete>' key for either 'trash' or 'delete' command
-map <delete> trash
+map <delete> delete
 map D trash
 # map <delete> delete
 
@@ -101,6 +121,30 @@ map C edit-config
 map J :updir; set dironly true; down; set dironly false; open
 map K :updir; set dironly true; up; set dironly false; open
 
+cmd bulkrename ${{
+    old="$(mktemp)"
+    new="$(mktemp)"
+    if [ -n "$fs" ]; then
+        fs="$(basename -a $fs)"
+    else
+        fs="$(ls)"
+    fi
+    printf '%s\n' "$fs" >"$old"
+    printf '%s\n' "$fs" >"$new"
+    $EDITOR "$new"
+    [ "$(wc -l < "$new")" -ne "$(wc -l < "$old")" ] && exit
+    paste "$old" "$new" | while IFS= read -r names; do
+        src="$(printf '%s' "$names" | cut -f1)"
+        dst="$(printf '%s' "$names" | cut -f2)"
+        if [ "$src" = "$dst" ] || [ -e "$dst" ]; then
+            continue
+        fi
+        mv -- "$src" "$dst"
+    done
+    rm -- "$old" "$new"
+    lf -remote "send $id unselect"
+}}
+map R bulkrename
 
 cmd on-cd &{{
     case "$PWD" in

@@ -9,7 +9,7 @@
 (defpoll current_status :interval "1s"  "./scripts/music-info --time")
 (defpoll song_status    :interval "2s"  "./scripts/music-info --status")
 (defpoll cover_art      :interval "2s"  "./scripts/music-info --cover")
-(defvar music-reveal  false)
+(defvar  music-reveal   false)
 (defwidget music []
 (box :vexpand false :hexpand false :oreintation "h" :space-evenly false :class "song" :spacing 4
     (eventbox :onhover "eww update music-reveal=true"
@@ -57,7 +57,7 @@
 (defpoll essid  :interval '5s' :initial "N/A" `nmcli connection | awk '/wlp/{print$1}'`)
 (defwidget network []
 (box :class "circ-btn"
-    (image :image-width "23"
+    (image :image-width "22"
             :path {
         net == '' ? './images/wifi-7.svg' :
         net < 14 ? './images/wifi-1.svg' :
@@ -72,26 +72,30 @@
 
 (deflisten volperc `./scripts/get-volume`)
 (defwidget volume []
-(box :class "circ-btn"
-    (image :image-width "23"
-            :path {
-                volperc == '[MUTED]' ? './images/volume-0.svg' :
-                volperc < 25 ? './images/volume-1.svg' :
-                volperc < 50 ? './images/volume-2.svg' :
-                volperc < 75 ? './images/volume-3.svg' :
-                               './images/volume-4.svg'
-            })))
+(eventbox :onscroll `popslider volume {}; touch /tmp/volume-pop.lock`
+    (box :class "circ-btn"
+        (image :image-width "22"
+                :path {
+                    volperc == '[MUTED]' ? './images/volume-0.svg' :
+                    volperc < 25 ? './images/volume-1.svg' :
+                    volperc < 50 ? './images/volume-2.svg' :
+                    volperc < 75 ? './images/volume-3.svg' :
+                    './images/volume-4.svg'
+                }
+            :tooltip '${volperc}%'))))
 
 
 (deflisten lightperc "./scripts/get-brightness")
 (defwidget brightness []
-(box :class "circ-btn"
-    (image :image-width '22'
-            :path {
-                lightperc < 33 ? './images/light-60.svg' :
-                lightperc < 67 ? './images/light-120.svg' :
-                './images/light-180.svg'
-            })))
+(eventbox :onscroll `popslider brightness {}; touch /tmp/brightness-pop.lock`
+    (box :class "circ-btn"
+        (image :image-width '22'
+                :path {
+                    lightperc < 33 ? './images/light-60.svg' :
+                    lightperc < 67 ? './images/light-120.svg' :
+                    './images/light-180.svg'
+                }
+            :tooltip "${lightperc}%"))))
 
 
 (deflisten powerstate "./scripts/get-power --state")
@@ -132,7 +136,7 @@
 (defpoll time       :interval "1s" 'jdate +%R')
 (defpoll weekday    :interval "5m" `jdate +%G`)
 (defpoll dayofmonth :interval "5m" `jdate +%e\\ %V`)
-(defvar showdate false)
+(defvar  showdate   false)
 (defwidget clock []
 (eventbox
         :timeout        '50ms'
@@ -160,7 +164,8 @@
         (brightness)
         (power)
         (keyboard)
-        (clock))))
+        (clock)
+        )))
 
 (defwindow bar
     :exclusive true

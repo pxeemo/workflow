@@ -23,11 +23,7 @@ case "$filetype" in
 	application/*zip | application/zstd | application/x-xz | application/x-rar) atool --list "$file" ;;
 	audio/* | application/octet-stream) mediainfo "$file" || exit 1;;
 	video/* ) image "$file" "$w" "$h" "$x" "$y" ;;
-	*/pdf)
-		CACHE="${XDG_CACHE_HOME:-$HOME/.cache}/lf/thumb.$(stat --printf '%n\0%i\0%F\0%s\0%W\0%Y' -- "$(readlink -f "$file")" | sha256sum | awk '{print $file}')"
-		[ ! -f "$CACHE.jpg" ] && pdftoppm -jpeg -f 1 -singlefile "$file" "$CACHE"
-		image "$CACHE.jpg" "$w" "$h" "$x" "$y"
-		;;
+	*/pdf) image "$file" "$w" "$h" "$x" "$y" ;;
 	*opendocument*) odt2txt "$file" ;;
 	application/pgp-encrypted) gpg -d -- "$file" ;;
 esac
