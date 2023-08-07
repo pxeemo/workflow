@@ -4,11 +4,11 @@
     (label :text "${win-title}")))
 
 
-(defpoll song           :interval "2s"  "./scripts/music-info --song")
-(defpoll song_artist    :interval "2s"  "./scripts/music-info --artist")
-(defpoll current_status :interval "1s"  "./scripts/music-info --time")
-(defpoll song_status    :interval "2s"  "./scripts/music-info --status")
-(defpoll cover_art      :interval "2s"  "./scripts/music-info --cover")
+(defpoll music-song     :interval "1s"  "./scripts/music-info --song")
+(defpoll music-artist   :interval "1s" `./scripts/music-info --artist`)
+(defpoll music-perc     :interval "1s"  "./scripts/music-info --time")
+(defpoll music-status   :interval "2s"  "./scripts/music-info --status")
+(defpoll music-cover    :interval "1s"  "./scripts/music-info --cover")
 (defvar  music-reveal   false)
 (defwidget music []
 (box :vexpand false :hexpand false :oreintation "h" :space-evenly false :class "song" :spacing 4
@@ -21,19 +21,21 @@
                     :duration "250ms"
                 (box :vexpand false :hexpand false :oreintation "h" :class "song-btn"
                     (button :onclick "./scripts/music-info --prev" "󰒮")))
-            (circular-progress :value current_status :thickness 4
-                (box :class "song-cover-art" :style "background-image: url('${cover_art}');"
+            (circular-progress :value music-perc :thickness 4
+                (box :class "song-cover-art" :style "background-image: url('${music-cover}');"
                     (revealer :transition "crossfade"
                             :reveal music-reveal
                             :duration "250ms"
                         (box :vexpand false :hexpand false :oreintation "h" :class "song-btn"
-                            (button :onclick "./scripts/music-info --toggle" song_status)))))
+                            (button :onclick "./scripts/music-info --toggle" music-status)))))
             (revealer :transition "slideright"
                     :reveal music-reveal
                     :duration "250ms"
                 (box :vexpand false :hexpand false :oreintation "h" :class "song-btn"
                     (button :onclick `./scripts/music-info --next` "󰒭")))))
-    (button :wrap "true" :onclick `./scripts/pop music` song)))
+    (button :wrap "true" 
+            :onclick `if [[ $(eww windows | grep -o '*music') ]]; then eww close music; else eww open music; fi` 
+            music-song)))
 
 
 (deflisten workspaces :initial "[]" `bash ~/.config/eww/scripts/get-workspaces`)

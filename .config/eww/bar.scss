@@ -1,0 +1,70 @@
+/** General **/
+.bar {
+  font-size: 14px;
+  margin: 2px 11px;
+}
+
+.song {
+  color: $blue;
+  font-weight : bold;
+  margin : 0px 10px;
+}
+.song-cover-art {
+  background-size: cover;
+  background-position: center;
+  min-height: 30px;
+  min-width: 30px;
+  border-radius: 100px;
+}
+.song-btn button {
+  font-family: $nerd-font;
+  font-size : 22px;
+  background-color: inherit;
+  margin: 4px 2px;
+  padding: 0 2px;
+}
+
+.workspaces-widget {
+  font-family: $nerd-font;
+  font-size: 20px;
+}
+.workspace-entry {
+  margin: 2px 0;
+  border-radius: 999px;
+  padding: 2px 4px;
+  background-color: inherit;
+}
+.workspace-entry .current {
+  color: $yellow;
+}
+.workspace-entry .urgent {
+  color: $red;
+}
+
+/** Widgets **/
+
+.circ-btn {
+  border-radius: 999px;
+  padding: 0 5px;
+  margin: 0px 0;
+  background-color: inherit;
+}
+.clock {
+  font-size: 24px;
+  font-weight: bold;
+  padding-left: 10px;
+}
+.date {
+  font-family: "Vazirmatn FD";
+  font-weight: normal;
+  font-size: 11px;
+  padding: 2px 8px 2px 2px;
+}
+
+/** tooltip!! **/
+tooltip.background {
+  background-color: $background;
+  font-size: 12px;
+  border-radius: 10px;
+  color: $gray;
+}
