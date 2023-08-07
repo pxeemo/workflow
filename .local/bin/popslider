@@ -1,31 +1,52 @@
 #!/bin/bash
 
+utility=$1
 slider="$1-pop"
-shift
+action=$2
 lockfile="/tmp/${slider}.lock"
 
-if [[ "${slider}" == "brightness-pop" ]]; then
-    brightnessctl -q -n9 set $@
-    eww update current-brightness-state=$(brightnessctl get)
+if [[ "$slider" == "brightness-pop" ]]; then
+    if [[ ${action} == "up" ]]; then
+        brightnessctl -q -n9 set +2%
+    else
+        brightnessctl -q -n9 set 2%-
+    fi
+    laststate="$(brightnessctl get)"
+    eww update current-brightness-state=${laststate}
 else 
-    eww update current-volume-state=$(pamixer --get-volume $@)
+    if [[ ${action} == "up" ]]; then
+        laststate="$(pamixer --get-volume -i 2)"
+    else
+        laststate="$(pamixer --get-volume -d 2)"
+    fi
+    eww update current-volume-state=${laststate}
 fi
 
 if [[ -f ${lockfile} ]]; then
-    echo $(( "$(cat ${lockfile})"+1 )) > ${lockfile}
+    echo $(( $(cat ${lockfile})+1 )) > ${lockfile}
     exit 0
 fi
 
 echo 1 > ${lockfile}
 eww open "${slider}"
-laststate=0
+lastrun=0
+
+function getstate {
+    if [[ "$1" == "brightness-pop" ]]; then
+        echo "$(brightnessctl get)"
+    else 
+        echo "$(pamixer --get-volume)"
+    fi
+}
 
 while true; do
-    currentstate="$(cat ${lockfile})"
-    if [[ ${currentstate} -eq ${laststate} ]]; then
+    currentrun="$(cat ${lockfile})"
+    currentstate="$(getstate ${slider})"
+    if [ ${currentrun} -eq ${lastrun} ] && [ ${currentstate} -eq ${laststate} ]; then
         eww close "${slider}"
         break
     else
+        lastrun=${currentrun}
         laststate=${currentstate}
     fi
     sleep 3

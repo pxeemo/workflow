@@ -1,0 +1,16 @@
+.music {
+    border: 2px solid $blue;
+    border-radius: 15px;
+}
+.music-pop {
+    margin: 30px;
+}
+.music-pop .music-cover {
+    border-radius: 8px;
+}
+.music-controls button {
+    font-size: 20px;
+    padding: 0;
+    min-width: 32px;
+    min-height: 31px;
+}

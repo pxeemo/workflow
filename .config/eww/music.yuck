@@ -1,0 +1,27 @@
+(defpoll music-single   :interval "2s" `mpc status '%single%'`)
+(defpoll music-random   :interval "2s" `mpc status '%random%'`)
+(defpoll music-repeat   :interval "2s" `mpc status '%repeat%'`)
+(defpoll music-consume  :interval "2s" `mpc status '%consume%'`)
+(defwidget music-win []
+(box :class 'music-pop' :space-evenly false :spacing 20
+    (image :class 'music-cover' :path music-cover :image-width "128" :image-height "128")
+    (box :space-evenly true :valign 'center' :orientation 'v' music-artist music-song
+            (box :spacing 10 :class 'music-controls' :space-evenly false :halign 'center'
+                (button :class music-single :onclick 'mpc single; eww update music-single=$(mpc status "%single%")' '1')
+                (button :class music-repeat :onclick 'mpc repeat; eww update music-repeat=$(mpc status "%repeat%")' '󰑖')
+                (button :onclick `mpc prev` '󰒮')
+                (button :onclick `mpc toggle` music-status)
+                (button :onclick `mpc next` '󰒭')
+                (button :class music-random :onclick 'mpc random; eww update music-random=$(mpc status "%random%")' '󰒝')
+                (button :class music-consume :onclick 'mpc consume; eww update music-consume=$(mpc status "%consume%")' '󰍖'))
+        (progress :value music-perc))))
+
+(defwindow music
+    :exclusive true
+    :monitor 0
+    :geometry (geometry :x "15px" :y "15px"
+        :width "400px" :height "150px" :anchor "top left")
+    :stacking "fg"
+    ;; :focusable true
+    :namespace "eww"
+(music-win))

@@ -63,10 +63,10 @@ cmd trash %{{
     mkdir -p ~/.trash
     for file in $fx; do
         if [ -e "$HOME/.trash/$file" ]; then
-            rm -rf "$HOME/.Trash/$file"
-            mv -f "$file" "$HOME/.Trash/"
+            rm -rf "$HOME/.trash/$file"
+            mv -f "$file" "$HOME/.trash/"
         else
-            mv -f "$file" "$HOME/.Trash/"
+            mv -f "$file" "$HOME/.trash/"
         fi
         echo "Moved '$file' to trash."
     done

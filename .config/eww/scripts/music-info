@@ -89,6 +89,6 @@ case $1 in
   "--ttime")  get_ttime ;;
   "--cover")  get_cover ;;
   "--toggle") mpc -q toggle ;;
-  "--next")   mpc -q next; get_cover; ;;
-  "--prev")   mpc -q prev; get_cover; ;;
+  "--next")   mpc -q next ;;
+  "--prev")   mpc -q prev ;;
 esac
