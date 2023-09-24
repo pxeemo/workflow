@@ -2,7 +2,7 @@
 
 * {
     /* `otf-font-awesome` is required to be installed for icons */
-    font-family: Product Sans, Material Design Icons;
+    font-family: Albert Sans Medium, Material Design Icons;
     font-size: 14px;
     color: @text;
 }
@@ -219,5 +219,6 @@ label:focus {
 
 #clock {
     font-size: 20px;
+    font-weight: bold;
     padding: 0 4px 0 0;
 }

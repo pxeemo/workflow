@@ -6,6 +6,8 @@ filename="$(mpc --format "$music_dir"/%file% current)"
 previewname="$previewdir/$(mpc --format %album% current | base64).png"
 
 mkdir -p $previewdir
-[ -e "$previewname" ] || ffmpeg -y -i "$filename" -an -vf scale=128:128 "$previewname" > /dev/null 2>&1
+[ -e "$previewname" ] || \
+    ffmpeg -y -i "$filename" -an -vf scale=128:128 "$previewname" > /dev/null 2>&1 || \
+    rsvg-convert --width=360 --output="$previewname" "$HOME/.config/eww/images/music.svg"
 
 notify-send -a MPC -r 27072 "Now Playing" "$(mpc --format '%title% \n%artist%' current)" -i "$previewname"

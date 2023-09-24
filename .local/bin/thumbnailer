@@ -9,7 +9,7 @@ file="$(realpath "$1")"
 mime="$(file -Lb --mime-type "$file")"
 thumbnail="$(echo "$file" | base64 -w 999).png"
 
-mkdir -p "$cache"
+mkdir -p "$cache/music"
 
 if [ -f "$cache/$thumbnail" ]; then
     echo "$cache/$thumbnail"
@@ -20,7 +20,14 @@ case $mime in
     video/*)    ffmpegthumbnailer -i "$file" -o "$cache/$thumbnail" -s 0 ;;
     image/svg*) rsvg-convert --keep-aspect-ratio --width 768 "$file" -o "$cache/$thumbnail" ;;
     */pdf)      pdftoppm -png -f 1 -r 100 -singlefile "$file" "$(echo $cache/$thumbnail | sed 's/\.png$//')" ;;
-    audio/*)    ffmpeg -y -i "$file" -an -vf scale=256:256 "$cache/$thumbnail" ;;
+    audio/*)
+        cache="$cache/music"
+        if ! ffmpeg -y -i "$file" -an -vf scale=360:360 "$cache/$thumbnail" > /dev/null 2>&1; then
+            [ -e "$cache/0.png" ] || rsvg-convert --width=360 --output="$cache/0.png" "$HOME/.config/eww/images/music.svg"
+            echo "$cache/0.png"
+            exit 0
+        fi
+        ;;
     *) echo "$file"; exit 0 ;;
 esac
 

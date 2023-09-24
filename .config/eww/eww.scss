@@ -7,10 +7,12 @@ button {
   padding: 2px 10px;
   margin: 2px 0;
   border-radius: 999px;
+  transition: all 250ms ease;
 }
 button.on {
   background: $blue;
   color: #0e0e1e;
+  font-weight: bold;
 }
 
 @import './bar.scss';

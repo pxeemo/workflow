@@ -39,7 +39,7 @@ map a :push %mkdir<space>
 map ; :push :
 cmd yank-dirname $dirname -- "$f" | head -c-1 | wl-copy
 cmd yank-path $printf '%s' "$fx" | wl-copy
-cmd yank-basename $basename -a -- $fx | head -c-1 | wl-copy
+cmd yank-basename $basename -a -- "$fx" | head -c-1 | wl-copy
 
 # cache clean
 cmd cleancache %set -f; rm -rf ~/.cache/thumbnails; echo "thumbnails reseted"
@@ -62,13 +62,14 @@ cmd trash %{{
     set -f 
     mkdir -p ~/.trash
     for file in $fx; do
-        if [ -e "$HOME/.trash/$file" ]; then
-            rm -rf "$HOME/.trash/$file"
+        name="$(basename "$file")"
+        if [ -d "$HOME/.trash/$name" ]; then
+            rm -rf "$HOME/.trash/$name"
             mv -f "$file" "$HOME/.trash/"
         else
             mv -f "$file" "$HOME/.trash/"
         fi
-        echo "Moved '$file' to trash."
+        echo "Moved '$name' to trash."
     done
 }}
 

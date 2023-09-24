@@ -1,55 +1,54 @@
 #!/bin/bash
 
-utility=$1
 slider="$1-pop"
 action=$2
-lockfile="/tmp/${slider}.lock"
+lockfile="/tmp/$slider.lock"
 
 if [[ "$slider" == "brightness-pop" ]]; then
-    if [[ ${action} == "up" ]]; then
-        brightnessctl -q -n9 set +2%
+    if [[ $action == "up" ]]; then
+        brillo -q -u 150000 -A 5
     else
-        brightnessctl -q -n9 set 2%-
+        brillo -q -u 150000 -U 5
     fi
-    laststate="$(brightnessctl get)"
-    eww update current-brightness-state=${laststate}
+    laststate="$(printf '%.0f' "$(brillo -Gq)")"
+    eww update current-brightness-state="$laststate"
 else 
-    if [[ ${action} == "up" ]]; then
+    if [[ $action == "up" ]]; then
         laststate="$(pamixer --get-volume -i 2)"
     else
         laststate="$(pamixer --get-volume -d 2)"
     fi
-    eww update current-volume-state=${laststate}
+    eww update current-volume-state="$laststate"
 fi
 
-if [[ -f ${lockfile} ]]; then
-    echo $(( $(cat ${lockfile})+1 )) > ${lockfile}
+if [[ -f $lockfile ]]; then
+    echo $(( $(cat "$lockfile")+1 )) > "$lockfile"
     exit 0
 fi
 
-echo 1 > ${lockfile}
-eww open "${slider}"
+echo 1 > "$lockfile"
+eww open "$slider"
 lastrun=0
 
 function getstate {
     if [[ "$1" == "brightness-pop" ]]; then
-        echo "$(brightnessctl get)"
+        printf '%.0f' "$(brillo -Gq)"
     else 
-        echo "$(pamixer --get-volume)"
+        pamixer --get-volume
     fi
 }
 
 while true; do
-    currentrun="$(cat ${lockfile})"
-    currentstate="$(getstate ${slider})"
-    if [ ${currentrun} -eq ${lastrun} ] && [ ${currentstate} -eq ${laststate} ]; then
-        eww close "${slider}"
+    currentrun="$(cat "$lockfile")"
+    currentstate="$(getstate "$slider")"
+    if [ "$currentrun" -eq "$lastrun" ] && [ "$currentstate" -eq "$laststate" ]; then
+        eww close "$slider"
         break
     else
-        lastrun=${currentrun}
-        laststate=${currentstate}
+        lastrun=$currentrun
+        laststate=$currentstate
     fi
     sleep 3
 done
 
-rm ${lockfile}
+rm "$lockfile"

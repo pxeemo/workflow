@@ -13,8 +13,8 @@ socat -u UNIX-CONNECT:/tmp/hypr/$HYPRLAND_INSTANCE_SIGNATURE/.socket2.sock - | w
         echo is_urgent $is_urgent urgent_window $urgent_window urgent_workspace $urgent_workspace
     fi
 
-    actived_window="$(echo $line | sed -ne 's/activewindowv2>>//p')"
-    if [[ -n $actived_window && "0x$actived_window" == $urgent_window ]]; then
+    actived_workspace="$(echo $line | sed -ne 's/workspace>>//p')"
+    if [[ -n $actived_workspace && "$actived_workspace" -eq $urgent_workspace ]]; then
         urgent_workspace=''
     fi
 
