@@ -19,9 +19,7 @@
       :class "slider-icon"
       :yalign 0.96
       :text "󰎈"
-    )
-  )
-)
+    )))
 
 (defwindow volume-pop
   :class "volume-pop"
@@ -32,13 +30,12 @@
   :stacking "overlay"
   :focusable false
   :namespace "volume-pop"
-(volume-slider)
-)
+(volume-slider))
 
 ;; Brightness
 (defpoll current-brightness-state
   :interval "99h"
-  "brightnessctl get"
+  `printf '%.0f' $(brillo -Gq)`
 )
 
 (defwidget brightness-slider []
@@ -46,20 +43,18 @@
   (scale
       :class "brightness-slider"
       :value "${current-brightness-state}"
-      :max 938
-      :min 9
+      :max 101
+      :min 2
       :orientation "v"
       :flipped true
-      :onchange "brightnessctl set {}"
+      :onchange "brillo -q -S {}"
     )
   (label
       :class "slider-icon"
       :yalign 0.95
       :xalign 0.44
       :text ""
-    )
-  )
-)
+    )))
 
 (defwindow brightness-pop
   :class "brightness-pop"
@@ -70,5 +65,4 @@
   :stacking "overlay"
   :focusable false
   :namespace "brightness-pop"
-(brightness-slider)
-)
+(brightness-slider))

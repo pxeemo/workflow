@@ -21,7 +21,7 @@ case "$filetype" in
 	application/json) bat -n --wrap never --terminal-width "$x" -f "$file" ;;
 	text/troff) bat -n --wrap never -l groff --terminal-width "$x" -f "$file" ;;
 	application/*zip | application/zstd | application/x-xz | application/x-rar) atool --list "$file" ;;
-	audio/* | application/octet-stream) image "$file" "$w" "$h" "$x" "$y" ;;
+	audio/* | application/octet-stream) exiftool "$file" ;;
 	video/* ) image "$file" "$w" "$h" "$x" "$y" ;;
 	*/pdf) image "$file" "$w" "$h" "$x" "$y" ;;
 	*opendocument*) odt2txt "$file" ;;

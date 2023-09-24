@@ -3,10 +3,12 @@
 (defpoll music-repeat   :interval "2s" `mpc status '%repeat%'`)
 (defpoll music-consume  :interval "2s" `mpc status '%consume%'`)
 (defwidget music-win []
-(box :class 'music-pop' :space-evenly false :spacing 20
-    (image :class 'music-cover' :path music-cover :image-width "128" :image-height "128")
-    (box :space-evenly true :valign 'center' :orientation 'v' music-artist music-song
-            (box :spacing 10 :class 'music-controls' :space-evenly false :halign 'center'
+(overlay :space-evenly false :spacing 20
+    (box :class 'music-cover' :style 'background: url("${music-cover}");')
+    (box :class 'music-pop' :height "360" 
+        (box :orientation 'v' :space-evenly false :spacing 10 :valign 'end'
+                music-artist music-song
+            (box :spacing 10 :class 'music-controls' :space-evenly false :halign "center"
                 (button :class music-single :onclick 'mpc single; eww update music-single=$(mpc status "%single%")' '1')
                 (button :class music-repeat :onclick 'mpc repeat; eww update music-repeat=$(mpc status "%repeat%")' '󰑖')
                 (button :onclick `mpc prev` '󰒮')
@@ -14,13 +16,13 @@
                 (button :onclick `mpc next` '󰒭')
                 (button :class music-random :onclick 'mpc random; eww update music-random=$(mpc status "%random%")' '󰒝')
                 (button :class music-consume :onclick 'mpc consume; eww update music-consume=$(mpc status "%consume%")' '󰍖'))
-        (progress :value music-perc))))
+            (scale :class 'music-seeker' :value music-perc :onchange `mpc seek {}%`)))))
 
 (defwindow music
     :exclusive true
     :monitor 0
     :geometry (geometry :x "15px" :y "15px"
-        :width "400px" :height "150px" :anchor "top left")
+        :width "400px" :height "400px" :anchor "top left")
     :stacking "fg"
     ;; :focusable true
     :namespace "eww"

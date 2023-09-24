@@ -1,7 +1,7 @@
 #!/bin/bash
 
 status=$(nmcli -get-values wifi general)
-essid=$(nmcli connection | awk '/wlp/ { print $1 }')
+essid=$(nmcli connection | awk '/wlp/{print$1}')
 
 if [[ "$status" == "disabled" ]]; then
     icon=""

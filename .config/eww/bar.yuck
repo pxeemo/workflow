@@ -4,11 +4,11 @@
     (label :text "${win-title}")))
 
 
-(defpoll music-song     :interval "1s"  "./scripts/music-info --song")
-(defpoll music-artist   :interval "1s" `./scripts/music-info --artist`)
-(defpoll music-perc     :interval "1s"  "./scripts/music-info --time")
-(defpoll music-status   :interval "2s"  "./scripts/music-info --status")
-(defpoll music-cover    :interval "1s"  "./scripts/music-info --cover")
+(defpoll music-song     :interval "1s"  `./scripts/music-info --song`)
+(defpoll music-artist   :interval "1s"  `./scripts/music-info --artist`)
+(defpoll music-perc     :interval "1s"  `./scripts/music-info --time`)
+(defpoll music-status   :interval "2s"  `./scripts/music-info --status`)
+(defpoll music-cover    :interval "1s"  `./scripts/music-info --cover`)
 (defvar  music-reveal   false)
 (defwidget music []
 (box :vexpand false :hexpand false :oreintation "h" :space-evenly false :class "song" :spacing 4
@@ -20,14 +20,14 @@
                     :reveal music-reveal
                     :duration "250ms"
                 (box :vexpand false :hexpand false :oreintation "h" :class "song-btn"
-                    (button :onclick "./scripts/music-info --prev" "󰒮")))
+                    (button :onclick `./scripts/music-info --prev` "󰒮")))
             (circular-progress :value music-perc :thickness 4
                 (box :class "song-cover-art" :style "background-image: url('${music-cover}');"
                     (revealer :transition "crossfade"
                             :reveal music-reveal
                             :duration "250ms"
                         (box :vexpand false :hexpand false :oreintation "h" :class "song-btn"
-                            (button :onclick "./scripts/music-info --toggle" music-status)))))
+                            (button :onclick `./scripts/music-info --toggle` music-status)))))
             (revealer :transition "slideright"
                     :reveal music-reveal
                     :duration "250ms"
@@ -41,7 +41,7 @@
 (deflisten workspaces :initial "[]" `bash ~/.config/eww/scripts/get-workspaces`)
 (deflisten current_workspace :initial "1" `bash ~/.config/eww/scripts/get-active-workspace`)
 (defwidget workspaces []
-(eventbox :onscroll "./scripts/change-active-workspace {} ${current_workspace}" 
+(eventbox :onscroll `./scripts/change-active-workspace {} ${current_workspace}`
         :class "workspaces-widget"
     (box :space-evenly true :spacing 2
         (label :text "${workspaces}${current_workspace}" :visible false)
@@ -55,8 +55,8 @@
                             :xalign 0.5)))))))
 
 
-(defpoll net    :interval '5s' `nmcli --terse --fields SIGNAL,ACTIVE device wifi | awk -F: '{if($2=="yes")print$1}'`)
-(defpoll essid  :interval '5s' :initial "N/A" `nmcli connection | awk '/wlp/{print$1}'`)
+(defpoll net    :interval '5s' `nmcli -t -f SIGNAL,ACTIVE dev wifi | awk -F: '{if($2=="yes")print$1}'`)
+(defpoll essid  :interval '5s' :initial "N/A" `nmcli c | awk '/wlp/{print$1}'`)
 (defwidget network []
 (box :class "circ-btn"
     (image :image-width "22"

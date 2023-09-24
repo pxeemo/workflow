@@ -4,5 +4,4 @@ set recolor true
 # set recolor-keephue true
 # set recolor-reverse-video true
 
-map i set recolor
 map I set recolor-reverse-video

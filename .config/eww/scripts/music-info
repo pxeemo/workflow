@@ -64,11 +64,11 @@ get_ttime() {
 ## Get cover
 get_cover() {
 	previewdir="$(xdg-user-dir CACHE)/thumbnails/music"
-	previewname="$previewdir/$(mpc --format %album% current | base64).png"
+	previewname="$previewdir/$(mpc --format %album% current | base64 -w 999).png"
 	filename="$(mpc --format "$MUSIC_DIR"/%file% current)"
 
 	mkdir -p $previewdir
-	[ -e "$previewname" ] || ffmpeg -y -i "$filename" -an -vf scale=128:128 "$previewname" > /dev/null 2>&1
+	[ -e "$previewname" ] || ffmpeg -y -i "$filename" -an -vf scale=360:360 "$previewname" > /dev/null 2>&1
 	STATUS=$?
 
 	# Check if the file has a embbeded album art
