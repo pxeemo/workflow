@@ -21,7 +21,9 @@ getTargetDirectory() {
   test -f "${XDG_CONFIG_HOME:-$HOME/.config}/user-dirs.dirs" &&
     . "${XDG_CONFIG_HOME:-$HOME/.config}/user-dirs.dirs"
 
-  echo "${XDG_SCREENSHOTS_DIR:-${XDG_PICTURES_DIR:-$HOME}}"
+  dir="${XDG_SCREENSHOTS_DIR:-${XDG_PICTURES_DIR:-$HOME}}"
+  if [[ ! -d "$dir" ]]; then mkdir -p $dir; fi
+  echo "$dir"
 }
 
 tmp_editor_directory() {
@@ -38,7 +40,7 @@ env_editor_confirm() {
   fi
 }
 
-NOTIFY=no
+NOTIFY=yes
 CURSOR=
 FREEZE=
 SCALE=
@@ -150,7 +152,7 @@ prettier() {
     # rounded corners
     convert $FILE \
       \( +clone -alpha extract \
-      -draw "fill black rectangle 0,0 $w,$h fill white roundrectangle 0,0 $w,$h 12,12" \
+      -draw "fill black rectangle 0,0 $w,$h fill white roundrectangle 0,0 $w,$h 18,18" \
       \) -alpha off -compose CopyOpacity -composite $FILE
   fi
 
@@ -241,7 +243,7 @@ fi
 if [ "$ACTION" = "copy" ]; then
   FILE=/tmp/scr.png
   takeScreenshot $FILE "$GEOM" "$OUTPUT" && wl-copy --type image/png <"$FILE" || die "Clipboard error"
-  notifyOk "$WHAT copied to buffer"
+  notifyOk "$WHAT copied to buffer" -i "$FILE"
 elif [ "$ACTION" = "save" ]; then
   if takeScreenshot "$FILE" "$GEOM" "$OUTPUT"; then
     TITLE="Screenshot of $SUBJECT"
@@ -264,8 +266,8 @@ elif [ "$ACTION" = "edit" ]; then
   fi
 else
   if [ "$ACTION" = "copysave" ]; then
-    takeScreenshot $FILE "$GEOM" "$OUTPUT" && wl-copy --type image/png <"$FILE" || die "Clipboard error"
-    notifyOk "$WHAT copied to buffer and saved to $FILE" -i "$FILE"
+    takeScreenshot "$FILE" "$GEOM" "$OUTPUT" && wl-copy --type image/png <"$FILE" || die "Clipboard error"
+    notifyOk "$WHAT copied to buffer and saved to pics" -i "$FILE"
     echo "$FILE"
   else
     notifyError "Error taking screenshot with grim"
