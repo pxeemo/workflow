@@ -90,6 +90,7 @@
 (deflisten lightperc "./scripts/get-brightness")
 (defwidget brightness []
 (eventbox :onscroll `popslider brightness {}; touch /tmp/brightness-pop.lock`
+        :visible { lightperc == "" ? false : true }
     (box :class "circ-btn"
         (image :image-width '22'
                 :path {
@@ -103,8 +104,9 @@
 (deflisten powerstate "./scripts/get-power --state")
 (deflisten powerperc "./scripts/get-power --percentage")
 (defpoll powerdetails :interval '1m' `acpi | cut -d' ' -f5-`)
-(defwidget power []
-(box :class "circ-btn"
+(defwidget power [] 
+(box :class "circ-btn" 
+        :visible { powerstate == "" ? false : true }
     (image :image-width "22"
             :tooltip '${powerperc}% ${powerstate == "1" ? "charging" : 
                 "not charging"}${powerdetails != "" ? " (${powerdetails})" : ""}'
