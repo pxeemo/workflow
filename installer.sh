@@ -5,16 +5,17 @@ cd $DIR
 REPLACE_ALL=
 
 showdiff() {
-    d=`diff --color=always "$1" "$2"`
+    d=`diff --brief "$1" "$2"`
     if [[ -z $REPLACE_ALL && -n $d  ]]; then
+        d=`batdiff --color "$1" "$2" || diff --color=always "$1" "$2"`
         echo "diff between $1 and $2:"
         echo "$d"
-        printf "Do you want to replace it [a]ll/[y]es/[N]o/[c]ancel? "
+        printf "Do you want to replace it [a]ll/[Y]es/[n]o/[c]ancel? "
         read -r ac
         case "$ac" in
             a|all) REPLACE_ALL=1; cp "$2" "$1" ;;
-            y|yes) cp "$2" "$1" ;;
-            n|no|'') pass ;;
+            y|yes|'') cp "$2" "$1" ;;
+            n|no) pass ;;
             c|cancel) echo Exiting && exit 0 ;;
             *) echo Enter a proper value!; exit 1 ;;
         esac

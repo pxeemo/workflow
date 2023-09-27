@@ -39,20 +39,16 @@
 
 
 (deflisten workspaces :initial "[]" `bash ~/.config/eww/scripts/get-workspaces`)
-(deflisten current_workspace :initial "1" `bash ~/.config/eww/scripts/get-active-workspace`)
 (defwidget workspaces []
-(eventbox :onscroll `./scripts/change-active-workspace {} ${current_workspace}`
-        :class "workspaces-widget"
-    (box :space-evenly true :spacing 2
-        (label :text "${workspaces}${current_workspace}" :visible false)
-        (for workspace in workspaces
-            (button :onclick "hyprctl dispatch workspace ${workspace.id}" :class "workspace-entry"
-                (box :class "${workspace.id == current_workspace ? "current" : ""} ${workspace.urgent == "1" ? "urgent" : ""}"
-                    (label :text {
-                            workspace.id == current_workspace ? "󰮯" : 
-                            workspace.urgent == "1"           ? "󰊠" : 
-                                                                "󰇘" } 
-                            :xalign 0.5)))))))
+(box :space-evenly true :spacing 2 :class "workspaces-widget"
+    (for workspace in workspaces
+        (button :onclick "hyprctl dispatch workspace ${workspace.id}" :class "workspace-entry"
+            (box :class "${workspace.active ? "current" : ""} ${workspace.urgent ? "urgent" : ""}"
+                (label :text {
+                        workspace.active ? "󰮯" : 
+                        workspace.urgent ? "󰊠" : 
+                        "󰇘" } 
+                        :xalign 0.5))))))
 
 
 (defpoll net    :interval '5s' `nmcli -t -f SIGNAL,ACTIVE dev wifi | awk -F: '{if($2=="yes")print$1}'`)

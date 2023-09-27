@@ -1,0 +1,17 @@
+#!/bin/bash
+
+drive="$(udiskie-info -a | wofi -d)"
+if [[ ! $drive ]]; then exit; fi
+action="$(printf '%s\n' 'Mount' 'Unmount' 'Eject' | wofi -d)"
+if [[ ! $action ]]; then exit; fi
+
+case "$action" in
+    'Mount') udiskie-mount $drive
+    ;;
+    'Unmount') udiskie-umount $drive
+    ;;
+    'Eject') udisksctl power-off -b $drive
+    ;;
+    *) echo default
+    ;;
+esac
