@@ -8,7 +8,7 @@ function get {
     esac
 }
 
-if [[ ! -d /org/freedesktop/UPower/devices/battery_BAT0 ]]; then 
+if [[ ! `upower -e | grep battery` ]]; then 
     exit 1
 fi
 

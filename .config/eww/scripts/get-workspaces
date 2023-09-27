@@ -1,22 +1,30 @@
 #!/bin/bash
 
 function spaces {
-    hyprctl workspaces -j | jq --arg urgent "$1" -Mc 'map({id: .id | tostring, urgent: (if .id | tostring == $urgent then "1" else "0" end)}) | .=sort_by(.id)'
+    hyprctl workspaces -j | jq --arg active "$1" --arg urgent "$2" -Mc 'map({
+    id: .id | tostring, 
+    active: (if .id | tostring == $active then true else false end), 
+    urgent: (if .id | tostring == $urgent then true else false end)
+}) | .=sort_by(.id)'
 }
 
-spaces
+activews=`hyprctl activeworkspace -j | jq -r '.id'`
+spaces "$activews"
 socat -u UNIX-CONNECT:/tmp/hypr/$HYPRLAND_INSTANCE_SIGNATURE/.socket2.sock - | while read -r line; do
-    is_urgent="$(echo $line | sed -ne 's/urgent>>//p')"
-    if [[ -n $is_urgent ]]; then
-        urgent_window="0x$is_urgent"
+case "${line%>>*}" in
+    "urgent")
+        urgent_window="0x${line#*>>}"
         urgent_workspace="$(hyprctl clients -j | jq --arg window "$urgent_window" '.[] | select(.address == $window) | .workspace.id')"
-        echo is_urgent $is_urgent urgent_window $urgent_window urgent_workspace $urgent_workspace
-    fi
+    ;;
+    "workspace")
+        activews="${line#*>>}"
+        if [[ "$activews" == "$urgent_workspace" ]]; then
+            urgent_workspace=''
+        fi
+    ;;
+    *) echo default
+    ;;
+esac
 
-    actived_workspace="$(echo $line | sed -ne 's/workspace>>//p')"
-    if [[ -n $actived_workspace && "$actived_workspace" -eq $urgent_workspace ]]; then
-        urgent_workspace=''
-    fi
-
-    spaces "$urgent_workspace"
+    spaces "$activews" "$urgent_workspace"
 done
