@@ -123,7 +123,8 @@
 
 (deflisten layout "./scripts/get-keyboard")
 (defwidget keyboard []
-(button :onclick `hyprctl switchxkblayout at-translated-set-2-keyboard next` :class 'circ-btn'
+(button :class 'circ-btn'
+        :onclick `hyprctl --batch 'switchxkblayout at-translated-set-2-keyboard next; switchxkblayout sigmachip-usb-keyboard next'`
     (image :image-width "22"
             :tooltip "${layout} layout"
             :path {
