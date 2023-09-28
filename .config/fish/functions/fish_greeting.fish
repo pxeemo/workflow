@@ -1,3 +1,3 @@
 function fish_greeting
-    colorscript -r
+    pokemon-colorscripts -r
 end
