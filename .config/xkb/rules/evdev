@@ -1,0 +1,4 @@
+! option = symbols
+  myopts:map_sclk = +scroll(map_to_mod3)
+
+! include %S/evdev
