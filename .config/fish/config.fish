@@ -3,6 +3,7 @@ if status is-interactive
     abbr runat 'systemd-run --user --on-calendar'
     abbr runafter 'systemd-run --user --on-active'
     abbr webcam 'mpv av://v4l2:/dev/video0 --profile=low-latency --untimed'
+    abbr doom '~/.config/emacs/bin/doom'
 end
 
 if not contains $HOME/.local/bin $PATH
