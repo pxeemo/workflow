@@ -62,7 +62,7 @@
                 net < 25 ? './images/wifi-1.svg' :
                 net < 50 ? './images/wifi-2.svg' :
                 net < 75 ? './images/wifi-3.svg' :
-                net < 100 ? './images/wifi-4.svg' :
+                net <= 100 ? './images/wifi-4.svg' :
                            './images/wifi-5.svg' }
                        :tooltip '${essid} (${net}%)')))
 

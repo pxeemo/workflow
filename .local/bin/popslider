@@ -14,10 +14,11 @@ if [[ "$slider" == "brightness-pop" ]]; then
     eww update current-brightness-state="$laststate"
 else 
     if [[ $action == "up" ]]; then
-        laststate="$(pamixer --get-volume -i 2)"
+        wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%+
     else
-        laststate="$(pamixer --get-volume -d 2)"
+        wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%-
     fi
+    laststate="$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{print $NF*100}')"
     eww update current-volume-state="$laststate"
 fi
 
@@ -34,7 +35,7 @@ function getstate {
     if [[ "$1" == "brightness-pop" ]]; then
         printf '%.0f' "$(brillo -Gq)"
     else 
-        pamixer --get-volume
+        wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{print $NF*100}'
     fi
 }
 
