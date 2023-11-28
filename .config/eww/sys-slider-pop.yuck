@@ -1,7 +1,7 @@
 ;; Volume
 (defpoll current-volume-state
   :interval "99h"
-  "pamixer --get-volume"
+  "wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{print $NF*100}'"
 )
 
 (defwidget volume-slider []
@@ -13,7 +13,7 @@
       :min 0
       :orientation "v"
       :flipped true
-      :onchange "pamixer --set-volume {}"
+      :onchange "wpctl set-volume @DEFAULT_AUDIO_SINK@ {}%"
     )
   (label
       :class "slider-icon"

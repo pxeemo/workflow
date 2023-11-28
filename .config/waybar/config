@@ -8,7 +8,7 @@
     "modules-left": ["mpd", "hyprland/window"],
     "modules-center": ["wlr/workspaces"],
     // "modules-right": ["tray", "idle_inhibitor", "pulseaudio", "network", "cpu", "memory", "temperature", "backlight", "sway/language", "battery", "clock"],
-    "modules-right": ["tray", "pulseaudio", "network", "backlight", "battery", "hyprland/language", "clock"],
+    "modules-right": ["tray", "wireplumber", "network", "backlight", "battery", "hyprland/language", "clock"],
 
     "mpd": {
         "format": "{stateIcon} {artist} - {title} {volume}% 󰝚",
@@ -35,7 +35,7 @@
         "max-length": 200,
         "separate-outputs": true
     },
-    "wlr/workspaces": {
+    "hyprland/workspaces": {
         "format": "{icon}",
         "format-icons": {
             "urgent": "󰊠",
@@ -50,7 +50,7 @@
         // "icon-size": 21,
         "spacing": 10
     },
-    "pulseaudio": {
+    "wireplumber": {
         "format": "{icon} {volume}%",
         "format-bluetooth": "{icon}󰂰 {volume}%",
         "format-bluetooth-muted": "󰝟{icon}󰂰",

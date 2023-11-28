@@ -71,7 +71,7 @@ button:hover {
 #battery,
 #backlight,
 #network,
-#pulseaudio,
+#wireplumber,
 #language,
 #tray,
 #mpd {
@@ -132,7 +132,7 @@ label:focus {
     background-color: @red;
 }
 
-#pulseaudio {
+#wireplumber {
     margin: 4px 0;
     border-radius: 99px;
     color: rgb(147,139,255);
@@ -140,7 +140,7 @@ label:focus {
     transition: all .5s;
 }
 
-#pulseaudio.muted {
+#wireplumber.muted {
     color: #508f72;
     box-shadow: inset 0px 0px 4px 2px rgba(80,143,114,1);
 }

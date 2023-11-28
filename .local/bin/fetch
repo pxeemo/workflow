@@ -32,16 +32,16 @@ PBLD=$(printf "%b" "\033[1m")
 # vars
 #FULL=▓
 #EMPTY=░
-FULL=━
+#FULL=━
 EMPTY=━
 #FULL=─
-#FULL=┅
+FULL=┅
 #EMPTY=┄
 
 name=$USER
 host=$(uname -n)
-distro=$(uname -o | awk -F '"' '/PRETTY_NAME/ { print $2 }' /etc/os-release)
-wm="$(xprop -id $(xprop -root -notype | awk '$1=="_NET_SUPPORTING_WM_CHECK:"{print $5}') -notype -f _NET_WM_NAME 8t | grep "WM_NAME" | cut -f2 -d \")"
+distro=$(uname -o | awk -F '"' '/PRETTY_NAME/{print$2}' /etc/os-release)
+de=${DESKTOP_SESSION:-${XDG_SESSION_DESKTOP:-${XDG_CURRENT_DESKTOP:-"unknown"}}}
 
 get_pkg_count() {
 	package_managers=('xbps-install' 'apk' 'apt' 'pacman' 'nix' 'dnf' 'rpm' 'emerge')
@@ -96,7 +96,25 @@ for ((i = 0; i < PADXX; ++i)); do
 	PADCC="$PADCC "
 done
 
-# Ascii art arms
+## Ascii art arms
+# codename=$(lsb_release -i | awk '{print $NF;}')
+# codename='void'
+codename=$(awk -F '=' '/^ID=/{print$NF}' /etc/os-release)
+
+case $codename in
+[vV]oid)
+cat <<EOF
+$PADCC$PBLD                ${PGRN}________
+$PADCC              _ \______ -
+$PADCC             | \\  ${PWHT}___ ${PGRN} \\ |
+$PADCC             | | ${PWHT}/   \\ ${PGRN}| |
+$PADCC             | | ${PWHT}\\___/ ${PGRN}| |
+$PADCC             | \\______ \\_|
+$PADCC              -_______\\
+
+EOF
+;;
+[aA]rch)
 cat <<EOF
 $PADCC$PBLD                   $PBLU.
 $PADCC                  $PBLU/ $PPUR\\
@@ -108,27 +126,91 @@ $PADCC             $PBLU/ _.~   $PPUR~._^\\
 $PADCC            $PBLU/.^         $PPUR^.\\
 
 EOF
+;;
+[aA]rtix)
 
-BAR=" ▓▒░"
+cat <<EOF
+$PADCC$PBLD                   ${PCYN}/\\
+$PADCC                  /  \\
+$PADCC                 /${PBLU}\`'.,${PCYN}\\
+$PADCC                /     ${PBLU}',${PCYN}
+$PADCC               /      ${PBLU},\`${PCYN}\\
+$PADCC              /   ${PBLU},.'\`.${PCYN}  \\
+$PADCC             /${PBLU}.,'\`     \`'.${PCYN}\\
+
+EOF
+;;
+[aA]rco)
+cat <<EOF
+$PADCC$PBLD                   ${PBLU}A
+$PADCC                  ooo
+$PADCC                 ooooo
+$PADCC                ooooooo
+$PADCC               ooooooooo
+$PADCC              ooooo ooooo
+$PADCC             ooooo   ooooo
+$PADCC            ooooo     ooooo
+$PADCC           ${PBLU}ooooo  ${PWHT}<oooooooo>
+$PADCC          ${PBLU}ooooo      ${PWHT}<oooooo>
+$PADCC         ${PBLU}ooooo          ${PWHT}<oooo>
+EOF
+;;
+[mM]anjaro)
+cat <<EOF
+$PADCC$PBLD             ${PGRN}||||||||| ||||
+$PADCC             ||||||||| ||||
+$PADCC             ||||      ||||
+$PADCC             |||| |||| ||||
+$PADCC             |||| |||| ||||
+$PADCC             |||| |||| ||||
+$PADCC             |||| |||| ||||
+
+EOF
+;;
+*)
+;;
+esac
+
+
+#BAR=━
+#BAR=⏹
+#BAR=─
+#BAR=●
+#BAR=┄
+#BAR-" "
+#BAR=" ▓▒░"
+#BAR=" ┅┅┅"
+#NBAR=" ━━━"
+#SEP="¦┊"
+SEP="│"
+
+BAR="  ○ "
+NBAR="  ● "
 OUTT="$BLK$BAR$RED$BAR$GRN$BAR$YLW$BAR$BLU$BAR$PUR$BAR$CYN$BAR$WHT$BAR$RST"
+NOUTT="$BLK$NBAR$RED$NBAR$GRN$NBAR$YLW$NBAR$BLU$NBAR$PUR$NBAR$CYN$NBAR$WHT$NBAR$RST"
+#
+printf "%s%b" "$PADC" "$NOUTT"
+printf "\n"
 printf "%s%b" "$PADC" "$OUTT"
 printf "\n\n"
 
 
 # greetings
-printf "%s%b" "$PADC" "         hola $RED$BLD$name$RST\n"
-printf "%s%b" "$PADC" "      Bienvenido a $GRN$BLD$host$RST\n"
+printf "%s%b" "$PADC" "         Hello $RED$BLD$name$RST\n"
+printf "%s%b" "$PADC" "      Welcome to $GRN$BLD$host$RST\n"
 printf "%s%b" "$PADC" "           up $CYN$BLD$uptm$RST\n\n"
 
 # environment
-printf "%s%b" "$PADC" "$RED        distro $GRY⏹ $RST$distro\n"
-printf "%s%b" "$PADC" "$BLU        kernel $GRY⏹ $RST$(uname -r)\n"
-printf "%s%b" "$PADC" "$PUR      packages $GRY⏹ $RST$(get_pkg_count)\n"
-printf "%s%b" "$PADC" "$GRN         shell $GRY⏹ $RST${SHELL##*/}\n"
-printf "%s%b" "$PADC" "$YLW          term $GRY⏹ $RST$term\n"
-printf "%s%b" "$PADC" "$CYN            wm $GRY⏹ $RST${wm}\n"
-printf "%s%b" "$PADC" "$BLU          disk $GRY⏹ $RST$storage used\n"
+printf "%s%b" "$PADC" "$RED        distro $WHT$SEP $RED$distro\n"
+printf "%s%b" "$PADC" "$BLU        kernel $WHT$SEP $BLU$(uname -r)\n"
+printf "%s%b" "$PADC" "$PUR      packages $WHT$SEP $PUR$(get_pkg_count)\n"
+printf "%s%b" "$PADC" "$GRN         shell $WHT$SEP $GRN${SHELL##*/}\n"
+printf "%s%b" "$PADC" "$YLW          term $WHT$SEP $YLW$term\n"
+printf "%s%b" "$PADC" "$CYN            de $WHT$SEP $CYN${de}\n"
+printf "%s%b" "$PADC" "$WHT          disk $WHT$SEP $WHT$storage used\n"
 printf " $RST\n"
+
+## 
 
 # progress bar
 draw() {
