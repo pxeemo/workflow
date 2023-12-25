@@ -7,7 +7,7 @@ fi
 cache="$HOME/.cache/thumbnails"
 file="$(realpath "$1")"
 mime="$(file -Lb --mime-type "$file")"
-thumbnail="$(echo "$file" | base58).png"
+thumbnail="$(echo "$file" | md5sum | awk '{print $1}').png"
 
 mkdir -p "$cache/music"
 
