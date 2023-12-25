@@ -23,6 +23,9 @@ map X !$f
 map o &mimeopen $f
 map O $mimeopen --ask $f
 
+map W &setwallpaper $f
+
+
 # define a custom 'open' command
 # This command is called when current file is not a directory. You may want to
 # use either file extensions and/or mime types here. Below uses an editor for
@@ -119,6 +122,7 @@ map J :updir; set dironly true; down; set dironly false; open
 map K :updir; set dironly true; up; set dironly false; open
 
 cmd bulkrename ${{
+    set -f
     old="$(mktemp)"
     new="$(mktemp)"
     if [ -n "$fs" ]; then
