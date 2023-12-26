@@ -14,5 +14,7 @@
 
 #### Packages to be installed:
 ```
-hyprland waybar-hyprland-git jq socat eww lf ncmpcpp mpd mpc file ffmpeg ffmpegthumnailer imagemagick mpv dunst rofi wofi
+hyprland jq socat eww-tray-wayland ncmpcpp mpd mpc mpv rofi wofi grim libnotify 
+ffmpegthumnailer rsvg-convert zathura-pdf-poppler imagemagick atool slurp dunst 
+eza bat-extras bat lf fzf wl-clipboard hyprpicker kitty xdg-user-dirs fish
 ```

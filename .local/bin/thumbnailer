@@ -7,13 +7,15 @@ fi
 cache="$HOME/.cache/thumbnails"
 file="$(realpath "$1")"
 mime="$(file -Lb --mime-type "$file")"
-thumbnail="$(echo "$file" | base64 -w 999).png"
+thumbnail="$(echo "$file" | md5sum | awk '{print $1}').png"
 
 mkdir -p "$cache/music"
 
 if [ -f "$cache/$thumbnail" ]; then
-    echo "$cache/$thumbnail"
-    exit 0
+    if [ "$(stat -c%Y "$cache/$thumbnail")" -gt "$(stat -c%Y "$file")" ]; then
+        echo "$cache/$thumbnail"
+        exit 0
+    fi
 fi
 
 case $mime in
