@@ -6,9 +6,9 @@ set -l choice (printf '%s\n' $options | wofi -dp Screenshot)
 sleep .2
 switch $choice
 case $options[1]
-    grimblast --notify --cursor copy active
+    grimblast --prettier --notify --cursor copy active
 case $options[2]
-    grimblast --notify copy area
+    grimblast --prettier --notify copy area
 case $options[3]
     set -l lang (tesseract --list-langs | wofi -dp Langs)
     set -l text (grim -g (slurp) - | tesseract - - -l $lang)
