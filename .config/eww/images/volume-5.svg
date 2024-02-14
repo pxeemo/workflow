@@ -7,7 +7,7 @@
    viewBox="0 0 8.4666666 8.4666666"
    version="1.1"
    id="svg1"
-   sodipodi:docname="volume-0.svg"
+   sodipodi:docname="volume-5.svg"
    inkscape:version="1.3.2 (091e20ef0f, 2023-11-25, custom)"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
@@ -24,7 +24,7 @@
      inkscape:deskcolor="#343434"
      inkscape:document-units="px"
      inkscape:zoom="15.15625"
-     inkscape:cx="16"
+     inkscape:cx="15.96701"
      inkscape:cy="16"
      inkscape:window-width="1322"
      inkscape:window-height="688"
@@ -74,52 +74,52 @@
      inkscape:groupmode="layer"
      id="layer1">
     <rect
-       style="opacity:1;fill:#893bff;fill-opacity:1;stroke:none;stroke-width:0.268578;stroke-linecap:round;stroke-dasharray:none"
+       style="opacity:1;fill:#893bff;fill-opacity:1;stroke:none;stroke-width:0.800811;stroke-linecap:round;stroke-dasharray:none"
        id="rect27"
        width="0.79375005"
-       height="0.93627042"
+       height="8.3237915"
        x="3.175"
-       y="3.765198"
+       y="0.071437545"
        ry="0.39687502" />
     <rect
-       style="opacity:1;fill:#893bff;fill-opacity:1;stroke:none;stroke-width:0.339604;stroke-linecap:round;stroke-dasharray:none"
+       style="opacity:1;fill:#893bff;fill-opacity:1;stroke:none;stroke-width:0.800811;stroke-linecap:round;stroke-dasharray:none"
        id="rect28"
        width="0.79375005"
-       height="1.4969416"
+       height="8.3237915"
        x="4.4979167"
-       y="3.4848626"
+       y="0.071437545"
        ry="0.39687502" />
     <rect
-       style="opacity:1;fill:#893bff;fill-opacity:1;stroke:none;stroke-width:0.452806;stroke-linecap:round;stroke-dasharray:none"
+       style="opacity:1;fill:#893bff;fill-opacity:1;stroke:none;stroke-width:1.13692;stroke-linecap:round;stroke-dasharray:none"
        id="rect29"
        width="0.79374999"
-       height="1.2003082"
+       height="7.5670834"
        x="5.8208332"
-       y="3.6331792"
+       y="0.44979161"
        ry="0.39687499" />
     <rect
-       style="opacity:1;fill:#893bff;fill-opacity:1;stroke:none;stroke-width:0.466088;stroke-linecap:round;stroke-dasharray:none"
+       style="opacity:1;fill:#893bff;fill-opacity:1;stroke:none;stroke-width:1.13692;stroke-linecap:round;stroke-dasharray:none"
        id="rect30"
        width="0.79374999"
-       height="1.271773"
+       height="7.5670834"
        x="1.8520833"
-       y="3.5974469"
+       y="0.44979161"
        ry="0.39687499" />
     <rect
-       style="opacity:1;fill:#893bff;fill-opacity:1;stroke:none;stroke-width:0.479498;stroke-linecap:round;stroke-dasharray:none"
+       style="opacity:1;fill:#893bff;fill-opacity:1;stroke:none;stroke-width:1.21784;stroke-linecap:round;stroke-dasharray:none"
        id="rect31"
        width="0.79374999"
-       height="0.79374999"
+       height="5.1202168"
        x="7.1437497"
-       y="3.8364582"
+       y="1.6732249"
        ry="0.39687499" />
     <rect
-       style="opacity:1;fill:#893bff;fill-opacity:1;stroke:none;stroke-width:0.479499;stroke-linecap:round;stroke-dasharray:none"
+       style="opacity:1;fill:#893bff;fill-opacity:1;stroke:none;stroke-width:1.21784;stroke-linecap:round;stroke-dasharray:none"
        id="rect32"
        width="0.79374999"
-       height="0.79374999"
+       height="5.1202168"
        x="0.52916664"
-       y="3.8364582"
+       y="1.6732249"
        ry="0.39687499" />
   </g>
 </svg>

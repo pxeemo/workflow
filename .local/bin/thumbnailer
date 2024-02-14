@@ -1,10 +1,12 @@
 #!/usr/bin/env bash
 
 if ! [ -f "$1" ]; then
-    exit 1
+	exit 1
 fi
 
-cache="$HOME/.cache/thumbnails"
+test -f "${XDG_CONFIG_HOME:-$HOME/.config}/user-dirs.dirs" &&
+	. "${XDG_CONFIG_HOME:-$HOME/.config}/user-dirs.dirs"
+cache="${XDG_CACHE_DIR:-$HOME/.cache}/thumbnails"
 file="$(realpath "$1")"
 mime="$(file -Lb --mime-type "$file")"
 thumbnail="$(echo "$file" | md5sum | awk '{print $1}').png"
@@ -12,25 +14,30 @@ thumbnail="$(echo "$file" | md5sum | awk '{print $1}').png"
 mkdir -p "$cache/music"
 
 if [ -f "$cache/$thumbnail" ]; then
-    if [ "$(stat -c%Y "$cache/$thumbnail")" -gt "$(stat -c%Y "$file")" ]; then
-        echo "$cache/$thumbnail"
-        exit 0
-    fi
+	if [ "$(stat -c%Y "$cache/$thumbnail")" -gt "$(stat -c%Y "$file")" ]; then
+		echo "$cache/$thumbnail"
+		exit 0
+	fi
 fi
 
 case $mime in
-    video/*)    ffmpegthumbnailer -i "$file" -o "$cache/$thumbnail" -s 0 ;;
-    image/svg*) rsvg-convert --keep-aspect-ratio --width 768 "$file" -o "$cache/$thumbnail" ;;
-    */pdf)      pdftoppm -png -f 1 -r 100 -singlefile "$file" "$(echo $cache/$thumbnail | sed 's/\.png$//')" ;;
-    audio/*)
-        cache="$cache/music"
-        if ! ffmpeg -y -i "$file" -an -vf scale=360:360 "$cache/$thumbnail" > /dev/null 2>&1; then
-            [ -e "$cache/0.png" ] || rsvg-convert --width=360 --output="$cache/0.png" "$HOME/.config/eww/images/music.svg"
-            echo "$cache/0.png"
-            exit 0
-        fi
-        ;;
-    *) echo "$file"; exit 0 ;;
+video/*) ffmpegthumbnailer -i "$file" -o "$cache/$thumbnail" -s 0 ;;
+image/svg*) rsvg-convert --keep-aspect-ratio --width 768 "$file" -o "$cache/$thumbnail" ;;
+*/pdf) pdftoppm -png -f 1 -r 100 -singlefile "$file" "$(echo "$cache/$thumbnail" | sed 's/\.png$//')" ;;
+audio/*)
+	cache="$cache/music"
+	if ! ffmpeg -y -i "$file" -an -vf "crop=ih:ih,scale=360:360" "$cache/$thumbnail" >/dev/null 2>&1; then
+		[ -e "$cache/0.png" ] || rsvg-convert --width=360 \
+			-output="$cache/0.png" "${XDG_CONFIG_HOME:-$HOME/.config}/eww/images/music.svg"
+
+		echo "$cache/0.png"
+		exit 0
+	fi
+	;;
+*)
+	echo "$file"
+	exit 0
+	;;
 esac
 
-echo $cache/$thumbnail
+echo "$cache/$thumbnail"

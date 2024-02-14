@@ -15,6 +15,15 @@
       :flipped true
       :onchange "wpctl set-volume @DEFAULT_AUDIO_SINK@ {}%"
     )
+  (scale
+      :visible {current-volume-state < 101 ? false : true}
+      :class "volume-slider high"
+      :value "${current-volume-state}"
+      :max 201
+      :min 102
+      :orientation "v"
+      :flipped true
+    )
   (label
       :class "slider-icon"
       :yalign 0.96
