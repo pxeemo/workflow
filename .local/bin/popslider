@@ -2,7 +2,7 @@
 
 slider="$1-pop"
 action=$2
-lockfile="/tmp/$slider.lock"
+lockfile="/$XDG_RUNTIME_DIR/$slider.lock"
 
 if [[ "$slider" == "brightness-pop" ]]; then
     if [[ $action == "up" ]]; then
@@ -14,7 +14,7 @@ if [[ "$slider" == "brightness-pop" ]]; then
     eww update current-brightness-state="$laststate"
 else 
     if [[ $action == "up" ]]; then
-        wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%+
+        wpctl set-volume --limit 2 @DEFAULT_AUDIO_SINK@ 2%+
     else
         wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%-
     fi

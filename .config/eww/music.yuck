@@ -1,22 +1,22 @@
-(defpoll music-single   :interval "2s" `mpc status '%single%'`)
-(defpoll music-random   :interval "2s" `mpc status '%random%'`)
-(defpoll music-repeat   :interval "2s" `mpc status '%repeat%'`)
-(defpoll music-consume  :interval "2s" `mpc status '%consume%'`)
+(defpoll music_single   :interval "2s" `mpc status '%single%'`)
+(defpoll music_random   :interval "2s" `mpc status '%random%'`)
+(defpoll music_repeat   :interval "2s" `mpc status '%repeat%'`)
+(defpoll music_consume  :interval "2s" `mpc status '%consume%'`)
 (defwidget music-win []
 (overlay :space-evenly false :spacing 20
-    (box :class 'music-cover' :style 'background: url("${music-cover}");')
+    (box :class 'music-cover' :style 'background: url("${music_info.cover}");')
     (box :class 'music-pop' :height "360" 
         (box :orientation 'v' :space-evenly false :spacing 10 :valign 'end'
-                music-artist music-song
+            {music_info.artist} {music_info.track}
             (box :spacing 10 :class 'music-controls' :space-evenly false :halign "center"
-                (button :class music-single :onclick 'mpc single; eww update music-single=$(mpc status "%single%")' '1')
-                (button :class music-repeat :onclick 'mpc repeat; eww update music-repeat=$(mpc status "%repeat%")' '󰑖')
+                (button :class music_single :onclick 'mpc single; eww update music_single=$(mpc status "%single%")' '1')
+                (button :class music_repeat :onclick 'mpc repeat; eww update music_repeat=$(mpc status "%repeat%")' '󰑖')
                 (button :onclick `mpc prev` '󰒮')
-                (button :onclick `mpc toggle` music-status)
+                (button :onclick `mpc toggle` {music_info.toggle_icon})
                 (button :onclick `mpc next` '󰒭')
-                (button :class music-random :onclick 'mpc random; eww update music-random=$(mpc status "%random%")' '󰒝')
-                (button :class music-consume :onclick 'mpc consume; eww update music-consume=$(mpc status "%consume%")' '󰍖'))
-            (scale :class 'music-seeker' :value music-perc :onchange `mpc seek {}%`)))))
+                (button :class music_random :onclick 'mpc random; eww update music_random=$(mpc status "%random%")' '󰒝')
+                (button :class music_consume :onclick 'mpc consume; eww update music_consume=$(mpc status "%consume%")' '󰍖'))
+            (scale :class 'music-seeker' :value {music_time.perc} :onchange `mpc seek {}%`)))))
 
 (defwindow music
     :exclusive true

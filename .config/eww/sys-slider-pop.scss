@@ -35,6 +35,14 @@
 .brightness-slider slider:hover {
 	box-shadow: 0 0 4px 4px rgba(137,59,255,0.5);
 }
+.volume-slider.high trough {
+	background: transparent;
+}
+.volume-slider.high slider,
+.volume-slider.high .bottom {
+	background: $orange;
+}
 .slider-icon {
 	color: #0e0e1e;
 }
+

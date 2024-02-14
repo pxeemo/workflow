@@ -1,13 +1,17 @@
 #!/bin/sh
 
-music_dir="$(xdg-user-dir MUSIC)"
-previewdir="$(xdg-user-dir CACHE)/thumbnails/music"
-filename="$(mpc --format "$music_dir"/%file% current)"
-previewname="$previewdir/$(mpc --format %album% current | base64).png"
+test -f "${XDG_CONFIG_HOME:-$HOME/.config}/user-dirs.dirs" &&
+    . "${XDG_CONFIG_HOME:-$HOME/.config}/user-dirs.dirs"
+music_dir="$(XDG_MUSIC_DIR:-$HOME/Music)"
+cache_dir="${XDG_CACHE_DIR:-$HOME/.cache}"
+preview_dir="$cache_dir/thumbnails/music"
+file_name="$(mpc --format "$music_dir"/%file% current)"
+preview_name="$preview_dir/$(mpc --format %album% current | base64).png"
 
-mkdir -p $previewdir
-[ -e "$previewname" ] || \
-    ffmpeg -y -i "$filename" -an -vf scale=360:360 "$previewname" > /dev/null 2>&1 || \
-    rsvg-convert --width=360 --output="$previewname" "$HOME/.config/eww/images/music.svg"
+mkdir -p $preview_dir
+[ -e "$preview_name" ] || \
+    ffmpeg -y -i "$file_name" -an -vf scale=360:360 "$preview_name" > /dev/null 2>&1 || \
+    rsvg-convert --width=360 --output="$preview_name" "$HOME/.config/eww/images/music.svg"
 
-notify-send -a MPC -r 27072 "Now Playing" "$(mpc --format '%title% \n%artist%' current)" -i "$previewname"
+notify-send -a MPC -r 27072 "Now Playing" "$(mpc --format '%title% \n%artist%' \
+    current)" -i "$preview_name"
