@@ -15,7 +15,7 @@ showdiff() {
         case "$ac" in
             a|all) REPLACE_ALL=1; cp "$2" "$1" ;;
             y|yes|'') cp "$2" "$1" ;;
-            n|no) pass ;;
+            n|no) return ;;
             c|cancel) echo Exiting && exit 0 ;;
             *) echo Enter a proper value!; exit 1 ;;
         esac
@@ -30,7 +30,7 @@ for dir in `find .config/* -type d`; do
         read -r ac 
         case "$ac" in
             yes|y|'') mkdir -p "$HOME/$dir" ;;
-            no|n) pass ;;
+            no|n) continue ;;
             *) echo Enter a proper value!; exit 1 ;;
         esac
     fi
