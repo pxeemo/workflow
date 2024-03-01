@@ -1,8 +1,8 @@
 #!/bin/sh
 
-test -f "${XDG_CONFIG_HOME:-$HOME/.config}/user-dirs.dirs" &&
-    . "${XDG_CONFIG_HOME:-$HOME/.config}/user-dirs.dirs"
-music_dir="$(XDG_MUSIC_DIR:-$HOME/Music)"
+XDG_DIRS="${XDG_CONFIG_HOME:-$HOME/.config}/user-dirs.dirs" 
+[ -f "$XDG_DIRS" ] && . "$XDG_DIRS"
+music_dir="${XDG_MUSIC_DIR:-$HOME/Music}"
 cache_dir="${XDG_CACHE_DIR:-$HOME/.cache}"
 preview_dir="$cache_dir/thumbnails/music"
 file_name="$(mpc --format "$music_dir"/%file% current)"
