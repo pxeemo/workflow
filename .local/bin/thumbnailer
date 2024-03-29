@@ -4,8 +4,9 @@ if ! [ -f "$1" ]; then
 	exit 1
 fi
 
-test -f "${XDG_CONFIG_HOME:-$HOME/.config}/user-dirs.dirs" &&
+if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/user-dirs.dirs" ]; then
 	. "${XDG_CONFIG_HOME:-$HOME/.config}/user-dirs.dirs"
+fi
 cache="${XDG_CACHE_DIR:-$HOME/.cache}/thumbnails"
 file="$(realpath "$1")"
 mime="$(file -Lb --mime-type "$file")"
@@ -28,7 +29,7 @@ audio/*)
 	cache="$cache/music"
 	if ! ffmpeg -y -i "$file" -an -vf "crop=ih:ih,scale=360:360" "$cache/$thumbnail" >/dev/null 2>&1; then
 		[ -e "$cache/0.png" ] || rsvg-convert --width=360 \
-			-output="$cache/0.png" "${XDG_CONFIG_HOME:-$HOME/.config}/eww/images/music.svg"
+			--output="$cache/0.png" "${XDG_CONFIG_HOME:-$HOME/.config}/eww/images/music.svg"
 
 		echo "$cache/0.png"
 		exit 0
