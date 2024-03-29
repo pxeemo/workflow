@@ -27,7 +27,7 @@ showdiff() {
 
 if [[ -n "$SETUP_NVIM" ]]; then
     git clone "https://github.com/AstroNvim/AstroNvim" "$HOME/.config/nvim"
-    cp -r ".config/nvim/lua/user/" "$HOME/.config/nvim/lua/user/"
+    cp -r "./.config/nvim-user/user/" "$HOME/.config/nvim/lua/user/"
     echo "Your neovim setuped!"
 fi
 
