@@ -3,7 +3,7 @@
 
 ## Hyprland:
 
-![shot1](screenshots/main1.png)
+![shot1](screenshots/view.avif)
 
 ### See [Catppuccin](https://catppuccin-website.vercel.app/) for GTK & QT theme
 
