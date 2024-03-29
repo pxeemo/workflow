@@ -1,0 +1,15 @@
+(defpoll lrc :interval '1m' `./scripts/lyrics.sh`)
+(defwidget lyrics []
+    (scroll :vscroll true :hscroll false
+        (box :orientation "v"
+            (for line in lrc
+                (label :text {line.text})))))
+
+(defwindow lyrics
+    :exclusive false
+    :monitor 0
+    :geometry (geometry :x "0%" :y "0%"
+        :width "250px" :height "150px" :anchor "bottom center")
+    :stacking "fg"
+    :focusable false
+    (lyrics))

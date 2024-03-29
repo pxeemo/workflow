@@ -8,23 +8,23 @@ function spaces {
 }) | .=sort_by(.id)'
 }
 
-activews=`hyprctl activeworkspace -j | jq '.id'`
+activews="$(hyprctl activeworkspace -j | jq '.id')"
 urgentwins='[]'
 urgentws="$(hyprctl clients -j | jq -Mc --argjson wins "$urgentwins" '[.[] | select([.address] | inside($wins)) | .workspace.id]')"
 spaces "$activews" "$urgentws"
-socat -u UNIX-CONNECT:/tmp/hypr/$HYPRLAND_INSTANCE_SIGNATURE/.socket2.sock - | while read -r line; do
+socat -u UNIX-CONNECT:/tmp/hypr/"$HYPRLAND_INSTANCE_SIGNATURE"/.socket2.sock - | while read -r line; do
 case "${line%>>*}" in
     "urgent")
-        urgentwins="$(echo "$urgentwins" | jq -Mc --arg win "0x${line#*>>}" --arg active "$activewin" '. += [$win] | unique | map(select(. != $active))')"
+        urgentwins="$(echo "$urgentwins" | jq -Mc --arg win "0x${line#*>>}" --arg active "$changedwin" '. += [$win] | unique | map(select(. != $active))')"
         urgentws="$(hyprctl clients -j | jq -Mc --argjson wins "$urgentwins" '[.[] | select([.address] | inside($wins)) | .workspace.id]')"
         ;;
     "workspace")
         activews="${line#*>>}"
         ;;
     "activewindowv2"|"closewindow")
-        chdwin="0x${line#*>>}"
-        if [[ `echo $urgentwins | jq 'length'` -gt 0 ]]; then
-            urgentwins="`echo $urgentwins | jq --arg active $chdwin 'map(select(. != $active))'`"
+        changedwin="0x${line#*>>}"
+        if [[ "$(echo "$urgentwins" | jq 'length')" -gt 0 ]]; then
+            urgentwins="$(echo "$urgentwins" | jq --arg active "$changedwin" 'map(select(. != $active))')"
             urgentws="$(hyprctl clients -j | jq -Mc --argjson wins "$urgentwins" '[.[] | select([.address] | inside($wins)) | .workspace.id]')"
         fi
         ;;

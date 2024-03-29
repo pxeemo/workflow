@@ -30,7 +30,7 @@
                 (box :vexpand false :hexpand false :oreintation "h" :class "song-btn"
                     (button :onclick `mpc next` "󰒭")))))
     (button :wrap "true"
-            :onclick `if [[ $(eww windows | grep -o '*music') ]]; then eww close music; else eww open music; fi`
+            :onclick `if [[ $(eww active-windows | grep -o 'music') ]]; then eww close music; else eww open music; fi`
         {music_info.track})))
 
 

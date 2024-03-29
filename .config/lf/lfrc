@@ -24,6 +24,7 @@ map o &mimeopen $f
 map O $mimeopen --ask $f
 
 map W &setwallpaper $f
+map i $bat --paging always $f
 
 
 # define a custom 'open' command
@@ -45,8 +46,7 @@ cmd yank-path $printf '%s' "$fx" | wl-copy
 cmd yank-basename $basename -a -- "$fx" | head -c-1 | wl-copy
 
 # cache clean
-cmd cleancache %set -f; rm -rf ~/.cache/thumbnails; echo "thumbnails reseted"
-map i cleancache
+cmd clearcache %set -f; rm -rf ~/.cache/thumbnails; echo "thumbnails reseted"
 
 ## autojump
 # cmd aj %lf -remote "send $id cd '$(autojump $1 } sed 's/\\/\\\\/g;s/"/\\"/g')'"
@@ -90,8 +90,9 @@ map D trash
 # (xkcd link: https://xkcd.com/1168/)
 cmd extract ${{
     set -f
-    atool -x $fx
+    atool -x $fx || continue
 }}
+map E extract
 
 # compress current file or selected files with tar and gunzip
 cmd tar ${{
