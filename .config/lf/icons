@@ -78,6 +78,7 @@ fi             # FILE
 *.bmp            
 *.png            
 *.webp           
+*.avif           
 *.gif            
 *.ico            
 *.twig           

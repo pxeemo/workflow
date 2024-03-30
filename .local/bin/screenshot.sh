@@ -1,23 +1,32 @@
-#!/usr/bin/fish
+#!/usr/bin/bash
 
-set -l options 'Active Window' 'Select Area' 'Text Scanner (OCR)' 'QR Code Scanner' 'Screen Record'
+option1="Active Window"
+option2="Select Area"
+option3="Text Scanner (OCR)"
+option4="QR Code Scanner"
+option5="Screen Record"
 
-set -l choice (printf '%s\n' $options | wofi -dp Screenshot)
+choice="$(printf '%s\n' "$option1" "$option2" "$option3" "$option4" "$option5" | wofi -dp Screenshot)"
 sleep .2
-switch $choice
-case $options[1]
-    grimblast --prettier --notify --cursor copy active
-case $options[2]
-    grimblast --prettier --notify copy area
-case $options[3]
-    set -l lang (tesseract --list-langs | wofi -dp Langs)
-    set -l text (grim -g (slurp) - | tesseract - - -l $lang)
-    wl-copy $text && notify-send -a Scanner "Text copied" $text
-case $options[4]
-    set -l text (grim -g (slurp) - | zbarimg -)
-    wl-copy $text && notify-send -a Scanner "Text copied" $text
-case $options[5]
-    kitty -e "screen-rec"
-case '*'
-    exit 1
-end
+
+case "$choice" in
+    "$option1")
+        grimblast --prettier --notify --cursor copy active
+        ;;
+    "$option2")
+        grimblast --prettier --notify copy area
+        ;;
+    "$option3")
+        lang="$(tesseract --list-langs | wofi -dp Langs)"
+        text="$(grim -g "$(slurp)" - | tesseract - - -l "$lang")"
+        wl-copy "$text" && notify-send -a Scanner "Text copied" "$text"
+        ;;
+    "$option4")
+        text="$(grim -g "$(slurp)" - | zbarimg -)"
+        wl-copy "$text" && notify-send -a Scanner "Text copied" "$text"
+        ;;
+    "$option5")
+        kitty -e "screen-rec"
+        ;;
+esac
+
