@@ -1,14 +1,14 @@
 # vim:ft=conf
 set icons
 set hidden
-set previewer '~/.config/lf/lf_kitty_preview'
+set shell bash
+set shellopts '-eu'
+set ifs "\n"
+set previewer "~/.config/lf/lf_kitty_preview"
 set cleaner '~/.config/lf/lf_kitty_clean'
 set mouse
 # set drawbox
 # set ratios 1:2:3
-set shell bash
-set shellopts '-eu'
-set ifs "\n"
 set scrolloff 8
 set cursorpreviewfmt "\033[7;2m"
 
@@ -25,7 +25,7 @@ map O $mimeopen --ask $f
 
 map W &setwallpaper $f
 map i $bat --paging always $f
-
+map gt cd ~/.local/share/Trash
 
 # define a custom 'open' command
 # This command is called when current file is not a directory. You may want to
@@ -63,12 +63,15 @@ cmd clearcache %set -f; rm -rf ~/.cache/thumbnails; echo "thumbnails reseted"
 # (also see 'man mv' for backup/overwrite options)
 cmd trash %{{
     set -f 
-    mkdir -p ~/.trash
+    trashdir="${XDG_CONFIG_DIR:-$HOME/.local/share}/Trash"
+    [ -d "$trashdir" ] || mkdir -p "$trashdir"
+
     for file in $fx; do
         name="$(basename "$file")"
-        rm -rf "$HOME/.trash/$name"
-        mv -f "$file" "$HOME/.trash/"
-        echo "Moved '$name' to trash."
+        rm -rf "$trashdir/$name"
+        [ -e "$file" ] || (echo "Deleted permanetly!" && exit 0)
+        mv -f "$file" "$trashdir"
+        echo "Trashed at $trashdir/$name."
     done
 }}
 
@@ -148,27 +151,22 @@ cmd bulkrename ${{
 }}
 map R bulkrename
 
-cmd on-cd &{{
-    case "$PWD" in
-        $HOME/dls/tg|$HOME/.trash)
-            lf -remote "send $id set user_prev_sortby $lf_sortby"
-            lf -remote "send $id set sortby time"
-            lf -remote "send $id set reverse"
-
-            lf -remote "send $id echomsg changed sort to time accending"
-            ;;
-        *)
-            # restore sorting on directory exit
-            if [[ "$lf_user_prev_sortby" != "" ]]; then
-                lf -remote "send $id set sortby $lf_user_prev_sortby"
-                lf -remote "send $id set noreverse"
-
-                lf -remote "send $id echomsg restored sort to $lf_user_prev_sortby"
-                lf -remote "send $id set user_prev_sortby ''"
-            fi
-            ;;
-    esac
+cmd z %{{
+	result="$(zoxide query --exclude $PWD $@ | sed 's/\\/\\\\/g;s/"/\\"/g')"
+	lf -remote "send $id cd \"$result\""
 }}
 
-# run on startup too
-on-cd
+cmd zi ${{
+	result="$(zoxide query -i | sed 's/\\/\\\\/g;s/"/\\"/g')"
+	lf -remote "send $id cd \"$result\""
+}}
+
+cmd on-cd &{{
+        zoxide add "$PWD"
+}}
+
+setlocal ~/.local/share/Trash sortby time
+setlocal ~/.local/share/Trash reverse
+setlocal ~/dls/tg sortby time
+setlocal ~/dls/tg reverse
+
