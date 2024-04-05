@@ -2,6 +2,6 @@
 
 res="$(xrandr | grep -Po "\d+x\d+\+\d+\+\d+")"
 convert "$@" -resize "${res%x*}x" -gravity center -crop "$res" +repage \
-    "${XDG_CONFIG_DIR:-$HOME/.config}/hypr/wallpaper.jpg"
+    "${XDG_CONFIG_DIR:-$HOME/.config}/hypr/wallpaper.png"
 pkill hyprpaper
 hyprpaper >/dev/null &
