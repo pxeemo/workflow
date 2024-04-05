@@ -14,7 +14,8 @@
 
 #### Packages to be installed:
 ```
-hyprland jq socat eww-tray-wayland ncmpcpp mpd mpc mpv rofi wofi grim libnotify 
+hyprland hyprpaper hypridle hyprlock hyprpicker jq socat eww-tray-wayland ncmpcpp
 ffmpegthumnailer rsvg-convert zathura-pdf-poppler imagemagick atool slurp dunst 
-eza bat-extras bat lf fzf wl-clipboard hyprpicker kitty xdg-user-dirs fish
+eza bat-extras bat lf fzf wl-clipboard kitty xdg-user-dirs fish mpd mpc mpv rofi 
+wofi grim libnotify 
 ```

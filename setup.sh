@@ -49,7 +49,7 @@ for dir in $dirs; do
     fi
     files=$(find "$dir" -type f)
     for file in $files; do
-        [[ "$file" == *"hypr/wallpaper.jpg" && -e "$HOME/.config/hypr/wallpaper.jpg" ]] && continue
+        [[ "$file" == *"hypr/wallpaper.png" && -e "$HOME/.config/hypr/wallpaper.png" ]] && continue
         if [[ ! -e "$HOME/$file" ]]; then
             cp "$DIR/$file" "$HOME/$file"
             DID_OPERATION=1
