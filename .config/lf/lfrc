@@ -167,6 +167,6 @@ cmd on-cd &{{
 
 setlocal ~/.local/share/Trash sortby time
 setlocal ~/.local/share/Trash reverse
-setlocal ~/dls/tg sortby time
-setlocal ~/dls/tg reverse
+setlocal ~/dls/ sortby time
+setlocal ~/dls/ reverse
 
