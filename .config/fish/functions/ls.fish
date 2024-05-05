@@ -1,3 +1,3 @@
 function ls --wraps='eza -lFa' --description 'alias ls eza'
-  eza -AlF --icons --git -stype $argv
+  eza -AlF -stype --icons --git --time-style="relative" $argv
 end
