@@ -1,17 +1,24 @@
 #!/bin/bash
 
-drive="$(udiskie-info -a | wofi -d)"
-if [[ ! $drive ]]; then exit; fi
+# drive="$(udiskie-info -a | wofi -d)"
+drive="$(lsblk -l -o 'name,size,type,mountpoint' -n | \
+    awk '{ if($3=="part") {print $1,$2} }' | \
+    column -tR2 | sort -r | wofi -d | awk '{print "/dev/"$1}')"
+[[ $drive ]] || exit
 action="$(printf '%s\n' 'Mount' 'Unmount' 'Eject' | wofi -d)"
-if [[ ! $action ]]; then exit; fi
+[[ $action ]] || exit
 
 case "$action" in
-    'Mount') udiskie-mount $drive
-    ;;
-    'Unmount') udiskie-umount $drive
-    ;;
-    'Eject') udisksctl power-off -b $drive
-    ;;
-    *) echo default
-    ;;
+    'Mount') 
+        result="$(udisksctl mount -b "$drive")"
+        ;;
+    'Unmount') 
+        result="$(udisksctl unmount -b "$drive")"
+        ;;
+    'Eject') 
+        result="$(udisksctl power-off -b "$drive")"
+        ;;
+    *) exit ;;
 esac
+notify-send "USB Managment" "$result"
+wl-copy "$(echo "$result" | awk '{print$NF}')"
