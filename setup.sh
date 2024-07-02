@@ -1,6 +1,5 @@
 #!/bin/bash
 
-SETUP_NVIM=$1
 REPLACE_ALL=
 DID_OPERATION=
 DIR="$(cd "$(dirname "$0")" && pwd)"
@@ -26,18 +25,8 @@ showdiff() {
     fi
 }
 
-if [[ "$SETUP_NVIM" == "nvim" ]]; then
-    git clone "https://github.com/AstroNvim/AstroNvim" "$HOME/.config/nvim"
-    cp -r "./.config/nvim-user/user/" "$HOME/.config/nvim/lua/user/"
-    echo "Your neovim setted up!"
-    exit 0
-else
-    echo "Run \`./setup.sh nvim\` to setup neovim."
-fi
-
 dirs=$(find .config/* -type d)
 for dir in $dirs; do
-    if [[ "$dir" == *"nvim"* ]]; then continue; fi
     if [[ ! -d "$HOME/$dir" ]]; then
         echo -n "Create directory $HOME/$dir [Y]es/[n]o? "
         read -r ac 

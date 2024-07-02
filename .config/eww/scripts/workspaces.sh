@@ -12,7 +12,7 @@ activews="$(hyprctl activeworkspace -j | jq '.id')"
 urgentwins='[]'
 urgentws="$(hyprctl clients -j | jq -Mc --argjson wins "$urgentwins" '[.[] | select([.address] | inside($wins)) | .workspace.id]')"
 spaces "$activews" "$urgentws"
-socat -u UNIX-CONNECT:/tmp/hypr/"$HYPRLAND_INSTANCE_SIGNATURE"/.socket2.sock - | while read -r line; do
+socat -u "UNIX-CONNECT:$XDG_RUNTIME_DIR/hypr/$HYPRLAND_INSTANCE_SIGNATURE/.socket2.sock" - | while read -r line; do
 case "${line%>>*}" in
     "urgent")
         urgentwins="$(echo "$urgentwins" | jq -Mc --arg win "0x${line#*>>}" --arg active "$changedwin" '. += [$win] | unique | map(select(. != $active))')"

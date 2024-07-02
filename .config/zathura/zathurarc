@@ -5,3 +5,6 @@ set recolor true
 # set recolor-reverse-video true
 
 map I set recolor-reverse-video
+map f toggle_fullscreen
+map [fullscreen] f toggle_fullscreen
+map F follow
