@@ -23,9 +23,11 @@ map X !$f
 map o &mimeopen $f
 map O $mimeopen --ask $f
 
-map W &setwallpaper $f
+map W &setwallpaper.sh $f
+map V invert-below
 map i $bat --paging always $f
 map gt cd ~/.local/share/Trash
+map gr cd /run/media/pxeemo
 
 # define a custom 'open' command
 # This command is called when current file is not a directory. You may want to
@@ -93,7 +95,9 @@ map D trash
 # (xkcd link: https://xkcd.com/1168/)
 cmd extract ${{
     set -f
-    atool -x $fx || continue
+    for f in $fx; do
+        x "$f" || continue
+    done
 }}
 map E extract
 

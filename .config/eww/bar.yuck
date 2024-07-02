@@ -46,7 +46,7 @@
                         "󰇘" }
                         :xalign 0.5))))))
 
-(defwidget tray [] (systray :pack-direction "left" :icon-size "18" :class "tray"))
+(defwidget tray [] (systray :pack-direction "left" :icon-size "18" :spacing '5' :class "tray"))
 
 (defpoll net    :interval '5s' `nmcli -t -f SIGNAL,ACTIVE dev wifi | awk -F: '{if($2=="yes")print$1}'`)
 (defpoll essid  :interval '5s' :initial "N/A" `nmcli c | awk '/wlp/{print$1}'`)
@@ -54,12 +54,13 @@
 (box :class "circ-btn"
     (image :image-width "22"
             :path {
+                essid == '' ? './images/wifi-5.svg' :
                 net < 25 ? './images/wifi-1.svg' :
                 net < 50 ? './images/wifi-2.svg' :
                 net < 75 ? './images/wifi-3.svg' :
                 net <= 100 ? './images/wifi-4.svg' :
                 './images/wifi-0.svg' }
-            :tooltip '${essid} (${net}%)')))
+            :tooltip {essid == '' ? "Not connected" : '${essid} (${net}%)'})))
 
 
 (deflisten volperc `./scripts/get-volume`)

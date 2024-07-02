@@ -44,7 +44,7 @@ NOTIFY=no
 CURSOR=
 FREEZE=
 SCALE=
-PRETTIER=no
+BLUR_FRAME=no
 
 while [ $# -gt 0 ]; do
   key="$1"
@@ -62,10 +62,6 @@ while [ $# -gt 0 ]; do
     FREEZE=yes
     shift # past argument
     ;;
-  -p | --prettier)
-    PRETTIER=yes
-    shift # past argument
-    ;;
   -s | --scale)
     shift # past argument
     if [ $# -gt 0 ]; then
@@ -75,6 +71,10 @@ while [ $# -gt 0 ]; do
       echo "Error: Missing argument for --scale option."
       exit 1
     fi
+    ;;
+  --blur-frame)
+    BLUR_FRAME=yes
+    shift # past argument
     ;;
   *)      # unknown option
     break # done with parsing --flags
@@ -145,29 +145,39 @@ check() {
   echo "   $COMMAND: $RESULT"
 }
 
-prettier() {
-  [ $PRETTIER == "no" ] && return
+blurFrame() {
+  [ $BLUR_FRAME == "no" ] && return
   FILE=$1
   GEOM=$2
   WINDOWS_GEOM=$3
+  w=$(echo $GEOM | awk -F ' |x' '{print$2}')
+  h=$(echo $GEOM | awk -F ' |x' '{print$3}')
+  unit=$(printf "%.f" $(echo "($w+$h)/2*0.1" | bc)) # frame size
+  blur=$(printf "%.f" $(echo $unit/2 | bc)) # blur radius
+  [ $unit -gt 50 ] || unit=50
+  shadow=$(printf "%.f" $(echo $unit/6 | bc)) # shadow size
+  newgeom=$(echo $w+$unit | bc)x$(echo $h+$unit | bc)
 
   if [[ $GEOM == *"$WINDOWS_GEOM"* ]]; then
-    w=$(echo $GEOM | awk -F ' |x' '{print$2}')
-    h=$(echo $GEOM | awk -F ' |x' '{print$3}')
-
     # rounded corners
-    convert $FILE \
+    magick "$FILE" \
       \( +clone -alpha extract \
-      -draw "fill black rectangle 0,0 $w,$h fill white roundrectangle 0,0 $w,$h 18,18" \
-      \) -alpha off -compose CopyOpacity -composite $FILE
+      -draw "fill black rectangle 0,0 $w,$h fill white roundrectangle 0,0 $w,$h 14,14" \
+      \) -alpha off -compose CopyOpacity -composite "$FILE"
   fi
-
-  # shadow
-  convert $FILE \( +clone -background black -shadow 120x10+0+0 \) \
-    +swap -background none -layers merge +repage $FILE
-
-  # backdrop color
-  convert $FILE -bordercolor '#893bff' -border 10 $FILE
+  magick "$FILE" \( +clone -background black -shadow 80x$shadow+0+0 \) \
+      +swap -background none -layers merge +repage \
+      -gravity center -background '#ffffff22' -extent "$newgeom" \
+      \( "$FILE" -resize 10% -gaussian-blur 10x$blur -resize "$newgeom^" -extent "$newgeom" \) \
+      +swap -composite "$FILE"
+  # # shadow
+  # magick "$FILE" \( +clone -background black -shadow 100x$shadow+0+0 \) +swap -background none -layers merge +repage /tmp/shadow.png
+  # # frame background shade
+  # magick /tmp/shadow.png -gravity center -background '#ffffff22' -extent "$newgeom" /tmp/border.png
+  # # frame blur
+  # magick "$FILE" -resize 10% -gaussian-blur 10x$blur -resize "$newgeom^" -extent "$newgeom" /tmp/blurred.png
+  # # merge
+  # magick /tmp/blurred.png /tmp/border.png -composite "$FILE"
 }
 
 takeScreenshot() {
@@ -181,7 +191,7 @@ takeScreenshot() {
   else
     grim ${CURSOR:+-c} ${SCALE:+-s "$SCALE"} -g "$GEOM" "$FILE" || die "Unable to invoke grim"
   fi
-  prettier "$FILE" "$GEOM" "$WINDOWS_GEOM"
+  blurFrame "$FILE" "$GEOM" "$WINDOWS_GEOM"
 }
 
 if [ "$ACTION" = "check" ]; then

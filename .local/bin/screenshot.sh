@@ -11,10 +11,10 @@ sleep .2
 
 case "$choice" in
     "$option1")
-        grimblast --prettier --notify --cursor copy active
+        grimmor --blur-frame --notify --cursor copy active
         ;;
     "$option2")
-        grimblast --prettier --notify copy area
+        grimmor --blur-frame --notify copy area
         ;;
     "$option3")
         lang="$(tesseract --list-langs | wofi -dp Langs)"
@@ -26,7 +26,7 @@ case "$choice" in
         wl-copy "$text" && notify-send -a Scanner "Text copied" "$text"
         ;;
     "$option5")
-        kitty -e "screen-rec"
+        kitty -e fish -c screen-rec
         ;;
 esac
 

@@ -1,15 +1,15 @@
 (defpoll entries :interval "60s" `./scripts/get-app-entries.sh`)
-(defwidget app-list []
-(scroll
-    (box :orientation "v" :space-evenly true :class "applist"
-        (for entry in entries
-            (eventbox 
+(defwidget applist []
+    (scroll
+        (box :orientation "v" :space-evenly true :class "applist"
+            (for entry in entries
+                (eventbox 
                     :timeout "0"
                     :onclick `sh -c "${entry.exec} &"; eww close launcher` 
                     :class "item"
-                (box :space-evenly false :class "entry"
-                    (image :image-width "65" :path "${entry.icon}")
-                    (label :text "${entry.name}")
+                    (box :space-evenly false :class "entry"
+                        (image :image-width "65" :path "${entry.icon}")
+                        (label :text "${entry.name}")
                     )
                 )
             )
@@ -17,13 +17,20 @@
     )
 )
 
+(defwidget container []
+    (box :width "500px"
+        (eventbox :onclick 'eww close launcher'
+            (applist)
+        )
+    )
+)
+
 (defwindow launcher
-    :exclusive true
     :monitor 0
-    :geometry (geometry :x "0" :y "0"
-        :width "400px" :height "400px" :anchor "center")
+    :geometry (geometry :x "0%" :y "0%" :width "100%" :height "100%" :anchor "top left")
     ;; :fullscreen true
     :stacking "fg"
     ;; :focusable true
     :namespace "eww"
-(app-list))
+    (container)
+)

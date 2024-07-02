@@ -42,23 +42,9 @@
 }
 
 .tray {
-  // padding: 12px;
-  background: inherit;
-  box-shadow: none;
-  menuitem {
-    // min-height: 2px;
-    margin: 2px;
-    padding: 2px;
-    border-radius: 8px;
-    menuitem {
-      border-radius: 4px;
-      padding: 4px 8px;
-      margin: 0;
-      min-height: 20px;
-    }
-  }
+  padding: 0 5;
+  margin: 0 2;
 }
-/** Widgets **/
 
 .circ-btn {
   border-radius: 999px;
@@ -78,7 +64,6 @@
   padding: 2px 8px 2px 2px;
 }
 
-/** tooltip!! **/
 tooltip.background {
   background-color: $background;
   font-size: 12px;
