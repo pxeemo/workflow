@@ -1,0 +1,73 @@
+;; Volume
+(defpoll current-volume-state
+  :interval "99h"
+  "wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{print $NF*100}'"
+)
+
+(defwidget volume-slider []
+(overlay
+  (scale
+      :class "volume-slider"
+      :value "${current-volume-state}"
+      :max 101
+      :min 0
+      :orientation "v"
+      :flipped true
+      :onchange "wpctl set-volume @DEFAULT_AUDIO_SINK@ {}%"
+    )
+  (scale
+      :visible {current-volume-state < 101 ? false : true}
+      :class "volume-slider high"
+      :value "${current-volume-state}"
+      :max 201
+      :min 102
+      :orientation "v"
+      :flipped true
+    )
+  (label
+      :class "slider-icon"
+      :yalign 0.96
+      :text "󰎈"
+    )))
+
+(defwindow volume-osd
+  :class "volume-osd"
+  :exclusive false
+  :monitor 0
+  :geometry (geometry :x "15px" :y "0%"
+    :width "36px" :height "180px" :anchor "center right")
+  :stacking "overlay"
+  :focusable false
+  :namespace "volume-osd"
+(volume-slider))
+
+;; Brightness
+
+(defwidget brightness-slider []
+(overlay
+  (scale
+      :class "brightness-slider"
+      :value "${lightperc}"
+      :max 101
+      :min 2
+      :orientation "v"
+      :flipped true
+      :onchange "brillo -q -S {}"
+    )
+  (label
+      :class "slider-icon"
+      :yalign 0.95
+      :xalign 0.44
+      :text ""
+    )))
+
+(defwindow brightness-osd
+  :class "brightness-osd"
+  :exclusive false
+  :monitor 0
+  :geometry (geometry :x "15px" :y "0%"
+    :width "36px" :height "180px" :anchor "center left")
+  :stacking "overlay"
+  :focusable false
+  :namespace "brightness-osd"
+(brightness-slider))

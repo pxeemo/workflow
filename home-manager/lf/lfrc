@@ -1,0 +1,118 @@
+# vim:ft=conf
+set icons
+set hidden
+set shell bash
+set shellopts '-eu'
+set ifs "\n"
+set previewer "~/.config/lf/lf_kitty_preview"
+set cleaner "~/.config/lf/lf_kitty_clean"
+set mouse
+# set drawbox
+# set ratios 1:2:3
+set scrolloff 8
+set cursorpreviewfmt "\033[7;2m"
+
+map <enter> shell
+map ` !true
+
+# execute current file (must be executable)
+map x $$f
+map X !$f
+
+# dedicated keys for file opener actions
+map o &mimeopen $f
+map O $mimeopen --ask $f
+
+map W &setwallpaper.sh $f
+map V invert-below
+map i $bat --paging always $f
+
+# mkdir command. See wiki if you want it to select created dir
+map a :push %mkdir<space>
+map ; :push :
+cmd yank-dirname $dirname -- "$f" | head -c-1 | wl-copy
+cmd yank-path $printf '%s' "$fx" | wl-copy
+cmd yank-basename $basename -a -- "$fx" | head -c-1 | wl-copy
+
+# cache clean
+cmd clearcache %set -f; rm -rf ~/.cache/thumbnails; echo "thumbnails reseted"
+map <delete> delete
+map D trash
+map E extract
+
+map C edit-config
+map J :updir; set dironly true; down; set dironly false; open
+map K :updir; set dironly true; up; set dironly false; open
+
+map R bulkrename
+
+cmd bulkrename ${{
+    set -f
+    old="$(mktemp)"
+    new="$(mktemp)"
+    if [ -n "$fs" ]; then
+        fs="$(basename -a $fs)"
+    else
+        fs="$(ls)"
+    fi
+    printf '%s\n' "$fs" >"$old"
+    printf '%s\n' "$fs" >"$new"
+    $EDITOR "$new"
+    [ "$(wc -l < "$new")" -ne "$(wc -l < "$old")" ] && exit
+    paste "$old" "$new" | while IFS= read -r names; do
+        src="$(printf '%s' "$names" | cut -f1)"
+        dst="$(printf '%s' "$names" | cut -f2)"
+        if [ "$src" = "$dst" ] || [ -e "$dst" ]; then
+            continue
+        fi
+        mv -- "$src" "$dst"
+    done
+    rm -- "$old" "$new"
+    lf -remote "send $id unselect"
+}}
+cmd edit-config ${{
+    $EDITOR ~/.config/lf/lfrc
+    lf -remote "send $id source ~/.config/lf/lfrc"
+}}
+cmd extract ${{
+    set -f
+    for f in $fx; do
+        x "$f" || continue
+    done
+}}
+cmd open &{{
+    case $(file --mime-type -Lb $f) in
+        text/*) lf -remote "send $id \$$EDITOR \$fx";;
+        *) for f in $fx; do $OPENER $f > /dev/null 2> /dev/null & done;;
+    esac
+}}
+cmd tar ${{
+    set -e # Exit on error
+    mkdir $1
+    cp -r $fx $1
+    tar czf $1.tar.gz $1
+    rm -rf $1
+}}
+cmd zip ${{
+    set -e # Exit on error
+    name="${1:-$f}"
+    mkdir "$name"
+    cp -r $fx "$name"
+    zip -r "$name.zip" "$name"
+    rm -rf "$name"
+}}
+
+cmd z %{{
+	result="$(zoxide query --exclude $PWD $@ | sed 's/\\/\\\\/g;s/"/\\"/g')"
+	lf -remote "send $id cd \"$result\""
+}}
+
+cmd zi ${{
+	result="$(zoxide query -i | sed 's/\\/\\\\/g;s/"/\\"/g')"
+	lf -remote "send $id cd \"$result\""
+}}
+
+cmd on-cd &{{
+    zoxide add "$PWD"
+}}
+

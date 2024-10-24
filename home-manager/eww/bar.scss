@@ -1,0 +1,86 @@
+/** General **/
+.bar {
+  color: $foreground;
+  font-size: 14px;
+  font-family: $primary-font;
+  margin: 2px 11px;
+}
+
+.song {
+  color: $blue;
+  font-weight : bold;
+  margin : 0px 10px;
+}
+.song-cover-art {
+  background-size: cover;
+  background-position: center;
+  min-height: 30px;
+  min-width: 30px;
+  border-radius: 100px;
+}
+.song-btn button {
+  font-family: $nerd-font;
+  font-size : 16pt;
+  background-color: inherit;
+  margin: 4px 2px;
+  padding: 0;
+  min-width: 30px;
+}
+
+.workspaces-widget {
+  font-family: $nerd-font;
+  font-size: 16pt;
+}
+.workspace-entry {
+  margin: 3px 1px;
+  border-radius: 999px;
+  padding: 0;
+  min-width: 31px;
+  background-color: inherit;
+}
+.workspace-entry.urgent {
+  background-color: $red;
+  transition: background-color 250ms linear;
+}
+
+.tray {
+  padding: 0 5;
+  margin: 0 2;
+}
+
+.circ-btn {
+  border-radius: 999px;
+  padding: 0;
+  margin: 2px;
+  min-width: 31px;
+  background-color: inherit;
+  color: $foreground;
+}
+.layout {
+  font-size: 12;
+  font-weight: 600;
+  background-color: $gray;
+  border-radius: 4px;
+  padding: 0 4px;
+  margin: 7px 2px;
+  letter-spacing: 1px;
+  color: $background;
+}
+.clock {
+  font-size: 24px;
+  font-weight: bold;
+  padding-left: 5px;
+}
+.date {
+  font-family: "Vazirmatn FD";
+  font-weight: normal;
+  font-size: 11px;
+  padding: 2px 8px 2px 2px;
+}
+
+tooltip.background {
+  background-color: $background;
+  color: $white;
+  font-size: 9pt;
+  border-radius: 10px;
+}
