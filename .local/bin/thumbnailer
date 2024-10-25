@@ -1,48 +1,55 @@
 #!/usr/bin/env bash
 
+set -e
 userdirs="${XDG_CONFIG_HOME:-$HOME/.config}/user-dirs.dirs" 
 [ -f "$userdirs" ] && source "$userdirs"
 
 cachedir="${XDG_CACHE_DIR:-$HOME/.cache}/thumbnails"
 file="$(realpath "$1")"
 mime="$(file -Lb --mime-type "$file")"
-thumbnail="$(echo "$file" | md5sum | awk '{print $1}').png"
+thumbfile="$(echo "$file" | md5sum | awk '{print $1}').png"
+thumbpath="$cachedir/$thumbfile"
+[ -d "$cachedir/music" ] || mkdir -p "$cachedir/music"
 
-mkdir -p "$cachedir/music"
-
-if [ -f "$cachedir/$thumbnail" ]; then
-	if [ "$(stat -c "%Y" "$cachedir/$thumbnail")" -gt "$(stat -c "%Y" "$file")" ]; then
-		echo "$cachedir/$thumbnail"
+if [ -f "$thumbpath" ]; then
+	if [ "$(stat -c "%Y" "$thumbpath")" -gt "$(stat -c "%Y" "$file")" ]; then
+		echo "$thumbpath"
 		exit 0
 	fi
 fi
 
 case $mime in
-video/*) ffmpegthumbnailer -i "$file" -o "$cachedir/$thumbnail" -s 0 ;;
-image/svg*) rsvg-convert --keep-aspect-ratio --width 768 "$file" -o "$cachedir/$thumbnail" ;;
-image/*) 
-	# check if image size is bigger then 1MiB
-	if [[ "$(stat -c %s "$file")" -gt 1000000 ]]; then
-		convert "$file" -thumbnail 720 "$cachedir/$thumbnail"
-	else
-		echo "$file"
-		exit 0
-	fi
-	;;
-*/pdf) pdftoppm -png -f 1 -r 100 -singlefile "$file" "$(echo "$cachedir/$thumbnail" | sed 's/\.png$//')" ;;
-audio/*)
-	cachedir="$cachedir/music"
-	if ! ffmpeg -y -i "$file" -an -vf "crop=ih:ih,scale=360:360" "$cachedir/$thumbnail" >/dev/null 2>&1; then
-		[ -e "$cachedir/0.png" ] || rsvg-convert --width=360 \
-			--output="$cachedir/0.png" "${XDG_CONFIG_HOME:-$HOME/.config}/eww/images/music.svg"
-
-		echo "$cachedir/0.png"
-		exit 0
-	fi
-	;;
-*)
-	exit 1
-	;;
+	video/*) ffmpegthumbnailer -i "$file" -o "$thumbpath" -s 0 ;;
+	image/svg*) 
+		rsvg-convert --keep-aspect-ratio --width 768 "$file" -o "$thumbpath" 
+		;;
+	image/*) 
+		# check if image size is bigger then 1MiB
+		if [[ "$(stat -c %s "$file")" -gt 1000000 ]]; then
+			magick "$file" -thumbnail 720 "$thumbpath"
+		else
+			echo "$file"
+			exit 0
+		fi
+		;;
+	*/pdf) 
+		pdftoppm -png -f 1 -r 100 -singlefile "$file" "${thumbpath%.png}" || \
+			gs -q -sDEVICE=png256 -dFirstPage=1 -dLastPage=1 -dNOPAUSE \
+			-dBATCH -o "$thumbpath" -r100 "$file"
+		;;
+	audio/*)
+		defaultthumb="$cachedir/music/0.png"
+		ffmpeg -y -i "$file" -an -vf "crop=ih:ih,scale=360:360" "$thumbpath" >/dev/null 2>&1
+		if [ $? -ne 0 ]; then
+			if [ ! -e "$defaultthumb" ]; then
+				rsvg-convert --width=360 --output="$defaultthumb" \
+					"${XDG_CONFIG_HOME:-$HOME/.config}/eww/images/music.svg"
+			fi
+			echo "$defaultthumb"
+			exit 0
+		fi
+		;;
+	*) exit 1 ;;
 esac
 
-echo "$cachedir/$thumbnail"
+echo "$thumbpath"

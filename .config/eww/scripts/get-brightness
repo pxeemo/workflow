@@ -1,12 +1,10 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-if [ ! $(command -v brillo) ]; then
-    exit 1
-fi
+command -v brightnessctl >/dev/null || exit 1
 
-printf '%.0f\n' $(brillo -Gq)
+brightnessctl -m | cut -d, -f4 | tr -d '%'
 udevadm monitor --udev | while read -r line; do
-    if echo $line | grep backlight >/dev/null; then
-        printf '%.0f\n' $(brillo -Gq)
+    if echo $line | grep -q backlight >/dev/null; then
+        brightnessctl -m | cut -d, -f4 | tr -d '%'
     fi
 done

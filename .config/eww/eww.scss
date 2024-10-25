@@ -1,6 +1,6 @@
 @import './colors.scss';
 window {
-  background-color: rgba(30,30,46,0.6);
+  background-color: rgba(30,30,46,0.7);
   font-family: $primary-font, $nerd-font;
 }
 button {
@@ -16,6 +16,6 @@ button.on {
 }
 
 @import './bar.scss';
-@import './sys-slider-pop.scss';
+@import './osd.scss';
 @import './music.scss';
 @import './launcher.scss';

@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/usr/bin/env bash
 
 option1="Active Window"
 option2="Select Area"
@@ -14,10 +14,10 @@ case "$choice" in
         grimmor --blur-frame --notify --cursor copy active
         ;;
     "$option2")
-        grimmor --blur-frame --notify copy area
+        grimmor --blur-frame --notify --freeze copy area
         ;;
     "$option3")
-        lang="$(tesseract --list-langs | wofi -dp Langs)"
+        lang="$(tesseract --list-langs | wofi -dp Languages)"
         text="$(grim -g "$(slurp)" - | tesseract - - -l "$lang")"
         wl-copy "$text" && notify-send -a Scanner "Text copied" "$text"
         ;;

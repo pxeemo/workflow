@@ -1,0 +1,18 @@
+  programs.lf = {
+    enable = true;
+    commands = {
+      trash = "%${pkgs.trash-cli}/bin/trash-put $fx";
+    };
+    keybindings = {
+      gd = "cd ${config.xdg.userDirs.download}";
+      gt = "cd ${config.xdg.dataHome}/Trash";
+      gr = "cd /run/media/${config.home.username}";
+    };
+    extraConfig = ''
+    ${builtins.readFile ./lf/lfrc}
+    setlocal ${config.xdg.dataHome}/Trash sortby time
+    setlocal ${config.xdg.dataHome}/Trash reverse
+    setlocal ${config.xdg.userDirs.download}/ sortby time
+    setlocal ${config.xdg.userDirs.download}/ reverse
+    '';
+  };

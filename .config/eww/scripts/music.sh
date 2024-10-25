@@ -1,7 +1,7 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 ## Get data
-MUSIC_DIR="$(xdg-user-dir MUSIC)"
+MUSIC_DIR="/home/pxeemo/mus/"
 MUSIC_INFO='{"toggle_icon":"󰐊"}'
 MUSIC_TIME='{"time":"0:00"}'
 

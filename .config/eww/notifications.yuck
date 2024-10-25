@@ -1,0 +1,26 @@
+(deflisten notifs :initial "[]"
+  `python ./scripts/notification-daemon.py`)
+
+(defwidget notifw []
+(box
+(for item in notifs
+    (button :class 'notif'
+        (box :orientation 'horizontal' :space-evenly false
+            (image :image-width 80 :image-height 80 :path "${item.icon}")
+            (box :orientation 'vertical'
+                (label :width 100 :wrap true :text "${item.summary}")
+                (label :width 100 :wrap true :text "${item.body}")
+            )
+        )
+    )
+)))
+
+(defwindow notification
+    :monitor 0
+    :geometry (geometry :x "15px" 
+                        :y "15px" 
+                        :anchor "top right")
+    :stacking "overlay"
+    :namespace "notification"
+    (notifw)
+)

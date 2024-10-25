@@ -1,9 +1,12 @@
 function screen-rec --description 'Record video from screen'
-    mkdir -p $HOME/vid/scr
-    cd $HOME/vid/scr
+    set -l adev (wpctl inspect @DEFAULT_AUDIO_SINK@ | awk -F'"' '/node.name/{print $2}')
+    set -l screenrecdir $XDG_VIDEOS_DIR/screenrec
+    test -d $screenrecdir 
+    or mkdir -p $screenrecdir
+    pushd $screenrecdir
     wf-recorder \
-        --audio=alsa_output.pci-0000_00_1f.3.analog-stereo.monitor \
+        --audio=$adev.monitor \
         --pixel-format=yuv420p \
-        -f "$(date +%s).mkv"
-    prevd
+        -f (date +%s).mkv
+    popd
 end

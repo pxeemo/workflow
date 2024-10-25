@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 XDG_DIRS="${XDG_CONFIG_HOME:-$HOME/.config}/user-dirs.dirs" 
 [ -f "$XDG_DIRS" ] && . "$XDG_DIRS"

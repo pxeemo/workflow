@@ -30,28 +30,24 @@
       :text "󰎈"
     )))
 
-(defwindow volume-pop
-  :class "volume-pop"
+(defwindow volume-osd
+  :class "volume-osd"
   :exclusive false
   :monitor 0
   :geometry (geometry :x "15px" :y "0%"
     :width "36px" :height "180px" :anchor "center right")
   :stacking "overlay"
   :focusable false
-  :namespace "volume-pop"
+  :namespace "volume-osd"
 (volume-slider))
 
 ;; Brightness
-(defpoll current-brightness-state
-  :interval "99h"
-  `printf '%.0f' $(brillo -Gq)`
-)
 
 (defwidget brightness-slider []
 (overlay
   (scale
       :class "brightness-slider"
-      :value "${current-brightness-state}"
+      :value "${lightperc}"
       :max 101
       :min 2
       :orientation "v"
@@ -65,13 +61,13 @@
       :text ""
     )))
 
-(defwindow brightness-pop
-  :class "brightness-pop"
+(defwindow brightness-osd
+  :class "brightness-osd"
   :exclusive false
   :monitor 0
   :geometry (geometry :x "15px" :y "0%"
     :width "36px" :height "180px" :anchor "center left")
   :stacking "overlay"
   :focusable false
-  :namespace "brightness-pop"
+  :namespace "brightness-osd"
 (brightness-slider))

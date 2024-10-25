@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 cache_dir="${XDG_CAHCE_DIR:-$HOME/.cache}"
 applist_file="$cache_dir/applist.json" 

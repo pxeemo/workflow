@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+status=$(nmcli -get-values wifi general)
+essid=$(nmcli connection | awk '/wlp/{print$1}')

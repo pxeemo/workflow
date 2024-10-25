@@ -1,8 +1,7 @@
 function dl --wraps=aria2c --description 'alias of aria2c'
     aria2c \
-      --dir=. \
-      --max-concurrent-downloads=3 \
-      --split=16 \
+      --max-concurrent-downloads=2 \
+      --split=8 \
       --max-tries=0 \
       --continue \
       $argv

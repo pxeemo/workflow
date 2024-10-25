@@ -1,6 +1,6 @@
-(deflisten win-title :initial "..." `bash ~/.config/eww/scripts/get-window-title`)
+(deflisten window-title :initial "Desktop" `bash ~/.config/eww/scripts/get-window-title`)
 (defwidget window []
-(box (label :text "${win-title}")))
+(box (label :text "${replace(window-title, '(.{35})(...+\\W{3})(.+)', '\\1...\\3')}")))
 
 
 (deflisten music_info `./scripts/music.sh --info`)
@@ -8,142 +8,133 @@
 (defvar music_reveal false)
 (defwidget music []
 (box :vexpand false :hexpand false :oreintation "h" :space-evenly false :class "song" :spacing 4
-    (eventbox :onhover "eww update music_reveal=true"
-            :onhoverlost "eww update music_reveal=false"
-        (box :orientation "h" :space-evenly false
-                :vexpand false :hexpand false
-            (revealer :transition "slideleft"
-                    :reveal music_reveal
-                    :duration "250ms"
+    (eventbox :onhover `eww update music_reveal=true` :onhoverlost `eww update music_reveal=false`
+        (box :orientation "h" :space-evenly false :vexpand false :hexpand false
+            (revealer :transition "slideleft" :reveal music_reveal :duration "250ms"
                 (box :vexpand false :hexpand false :oreintation "h" :class "song-btn"
                     (button :onclick `mpc prev` "󰒮")))
             (circular-progress :value {music_time.perc} :thickness 4
                 (box :class "song-cover-art" :style "background-image: url('${music_info.cover}');"
-                    (revealer :transition "crossfade"
-                            :reveal music_reveal
-                            :duration "250ms"
+                    (revealer :transition "crossfade" :reveal music_reveal :duration "250ms"
                         (box :vexpand false :hexpand false :oreintation "h" :class "song-btn"
                             (button :onclick `mpc toggle` {music_info.toggle_icon})))))
-            (revealer :transition "slideright"
-                    :reveal music_reveal
-                    :duration "250ms"
+            (revealer :transition "slideright" :reveal music_reveal :duration "250ms"
                 (box :vexpand false :hexpand false :oreintation "h" :class "song-btn"
                     (button :onclick `mpc next` "󰒭")))))
     (button :wrap "true"
-            :onclick `if [[ $(eww active-windows | grep -o 'music') ]]; then eww close music; else eww open music; fi`
-        {music_info.track})))
+            :onclick `if eww active-windows | grep -q music; then eww close music; else eww open music; fi`
+        {replace(music_info.track, '(.{25})....+', '\\1...')})))
 
 
-(deflisten workspaces :initial "[]" `bash ~/.config/eww/scripts/workspaces.sh`)
+(deflisten workspaces :initial "[]" `bash ./scripts/get-workspaces`)
 (defwidget workspaces []
 (box :space-evenly true :spacing 2 :class "workspaces-widget"
     (for workspace in workspaces
-        (button :onclick "hyprctl dispatch workspace ${workspace.id}" :class "workspace-entry"
-            (box :class "${workspace.active ? "current" : ""} ${workspace.urgent ? "urgent" : ""}"
-                (label :text {
-                        workspace.active ? "󰮯" :
-                        workspace.urgent ? "󰊠" :
-                        "󰇘" }
-                        :xalign 0.5))))))
+        (button :onclick `hyprctl dispatch workspace ${workspace.id}`
+                :class "workspace-entry ${workspace.urgent ? "urgent" : ""}"
+                (image :image-width "22"
+                    :path { 
+                        workspace.active ? "./images/workspace-active.svg" 
+                                         : "./images/workspace.svg" 
+                    })))))
 
 (defwidget tray [] (systray :pack-direction "left" :icon-size "18" :spacing '5' :class "tray"))
 
-(defpoll net    :interval '5s' `nmcli -t -f SIGNAL,ACTIVE dev wifi | awk -F: '{if($2=="yes")print$1}'`)
-(defpoll essid  :interval '5s' :initial "N/A" `nmcli c | awk '/wlp/{print$1}'`)
+(defpoll net    :interval "5s" `nmcli -t -f SIGNAL,ACTIVE dev wifi | awk -F: '{if($2=="yes")print$1}'`)
+(defpoll essid  :interval "5s" :initial "N/A" `nmcli c | awk '/wlp/{print$1}'`)
 (defwidget network []
-(box :class "circ-btn"
-    (image :image-width "22"
-            :path {
-                essid == '' ? './images/wifi-5.svg' :
-                net < 25 ? './images/wifi-1.svg' :
-                net < 50 ? './images/wifi-2.svg' :
-                net < 75 ? './images/wifi-3.svg' :
-                net <= 100 ? './images/wifi-4.svg' :
-                './images/wifi-0.svg' }
-            :tooltip {essid == '' ? "Not connected" : '${essid} (${net}%)'})))
-
-
-(deflisten volperc `./scripts/get-volume`)
-(defwidget volume []
-(eventbox :onscroll `popslider volume {}; touch /tmp/volume-pop.lock`
-    (button :onclick "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle" :class "circ-btn"
+(box
+    (button :onclick `./scripts/wifimenu.sh` :class "circ-btn"
         (image :image-width "22"
-                :path {
-                    volperc == '[MUTED]' ? './images/volume-m.svg' :
-                    volperc < 17 ? './images/volume-0.svg' :
-                    volperc < 33 ? './images/volume-1.svg' :
-                    volperc < 50 ? './images/volume-2.svg' :
-                    volperc < 67 ? './images/volume-3.svg' :
-                    volperc < 83 ? './images/volume-4.svg' :
-                    volperc < 100 ? './images/volume-5.svg' :
-                    volperc < 133 ? './images/volume-6.svg' :
-                    volperc < 166 ? './images/volume-7.svg' :
-                    './images/volume-8.svg'
-                }
-                :tooltip {volperc == '[MUTED]' ? "Muted" : "${volperc}%"}))))
+            :path {
+                essid == "" ? "./images/wifi/5.svg" :
+                net < 25    ? "./images/wifi/1.svg" :
+                net < 50    ? "./images/wifi/2.svg" :
+                net < 75    ? "./images/wifi/3.svg" :
+                net <= 100  ? "./images/wifi/4.svg" :
+                              "./images/wifi/0.svg" }
+            :tooltip {essid == "" ? "Not connected" : "${essid} (${net}%)"}))))
 
 
-(deflisten lightperc "./scripts/get-brightness")
+(defpoll volperc :interval "1m" `./scripts/get-volume`)
+(defwidget volume []
+(eventbox :onscroll `osdslider volume {}`
+    (button :onclick `wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle` :class "circ-btn"
+        (image :image-width "22"
+            :path {
+                volperc == "[MUTED]" ? "./images/volume/m.svg" :
+                volperc < 17  ? "./images/volume/0.svg" :
+                volperc < 33  ? "./images/volume/1.svg" :
+                volperc < 50  ? "./images/volume/2.svg" :
+                volperc < 67  ? "./images/volume/3.svg" :
+                volperc < 83  ? "./images/volume/4.svg" :
+                volperc < 100 ? "./images/volume/5.svg" :
+                volperc < 133 ? "./images/volume/6.svg" :
+                volperc < 166 ? "./images/volume/7.svg" :
+                                "./images/volume/8.svg"
+            }
+            :tooltip {volperc == "[MUTED]" ? "Muted" : "${volperc}%"}))))
+
+
+(deflisten lightperc `./scripts/get-brightness`)
 (defwidget brightness []
-(eventbox :onscroll `popslider brightness {}; touch /tmp/brightness-pop.lock`
-        :visible { lightperc == "" ? false : true }
+(eventbox :onscroll `osdslider brightness {}`
+          :visible { lightperc != "" }
     (box :class "circ-btn"
-        (image :image-width '22'
-                :path {
-                    lightperc < 33 ? './images/light-60.svg' :
-                    lightperc < 67 ? './images/light-120.svg' :
-                    './images/light-180.svg'
-                }
-                :tooltip "${lightperc}%"))))
+        (image :image-width "22"
+            :path {
+                lightperc < 33 ? "./images/brightness/1.svg" :
+                lightperc < 67 ? "./images/brightness/2.svg" :
+                                 "./images/brightness/3.svg"
+            }
+            :tooltip "${lightperc}%"))))
 
 
-(deflisten powerstate "./scripts/get-power --state")
-(deflisten powerperc "./scripts/get-power --percentage")
-(defpoll powerdetails :interval '1m' `acpi | cut -d' ' -f5-`)
+(deflisten power `./scripts/get-power`)
+(defpoll powerdetails :interval "1m" `acpi | cut -d' ' -f5-`)
 (defwidget power [] 
 (box :class "circ-btn"
-        :visible { powerstate == "" ? false : true }
+        :visible { power != "" }
     (image :image-width "22"
-            :tooltip '${powerperc}% ${powerstate == "1" ? "charging" :
-                "not charging"}${powerdetails != "" ? " (${powerdetails})" : ""}'
-            :path {
-                powerperc < 10 ? './images/battery-${powerstate}-10.svg' :
-                powerperc < 20 ? './images/battery-${powerstate}-20.svg' :
-                powerperc < 30 ? './images/battery-${powerstate}-30.svg' :
-                powerperc < 40 ? './images/battery-${powerstate}-40.svg' :
-                powerperc < 50 ? './images/battery-${powerstate}-50.svg' :
-                powerperc < 60 ? './images/battery-${powerstate}-60.svg' :
-                powerperc < 70 ? './images/battery-${powerstate}-70.svg' :
-                powerperc < 80 ? './images/battery-${powerstate}-80.svg' :
-                powerperc < 90 ? './images/battery-${powerstate}-90.svg' :
-                powerperc < 99 ? './images/battery-${powerstate}-99.svg' :
-                './images/battery-full.svg'
-            })))
+        :tooltip '${power.percentage}% ${power.charging== 0 ? "not " : ""}charging
+            ${powerdetails != "" ? " (${powerdetails})" : ""}'
+        :path {
+            power.percentage < 10 ? "./images/battery/${power.charging}-10.svg" :
+            power.percentage < 20 ? "./images/battery/${power.charging}-20.svg" :
+            power.percentage < 30 ? "./images/battery/${power.charging}-30.svg" :
+            power.percentage < 40 ? "./images/battery/${power.charging}-40.svg" :
+            power.percentage < 50 ? "./images/battery/${power.charging}-50.svg" :
+            power.percentage < 60 ? "./images/battery/${power.charging}-60.svg" :
+            power.percentage < 70 ? "./images/battery/${power.charging}-70.svg" :
+            power.percentage < 80 ? "./images/battery/${power.charging}-80.svg" :
+            power.percentage < 90 ? "./images/battery/${power.charging}-90.svg" :
+            power.percentage < 99 ? "./images/battery/${power.charging}-99.svg" :
+                                          "./images/battery/full.svg"
+        })))
 
 
-(deflisten layout "./scripts/get-keyboard")
+(deflisten layout `./scripts/keyboard-layout`)
 (defwidget keyboard []
-(button :class 'circ-btn'
-        :onclick `hyprctl --batch 'switchxkblayout at-translated-set-2-keyboard next; switchxkblayout sigmachip-usb-keyboard next'`
-    (image :image-width "22"
-            :tooltip "${layout} layout"
-            :path {
-                layout == 'English (US)'        ? './images/keyboard-en-layout.svg' :
-                layout == 'Persian (IR-custom)' ? './images/keyboard-fa-layout.svg' :
-                layout == 'Persian'             ? './images/keyboard-fa-layout.svg' :
-                '??'
-            })))
+(button 
+    :class "circ-btn"
+    :onclick `./scripts/keyboard-layout next`
+    (box :class "layout"
+        (label :text {
+            layout == "English (US)"        ? "EN" :
+            layout == "Persian (IR-custom)" ? "FA" :
+            layout == "Persian"             ? "FA" :
+                                              "??"
+        }))))
 
 
-(defpoll time       :interval "1s" 'jdate +%R')
+(defpoll time       :interval "1s" `jdate +%R`)
 (defpoll weekday    :interval "5m" `jdate +%G`)
 (defpoll dayofmonth :interval "5m" `jdate +%e\\ %V`)
 (defvar  showdate   false)
 (defwidget clock []
-(eventbox
-        :timeout        '50ms'
-        :onhover        'eww update showdate=true'
-        :onhoverlost    'eww update showdate=false'
+(eventbox :timeout        "50ms"
+        :onhover        `eww update showdate=true`
+        :onhoverlost    `eww update showdate=false`
     (box :space-evenly false :class "clock"
         (revealer :transition "slideleft" :reveal "${showdate}" :duration "200ms" :class "date"
             (overlay :width "56"
@@ -159,19 +150,21 @@
     (workspaces)
     (box :space-evenly false :halign "end"
         (tray)
-        (network)
-        (volume)
-        (brightness)
-        (power)
-        (keyboard)
+        (box :space-evenly true
+            (network)
+            (volume)
+            ;; (brightness)
+            (power)
+            (keyboard)
+        )
         (clock))))
 
 (defwindow bar
-    :exclusive true
-    :monitor 0
-    :geometry (geometry :x "0%" :y "0%"
-        :width "100%" :height "36px" :anchor "top center")
-    :stacking "fg"
-    :focusable false
-    :namespace "eww"
-(bar))
+        :exclusive true
+        :monitor 0
+        :geometry (geometry :x "0%" :y "0%"
+            :width "100%" :height "36px" :anchor "top center")
+        :stacking "fg"
+        :focusable false
+        :namespace "eww"
+    (bar))

@@ -1,6 +1,8 @@
 /** General **/
 .bar {
+  color: $foreground;
   font-size: 14px;
+  font-family: $primary-font;
   margin: 2px 11px;
 }
 
@@ -18,27 +20,27 @@
 }
 .song-btn button {
   font-family: $nerd-font;
-  font-size : 22px;
+  font-size : 16pt;
   background-color: inherit;
   margin: 4px 2px;
-  padding: 0 2px;
+  padding: 0;
+  min-width: 30px;
 }
 
 .workspaces-widget {
   font-family: $nerd-font;
-  font-size: 20px;
+  font-size: 16pt;
 }
 .workspace-entry {
-  margin: 2px 0;
+  margin: 3px 1px;
   border-radius: 999px;
-  padding: 2px 4px;
+  padding: 0;
+  min-width: 31px;
   background-color: inherit;
 }
-.workspace-entry .current {
-  color: $yellow;
-}
-.workspace-entry .urgent {
-  color: $red;
+.workspace-entry.urgent {
+  background-color: $red;
+  transition: background-color 250ms linear;
 }
 
 .tray {
@@ -48,14 +50,26 @@
 
 .circ-btn {
   border-radius: 999px;
-  padding: 0 5px;
-  margin: 0px 0;
+  padding: 0;
+  margin: 2px;
+  min-width: 31px;
   background-color: inherit;
+  color: $foreground;
+}
+.layout {
+  font-size: 12;
+  font-weight: 600;
+  background-color: $gray;
+  border-radius: 4px;
+  padding: 0 4px;
+  margin: 7px 2px;
+  letter-spacing: 1px;
+  color: $background;
 }
 .clock {
   font-size: 24px;
   font-weight: bold;
-  padding-left: 10px;
+  padding-left: 5px;
 }
 .date {
   font-family: "Vazirmatn FD";
@@ -66,7 +80,7 @@
 
 tooltip.background {
   background-color: $background;
-  font-size: 12px;
+  color: $white;
+  font-size: 9pt;
   border-radius: 10px;
-  color: $gray;
 }

@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+
 file=$1
 w=$2
 h=$3
@@ -9,18 +10,21 @@ filetype="$(file -Lb --mime-type "$file")"
 
 image() {
 	thumbnail="$(thumbnailer "$file")"
-    kitty +kitten icat --silent --stdin no --transfer-mode file --place "${w}x${h}@${x}x${y}" "$thumbnail" < /dev/null > /dev/tty
+    kitten icat --silent --stdin no --transfer-mode file \
+    	--place "${w}x${h}@${x}x${y}" "$thumbnail" < /dev/null > /dev/tty
 }
 
 case "$filetype" in
 	image/*) image "$file" "$w" "$h" "$x" "$y" ;;
-	text/html) lynx -width="$x" -display_charset=utf-8 -dump "$file"  ;;
+	# text/html) lynx -width="$x" -display_charset=utf-8 -dump "$file"  ;;
 	troff) man ./ "$file" | col -b ;;
 	text/* | */xml | text/markdown | application/json | application/x-subrip | application/javascript) 
 		bat -n --wrap never --terminal-width "$x" -f "$file" 
 		;;
 	text/troff) bat -n --wrap never -l groff --terminal-width "$x" -f "$file" ;;
-	application/*zip | application/zstd | application/x-xz | application/x-rar) atool --list "$file" ;;
+	application/*zip | application/zstd | application/x-xz | application/x-rar) 
+		als "$file" || 7z l "$file" || zcat "$file" 
+		;;
 	audio/* | application/octet-stream) exiftool "$file" ;;
 	video/* ) image "$file" "$w" "$h" "$x" "$y" ;;
 	*/pdf) image "$file" "$w" "$h" "$x" "$y" ;;

@@ -7,11 +7,27 @@
 
 ### See [Catppuccin](https://catppuccin-website.vercel.app/) for GTK & QT theme
 
-# Used Apps
+# Installation
+Needed `git` to clone this repo and `stow` to manage dotfiles:
+```shell
+git clone https://github,com/pxeemo/workflow.git
+cd workflow
+stow .
+```
+
+## Used Apps
 #### PDF viewer
 - [zathura](https://github.com/pwmt/zathura) with `zathura-pdf-poppler` or `zathura-pdf-mupdf` engine
 #### File manager
 - [lf](https://github.com/gokcehan/lf) &#8594; TUI file manager based on Vim
+| file type | packages used for preview |
+|:----------|:--------------------------|
+| text/*    | `bat`                     |
+| image/svg | `librsvg`, `imagemagick`  |
+| image/*   | `imagemagick`             |
+| */pdf     | `poppler`, `ghostscript`  |
+| video/*   | `ffmpegthumbnailer`       |
+| audio/*   | `exiftool`                |
 #### Music player
 - [ncmpcpp](https://github.com/ncmpcpp/ncmpcpp) &#8594; Music player with [MPD](https://github.com/MusicPlayerDaemon/MPD)
 #### Terminal
