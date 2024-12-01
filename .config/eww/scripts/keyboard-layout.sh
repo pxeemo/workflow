@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 if [ "$1" == "next" ]; then
-    keyboard=$(hyprctl devices -j | jq -r '.keyboards.[] | select(.main == true) | .name')
+    keyboard=$(hyprctl devices -j | jq -r '.keyboards.[] | select(.main) | .name')
     hyprctl switchxkblayout "$keyboard" next 
     exit
 fi

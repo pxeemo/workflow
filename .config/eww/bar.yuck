@@ -1,4 +1,4 @@
-(deflisten window-title :initial "Desktop" `bash ~/.config/eww/scripts/get-window-title`)
+(deflisten window-title :initial "Desktop" `bash ~/.config/eww/scripts/get-window-title.sh`)
 (defwidget window []
 (box (label :text "${replace(window-title, '(.{35})(...+\\W{3})(.+)', '\\1...\\3')}")))
 
@@ -26,7 +26,7 @@
         {replace(music_info.track, '(.{25})....+', '\\1...')})))
 
 
-(deflisten workspaces :initial "[]" `bash ./scripts/get-workspaces`)
+(deflisten workspaces :initial "[]" `bash ./scripts/get-workspaces.sh`)
 (defwidget workspaces []
 (box :space-evenly true :spacing 2 :class "workspaces-widget"
     (for workspace in workspaces
@@ -56,7 +56,7 @@
             :tooltip {essid == "" ? "Not connected" : "${essid} (${net}%)"}))))
 
 
-(defpoll volperc :interval "1m" `./scripts/get-volume`)
+(defpoll volperc :interval "1m" `./scripts/get-volume.sh`)
 (defwidget volume []
 (eventbox :onscroll `osdslider volume {}`
     (button :onclick `wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle` :class "circ-btn"
@@ -76,7 +76,7 @@
             :tooltip {volperc == "[MUTED]" ? "Muted" : "${volperc}%"}))))
 
 
-(deflisten lightperc `./scripts/get-brightness`)
+(deflisten lightperc `./scripts/get-brightness.sh`)
 (defwidget brightness []
 (eventbox :onscroll `osdslider brightness {}`
           :visible { lightperc != "" }
@@ -90,14 +90,14 @@
             :tooltip "${lightperc}%"))))
 
 
-(deflisten power `./scripts/get-power`)
+(deflisten power `./scripts/get-power.sh`)
 (defpoll powerdetails :interval "1m" `acpi | cut -d' ' -f5-`)
 (defwidget power [] 
 (box :class "circ-btn"
         :visible { power != "" }
     (image :image-width "22"
-        :tooltip '${power.percentage}% ${power.charging== 0 ? "not " : ""}charging
-            ${powerdetails != "" ? " (${powerdetails})" : ""}'
+        :tooltip '${power.percentage}% ${power.charging == 0 ? "not " : ""
+            }charging${powerdetails != "" ? " (${powerdetails})" : ""}'
         :path {
             power.percentage < 10 ? "./images/battery/${power.charging}-10.svg" :
             power.percentage < 20 ? "./images/battery/${power.charging}-20.svg" :
@@ -113,11 +113,11 @@
         })))
 
 
-(deflisten layout `./scripts/keyboard-layout`)
+(deflisten layout `./scripts/keyboard-layout.sh`)
 (defwidget keyboard []
 (button 
     :class "circ-btn"
-    :onclick `./scripts/keyboard-layout next`
+    :onclick `./scripts/keyboard-layout.sh next`
     (box :class "layout"
         (label :text {
             layout == "English (US)"        ? "EN" :

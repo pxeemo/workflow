@@ -1,11 +1,12 @@
-function ls --wraps='eza -lFa' --description 'alias ls eza'
+function ls --wraps='eza' --description='alias ls eza'
   eza \
     --almost-all \
     --long \
     --classify \
     --icons \
     --git \
-    --sort=type \
+    --group-directories-first \
+    --sort=modified \
     --time-style=relative \
     $argv
 end
