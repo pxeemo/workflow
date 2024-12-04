@@ -28,8 +28,8 @@ map V invert-below
 map i $bat --paging always $f
 
 # mkdir command. See wiki if you want it to select created dir
-map a :push %mkdir<space>
-map ; :push :
+map a push :mkdir<space>""<left>
+map ; push :
 cmd yank-dirname $dirname -- "$f" | head -c-1 | wl-copy
 cmd yank-path $printf '%s' "$fx" | wl-copy
 cmd yank-basename $basename -a -- "$fx" | head -c-1 | wl-copy
