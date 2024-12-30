@@ -20,6 +20,7 @@ stow .
 - [zathura](https://github.com/pwmt/zathura) with `zathura-pdf-poppler` or `zathura-pdf-mupdf` engine
 #### File manager
 - [lf](https://github.com/gokcehan/lf) &#8594; TUI file manager based on Vim
+
 | file type | packages used for preview |
 |:----------|:--------------------------|
 | text/*    | `bat`                     |
