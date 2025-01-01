@@ -5,7 +5,7 @@
 
 ![shot1](screenshots/view.avif)
 
-### See [Catppuccin](https://catppuccin-website.vercel.app/) for GTK & QT theme
+### See [Catppuccin](https://catppuccin-website.vercel.app/) for GTK & QT themes
 
 # Installation
 
@@ -19,39 +19,40 @@ stow .
 
 ## Used Apps
 
-#### PDF viewer
+#### Terminal
 
-- [zathura](https://github.com/pwmt/zathura) with `zathura-pdf-poppler` or `zathura-pdf-mupdf` engine
+- [kitty](https://github.com/kovidgoyal/kitty) &#8594; Terminal emulator
+
+#### Panel Bar & OSD:
+
+> [!NOTE]
+> Since there are usually some problems when building `eww`, I recommend you adding [Choatic-AUR](https://aur.chaotic.cx/) for faster installation without build.
+
+- EWW
+
+Dependencies:
+```
+jq socat ncmpcpp grim slurp swaync mpc libnotify upower brightnessctl wireplumber
+```
 
 #### File manager
 
 - [lf](https://github.com/gokcehan/lf) &#8594; TUI file manager based on Vim
 
-| file type | packages used for preview |
-| :-------- | :------------------------ |
-| text/\*   | `bat`                     |
-| image/svg | `librsvg`, `imagemagick`  |
-| image/\*  | `imagemagick`             |
-| \*/pdf    | `poppler`, `ghostscript`  |
-| video/\*  | `ffmpegthumbnailer`       |
-| audio/\*  | `exiftool`                |
+| Mimetype    | Previewer                |
+| :---------- | :------------------------ |
+| `text/*`    | `bat`                     |
+| `image/svg` | `librsvg`, `imagemagick`  |
+| `image/*`   | `imagemagick`             |
+| `video/*`   | `ffmpegthumbnailer`       |
+| `audio/*`   | `exiftool`                |
+| `*/pdf`     | `poppler`, `ghostscript`  |
 
 #### Music player
 
-- [ncmpcpp](https://github.com/ncmpcpp/ncmpcpp) &#8594; Music player with [MPD](https://github.com/MusicPlayerDaemon/MPD)
+- [ncmpcpp](https://github.com/ncmpcpp/ncmpcpp) &#8594; A music player on top of [mpd](https://github.com/MusicPlayerDaemon/MPD)
+- sptlrx &#8594; Lyrics fetch and display tool
 
-#### Terminal
+#### PDF viewer
 
-- [kitty](https://github.com/kovidgoyal/kitty) &#8594; Terminal emulator
-
-#### Packages to be installed:
-
-> [!NOTE]
-> Since there are usually some problems when building `eww`, I recommend you adding [Choatic-AUR](https://aur.chaotic.cx/) for faster installation without build.
-
-```
-hyprland hyprpaper hypridle hyprlock hyprpicker jq socat eww-git ncmpcpp
-ffmpegthumnailer rsvg-convert imagemagick atool slurp dunst
-eza bat-extras bat lf fzf wl-clipboard kitty xdg-user-dirs fish mpd mpc mpv
-wofi grim libnotify nwg-drawer
-```
+- [zathura](https://github.com/pwmt/zathura) with `zathura-pdf-poppler` or `zathura-pdf-mupdf` engine
