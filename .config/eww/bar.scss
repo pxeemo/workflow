@@ -5,6 +5,10 @@
   font-family: $primary-font;
   margin: 2px 11px;
 }
+.leftbar {
+  margin: 8px 0px;
+  color: $foreground;
+}
 
 .song {
   color: $blue;
@@ -38,33 +42,53 @@
   min-width: 31px;
   background-color: inherit;
 }
+.hworkspaces {
+  padding: 8px 0;
+}
+.hworkspace-entry {
+  padding: 0;
+  margin: 1px 14px;
+  border-radius: 999px;
+  background-color: gray;
+  transition-duration: 250ms;
+}
+.hworkspace-entry.active {
+  padding: 4px 0;
+  background-color: orange;
+}
 .workspace-entry.urgent {
   background-color: $red;
   transition: background-color 250ms linear;
 }
 
 .tray {
-  padding: 0 5;
-  margin: 0 2;
+  padding: 5px;
+  margin: 2px;
 }
 
 .circ-btn {
   border-radius: 999px;
   padding: 0;
-  margin: 2px;
+  margin: 0 2px;
   min-width: 31px;
+  min-height: 31px;
   background-color: inherit;
   color: $foreground;
 }
-.layout {
+.kbd-layout {
   font-size: 12;
   font-weight: 600;
-  background-color: $gray;
-  border-radius: 4px;
-  padding: 0 4px;
-  margin: 7px 2px;
   letter-spacing: 1px;
+  border-radius: 4px;
+  background-color: $gray;
   color: $background;
+  margin: 7px 4px;
+}
+.htime {
+  font-size: 14pt;
+  font-weight: 900;
+  padding: 0;
+  margin: 0;
 }
 .clock {
   font-size: 24px;

@@ -1,0 +1,13 @@
+(deflisten niri-kbd `./scripts/niri-kbd.sh`)
+(defwidget niri-kbd []
+(button 
+    :class "circ-btn"
+    :onclick `niri msg action switch-layout next`
+        (label :class "kbd-layout" :text {
+            niri-kbd == "English (US)"      ? "EN" :
+            niri-kbd == "Persian (IRC)"     ? "FA" :
+            niri-kbd == "Persian"           ? "FA" :
+            niri-kbd != ""                  ? niri-kbd :
+                "??"
+        }))
+        )

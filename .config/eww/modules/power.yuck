@@ -1,0 +1,21 @@
+(deflisten power `./scripts/get-power.sh`)
+(defpoll powerdetails :interval "1m" `acpi | cut -d' ' -f5-`)
+(defwidget power [] 
+(box :class "circ-btn"
+        :visible { power != "" }
+    (image :image-width "22"
+        :tooltip '${power.percentage}% ${power.charging == 0 ? "not " : ""
+            }charging${powerdetails != "" ? " (${powerdetails})" : ""}'
+        :path {
+            power.percentage < 10 ? "./images/battery/${power.charging}-10.svg" :
+            power.percentage < 20 ? "./images/battery/${power.charging}-20.svg" :
+            power.percentage < 30 ? "./images/battery/${power.charging}-30.svg" :
+            power.percentage < 40 ? "./images/battery/${power.charging}-40.svg" :
+            power.percentage < 50 ? "./images/battery/${power.charging}-50.svg" :
+            power.percentage < 60 ? "./images/battery/${power.charging}-60.svg" :
+            power.percentage < 70 ? "./images/battery/${power.charging}-70.svg" :
+            power.percentage < 80 ? "./images/battery/${power.charging}-80.svg" :
+            power.percentage < 90 ? "./images/battery/${power.charging}-90.svg" :
+            power.percentage < 99 ? "./images/battery/${power.charging}-99.svg" :
+                                          "./images/battery/full.svg"
+        })))

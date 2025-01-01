@@ -1,0 +1,12 @@
+(defpoll notifcount :interval "5s" `swaync-client --count`)
+(defpoll isdnd :interval "5s" `swaync-client --get-dnd`)
+(defwidget notification []
+    (button :class "circ-btn" :onclick `swaync-client -t`
+        (image :image-width 22
+            :path {
+                isdnd           ? "./images/notification/FluentAlertOff24Regular.svg" :
+                notifcount > 0  ? "./images/notification/FluentAlertBadge24Regular.svg" :
+                                  "./images/notification/FluentAlert24Regular.svg"
+            })
+    )
+)

@@ -1,0 +1,3 @@
+(deflisten hypr-window-title :initial "Desktop" `bash ~/.config/eww/scripts/hypr-window-title.sh`)
+(defwidget hypr-window-title []
+    (box (label :text "${replace(hypr-window-title, '(.{35})(...+\\W{3})(.+)', '\\1...\\3')}")))

@@ -1,0 +1,13 @@
+(defpoll htime :interval "1s" `date +%H%M`)
+(defwidget hclock []
+(box :class "htime" :space-evenly false :halign "center"
+    (box :orientation "v"
+        (label :text {substring(htime, 0, 1)})
+        (label :text {substring(htime, 2, 1)})
+    )
+    (box :orientation "v"
+        (label :text {substring(htime, 1, 1)})
+        (label :text {substring(htime, 3, 1)})
+    )
+)
+)

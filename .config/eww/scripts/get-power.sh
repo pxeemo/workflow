@@ -11,15 +11,17 @@ get_battery() {
     
     if [ "$charging" != "$IS_CHARGING" ] && [ -n "$IS_CHARGING" ]; then
         if [ "$charging" != 1 ] && [ "$IS_PLUGGED" == "yes" ]; then
-            notify-send -i "$(realpath ../images/battery/1-99.svg)" "Battery" \
-                "Battery is full."
+            notify-send --icon "$(realpath ../images/battery/1-99.svg)" \
+                --expire-time 3000 \
+                "Battery" "Battery is full."
         fi
     fi
     IS_CHARGING="$charging"
 
     if [ "$percentage" -eq 25 ] && [ "$PERC" -gt "$percentage" ]; then
-        notify-send -i "$(realpath ../images/battery/0-20.svg)" "Battery" \
-            "Battery is low. Please plug in the battey."
+        notify-send --icon "$(realpath ../images/battery/0-20.svg)" \
+            --expire-time 3000 \
+            "Battery" "Battery is low. Please plug in the battey."
     fi
     PERC="$percentage"
 
@@ -33,11 +35,15 @@ get_supply() {
     plugged=$(echo "$status" | awk '/online/{print $2}')
     if [ "$plugged" != "$IS_PLUGGED" ]; then
         if [ "$plugged" == "yes" ]; then
-            notify-send -i "$(realpath ../images/battery/full.svg)" "Battery" \
-                "Power supply plugged in."
+            notify-send \
+                --icon "$(realpath ../images/FluentPlugConnected24Regular.svg)" \
+                --expire-time 3000 \
+                "Battery" "Power supply plugged in."
         else
-            notify-send -i "$(realpath ../images/battery/0-60.svg)" "Battery" \
-                "Power supply disconnected."
+            notify-send \
+                --icon "$(realpath ../images/FluentPlugDisconnected24Regular.svg)" \
+                --expire-time 3000 \
+                "Battery" "Power supply disconnected."
         fi
     fi
     IS_PLUGGED="$plugged"

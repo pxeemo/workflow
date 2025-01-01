@@ -16,10 +16,6 @@ if status is-interactive
     abbr webcam 'mpv --vf=hflip --profile=low-latency --untimed av://v4l2:/dev/video0'
     # abbr doom '~/.config/emacs/bin/doom'
 
-    alias ls "eza --almost-all --long --classify --icons --git --sort=type --time-style=relative"
-    alias dl "aria2c --max-concurrent-downloads=2 --split=8 --max-tries=0 --continue"
-    alias icat "kitten icat"
-
     zoxide init fish | source
 end
 

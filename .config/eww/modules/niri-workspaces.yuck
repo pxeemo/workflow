@@ -1,0 +1,7 @@
+(deflisten niri-workspaces :initial "[]" `bash ./scripts/niri-workspaces.sh`)
+(defwidget niri-workspaces []
+(box :class "hworkspaces" :space-evenly false :spacing 2 :orientation "v"
+    (for workspace in niri-workspaces
+            (box
+                :class "hworkspace-entry ${workspace.is_focused ? "active" : ""}"
+            ""))))

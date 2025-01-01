@@ -1,0 +1,21 @@
+(deflisten music_info `./scripts/music.sh --info`)
+(defpoll music_time :interval "2s" `./scripts/music.sh --time`)
+(defvar music_reveal false)
+(defwidget music []
+(box :vexpand false :hexpand false :oreintation "h" :space-evenly false :class "song" :spacing 4
+    (eventbox :onhover `eww update music_reveal=true` :onhoverlost `eww update music_reveal=false`
+        (box :orientation "h" :space-evenly false :vexpand false :hexpand false
+            (revealer :transition "slideleft" :reveal music_reveal :duration "250ms"
+                (box :vexpand false :hexpand false :oreintation "h" :class "song-btn"
+                    (button :onclick `mpc prev` "󰒮")))
+            (circular-progress :value {music_time.perc} :thickness 4
+                (box :class "song-cover-art" :style "background-image: url('${music_info.cover}');"
+                    (revealer :transition "crossfade" :reveal music_reveal :duration "250ms"
+                        (box :vexpand false :hexpand false :oreintation "h" :class "song-btn"
+                            (button :onclick `mpc toggle` {music_info.toggle_icon})))))
+            (revealer :transition "slideright" :reveal music_reveal :duration "250ms"
+                (box :vexpand false :hexpand false :oreintation "h" :class "song-btn"
+                    (button :onclick `mpc next` "󰒭")))))
+    (button :wrap "true"
+            :onclick `if eww active-windows | grep -q music; then eww close music; else eww open music; fi`
+        {replace(music_info.track, '(.{25})....+', '\\1...')})))

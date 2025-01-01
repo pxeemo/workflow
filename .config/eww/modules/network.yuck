@@ -1,0 +1,14 @@
+(defpoll net    :interval "5s" `nmcli -t -f SIGNAL,ACTIVE dev wifi | awk -F: '{if($2=="yes")print$1}'`)
+(defpoll essid  :interval "5s" :initial "N/A" `nmcli c | awk '/wlp/{print$1}'`)
+(defwidget network []
+(box
+    (button :onclick `./scripts/wifimenu.sh` :class "circ-btn"
+        (image :image-width "22"
+            :path {
+                essid == "" ? "./images/wifi/5.svg" :
+                net < 25    ? "./images/wifi/1.svg" :
+                net < 50    ? "./images/wifi/2.svg" :
+                net < 75    ? "./images/wifi/3.svg" :
+                net <= 100  ? "./images/wifi/4.svg" :
+                              "./images/wifi/0.svg" }
+            :tooltip {essid == "" ? "Not connected" : "${essid} (${net}%)"}))))

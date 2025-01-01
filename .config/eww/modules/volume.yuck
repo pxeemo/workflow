@@ -1,0 +1,18 @@
+(defpoll volperc :interval "1m" `./scripts/get-volume.sh`)
+(defwidget volume []
+(eventbox :onscroll `osdslider volume {}`
+    (button :onclick `wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle` :class "circ-btn"
+        (image :image-width 22
+            :path {
+                volperc == "[MUTED]" ? "./images/volume/m.svg" :
+                volperc < 17  ? "./images/volume/0.svg" :
+                volperc < 33  ? "./images/volume/1.svg" :
+                volperc < 50  ? "./images/volume/2.svg" :
+                volperc < 67  ? "./images/volume/3.svg" :
+                volperc < 83  ? "./images/volume/4.svg" :
+                volperc < 100 ? "./images/volume/5.svg" :
+                volperc < 133 ? "./images/volume/6.svg" :
+                volperc < 166 ? "./images/volume/7.svg" :
+                                "./images/volume/8.svg"
+            }
+            :tooltip {volperc == "[MUTED]" ? "Muted" : "${volperc}%"}))))

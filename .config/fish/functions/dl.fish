@@ -1,4 +1,5 @@
 function dl --wraps=aria2c --description 'alias of aria2c'
+  systemd-inhibit --what=idle --who=aria2c --why="Downloading" \
     aria2c \
       --max-concurrent-downloads=2 \
       --split=8 \

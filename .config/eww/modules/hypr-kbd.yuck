@@ -1,0 +1,14 @@
+(deflisten hypr-kbd `./scripts/hypr-kbd.sh`)
+(defwidget hypr-kbd []
+(button 
+    :class "circ-btn"
+    :onclick `./scripts/hypr-kbd.sh next`
+    (box :class "layout"
+        (label :text {
+            hypr-kbd == "English (US)"        ? "EN" :
+            hypr-kbd == "Persian (IR-custom)" ? "FA" :
+            hypr-kbd == "Persian"             ? "FA" :
+                                                "??"
+        }))))
+
+

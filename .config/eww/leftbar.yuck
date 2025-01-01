@@ -1,0 +1,23 @@
+(defwidget leftbar []
+(box :orientation "v"
+    (niri-workspaces)
+    (box :space-evenly false :valign "end" :orientation "v"
+        (systray :class "tray" :orientation "v" :icon-size 18 :spacing 5)
+        (network)
+        (volume)
+        ;; (brightness)
+        (power)
+        (notification)
+        (niri-kbd)
+        (hclock)
+    )))
+
+(defwindow leftbar
+        :exclusive true
+        :monitor 0
+        :geometry (geometry :x "0" :y "0"
+            :width "40px" :height "100%" :anchor "left center")
+        :stacking "fg"
+        :focusable false
+        :namespace "eww"
+    (leftbar))

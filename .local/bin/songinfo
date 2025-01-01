@@ -13,5 +13,5 @@ mkdir -p $preview_dir
     ffmpeg -y -i "$file_name" -an -vf scale=360:360 "$preview_name" > /dev/null 2>&1 || \
     rsvg-convert --width=360 --output="$preview_name" "$HOME/.config/eww/images/music.svg"
 
-notify-send -a MPC -r 27072 "Now Playing" "$(mpc --format '%title% \n%artist%' \
-    current)" -i "$preview_name"
+notify-send --app-name MPC --replace-id 1 --urgency low --expire-time 1500 \
+    "Now Playing" "$(mpc --format '%title% \n%artist%' current)" -i "$preview_name"

@@ -1,0 +1,21 @@
+(deflisten battery `./scripts/get-power.sh`)
+(defpoll batterydetails :interval "1m" `acpi | cut -d' ' -f5-`)
+(defwidget battery [] 
+(box :class "circ-btn"
+        :visible { battery != "" }
+    (image :image-width "22"
+        :tooltip '${battery.percentage}% ${battery.charging == 0 ? "not " : ""
+            }charging${batterydetails != "" ? " (${batterydetails})" : ""}'
+        :path {
+            battery.percentage < 10 ? "./images/fluentbattery/FluentBattery024Regular.svg" :
+            battery.percentage < 20 ? "./images/fluentbattery/FluentBattery124Regular.svg" :
+            battery.percentage < 30 ? "./images/fluentbattery/FluentBattery224Regular.svg" :
+            battery.percentage < 40 ? "./images/fluentbattery/FluentBattery324Regular.svg" :
+            battery.percentage < 50 ? "./images/fluentbattery/FluentBattery424Regular.svg" :
+            battery.percentage < 60 ? "./images/fluentbattery/FluentBattery524Regular.svg" :
+            battery.percentage < 70 ? "./images/fluentbattery/FluentBattery624Regular.svg" :
+            battery.percentage < 80 ? "./images/fluentbattery/FluentBattery724Regular.svg" :
+            battery.percentage < 90 ? "./images/fluentbattery/FluentBattery824Regular.svg" :
+            battery.percentage < 99 ? "./images/fluentbattery/FluentBattery924Regular.svg" :
+                                    "./images/fluentbattery/FluentBattery1024Regular.svg"
+        })))

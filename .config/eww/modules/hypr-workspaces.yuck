@@ -1,0 +1,11 @@
+(deflisten hypr-workspaces :initial "[]" `bash ./scripts/hypr-workspaces.sh`)
+(defwidget hypr-workspaces []
+(box :space-evenly true :spacing 2 :class "workspaces-widget"
+    (for workspace in hypr-workspaces
+        (button :onclick `hyprctl dispatch workspace ${workspace.id}`
+                :class "workspace-entry ${workspace.urgent ? "urgent" : ""}"
+                (image :image-width "22"
+                    :path { 
+                        workspace.active ? "./images/workspace-active.svg" 
+                                         : "./images/workspace.svg" 
+                    })))))

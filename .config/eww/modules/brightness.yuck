@@ -1,0 +1,12 @@
+(deflisten lightperc `./scripts/get-brightness.sh`)
+(defwidget brightness []
+(eventbox :onscroll `osdslider brightness {}`
+          :visible { lightperc != "" }
+    (box :class "circ-btn"
+        (image :image-width "22"
+            :path {
+                lightperc < 33 ? "./images/brightness/1.svg" :
+                lightperc < 67 ? "./images/brightness/2.svg" :
+                                 "./images/brightness/3.svg"
+            }
+            :tooltip "${lightperc}%"))))
