@@ -46,7 +46,8 @@ stow .
 
 #### Packages to be installed:
 
-I recommend you adding [choatic aur](https://aur.chaotic.cx/) for faster installation without build.
+> [!NOTE]
+> Since there are usually some problems when building `eww`, I recommend you adding [Choatic-AUR](https://aur.chaotic.cx/) for faster installation without build.
 
 ```
 hyprland hyprpaper hypridle hyprlock hyprpicker jq socat eww-git ncmpcpp
