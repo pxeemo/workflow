@@ -28,7 +28,7 @@ stow .
 > [!NOTE]
 > Since there are usually some problems when building `eww`, I recommend you adding [Choatic-AUR](https://aur.chaotic.cx/) for faster installation without build.
 
-- EWW
+- [eww (ElKowar's Wacky Widgets)](https://elkowar.github.io/eww/) &#8594; Widget system
 
 Dependencies:
 ```
@@ -50,8 +50,8 @@ jq socat ncmpcpp grim slurp swaync mpc libnotify upower brightnessctl wireplumbe
 
 #### Music player
 
-- [ncmpcpp](https://github.com/ncmpcpp/ncmpcpp) &#8594; A music player on top of [mpd](https://github.com/MusicPlayerDaemon/MPD)
-- sptlrx &#8594; Lyrics fetch and display tool
+- [ncmpcpp](https://github.com/ncmpcpp/ncmpcpp) &#8594; TUI music player on top of [mpd](https://github.com/MusicPlayerDaemon/MPD)
+- [sptlrx](https://github.com/raitonoberu/sptlrx) &#8594; Synced lyrics fetch and display tool
 
 #### PDF viewer
 
