@@ -8,12 +8,13 @@
 .leftbar {
   margin: 8px 0px;
   color: $foreground;
+  //border-right: 1px solid $orange;
 }
 
 .song {
   color: $blue;
-  font-weight : bold;
-  margin : 0px 10px;
+  font-weight: bold;
+  margin: 0px 10px;
 }
 .song-cover-art {
   background-size: cover;
@@ -24,7 +25,7 @@
 }
 .song-btn button {
   font-family: $nerd-font;
-  font-size : 16pt;
+  font-size: 16pt;
   background-color: inherit;
   margin: 4px 2px;
   padding: 0;
@@ -43,22 +44,23 @@
   background-color: inherit;
 }
 .hworkspaces {
-  padding: 8px 0;
+  // padding: 8px 0;
 }
 .hworkspace-entry {
   padding: 0;
-  margin: 1px 14px;
-  border-radius: 999px;
-  background-color: gray;
-  transition-duration: 250ms;
+  color: $white;
+  font-weight: 900;
+  margin: 2px 8px;
+  border-radius: 4px;
+  background-color: $black;
+  transition: background-color 250ms ease;
 }
 .hworkspace-entry.active {
-  padding: 4px 0;
-  background-color: orange;
+  color: $background;
+  background-color: $primary;
 }
 .workspace-entry.urgent {
   background-color: $red;
-  transition: background-color 250ms linear;
 }
 
 .tray {

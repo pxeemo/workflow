@@ -2,6 +2,7 @@
 (defwidget niri-workspaces []
 (box :class "hworkspaces" :space-evenly false :spacing 2 :orientation "v"
     (for workspace in niri-workspaces
-            (box
+            (button
                 :class "hworkspace-entry ${workspace.is_focused ? "active" : ""}"
-            ""))))
+                :onclick `niri msg action focus-workspace ${workspace.idx}`
+            {workspace.idx}))))

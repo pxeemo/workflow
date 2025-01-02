@@ -1,48 +1,48 @@
 .volume-osd,
 .brightness-osd {
   font-family: $nerd-font;
-	background: rgba(0,0,0,0);
+  background: rgba(0, 0, 0, 0);
 }
 .volume-slider,
 .brightness-slider {
-	border-radius: 999px;
-	border: 2px solid $blue;
-	min-width: 28px;
+  border-radius: 999px;
+  border: 2px solid $primary;
+  min-width: 28px;
 }
 .volume-slider trough,
 .brightness-slider trough {
-	background: #1e1e2e;
-	min-width: 24px;
-	padding: 16px 4px 16px 4px;
-	border-radius: 999px;
+  background: #1e1e2e;
+  min-width: 24px;
+  padding: 16px 4px 16px 4px;
+  border-radius: 999px;
 }
 .volume-slider .bottom,
 .brightness-slider .bottom {
-	background: $blue;
-	margin: -12px 0 -12px 0;
-	min-width: 10px;
-	border-radius: 999px;
-	transition-duration: 250ms;
+  background: $primary;
+  margin: -12px 0 -12px 0;
+  min-width: 10px;
+  border-radius: 999px;
+  transition-duration: 250ms;
 }
 .volume-slider slider,
 .brightness-slider slider {
-	background: $blue;
-	min-width: 24px;
-	min-height: 24px;
-	box-shadow: none;
+  background: $primary;
+  min-width: 24px;
+  min-height: 24px;
+  box-shadow: none;
 }
 .volume-slider slider:hover,
 .brightness-slider slider:hover {
-	box-shadow: 0 0 4px 4px rgba(137,59,255,0.5);
+  box-shadow: 0 0 4px 4px
+    rgba(red($primary), green($primary), blue($primary), 0.5);
 }
 .volume-slider.high trough {
-	background: transparent;
+  background: transparent;
 }
 .volume-slider.high slider,
 .volume-slider.high .bottom {
-	background: $orange;
+  background: $red;
 }
 .slider-icon {
-	color: #0e0e1e;
+  color: #0e0e1e;
 }
-
