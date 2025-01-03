@@ -6,17 +6,35 @@
 (overlay :space-evenly false :spacing 20
     (box :class 'music-cover' :style 'background: url("${music_info.cover}");')
     (box :class 'music-pop' :height "360" 
-        (box :orientation 'v' :space-evenly false :spacing 10 :valign 'end'
-            {music_info.artist} {music_info.track}
+        (box :orientation 'v' :space-evenly false :valign 'end'
+            (label :class 'artist' :text {music_info.artist}) 
+            (label :class 'track' :text {music_info.track}) 
+                (box :class 'details' :space-evenly false :halign 'center' :spacing 8
+                    (label :text "${music_info.kbitrate}kbps") 
+                    (label :text {music_info.audioformat}) 
+                )
             (box :spacing 10 :class 'music-controls' :space-evenly false :halign "center"
-                (button :class music_single :onclick 'mpc single; eww update music_single=$(mpc status "%single%")' '1')
-                (button :class music_repeat :onclick 'mpc repeat; eww update music_repeat=$(mpc status "%repeat%")' '󰑖')
+                (button :class music_single :onclick `mpc single; eww update music_single=$(mpc status "%single%")` '1')
+                (button :class music_repeat :onclick `mpc repeat; eww update music_repeat=$(mpc status "%repeat%")` '󰑖')
                 (button :onclick `mpc prev` '󰒮')
                 (button :onclick `mpc toggle` {music_info.toggle_icon})
                 (button :onclick `mpc next` '󰒭')
                 (button :class music_random :onclick 'mpc random; eww update music_random=$(mpc status "%random%")' '󰒝')
                 (button :class music_consume :onclick 'mpc consume; eww update music_consume=$(mpc status "%consume%")' '󰍖'))
-            (scale :class 'music-seeker' :value {music_time.perc} :onchange `mpc seek {}%`)))))
+            (scale :class 'music-seeker' :value {music_time.perc} :onchange `mpc seek {}%`)))
+            (sptlrx)
+    ))
+
+(deflisten lyric-line `sptlrx pipe`)
+(defwidget sptlrx []
+    (label :class 'lyrics-text' 
+        :width 100
+        :wrap true 
+        :show-truncated false
+        :justify "center"
+        :text lyric-line
+    )
+)
 
 (defwindow music
     :exclusive true

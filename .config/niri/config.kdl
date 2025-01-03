@@ -18,6 +18,7 @@ input {
         }
         repeat-delay 250
         repeat-rate 50
+        track-layout "window"
     }
 
     // Next sections include libinput settings.
@@ -28,7 +29,7 @@ input {
         dwt
         // dwtp
         // natural-scroll
-        // accel-speed 0.2
+        accel-speed 0.1
         // accel-profile "flat"
         scroll-method "two-finger"
         disabled-on-external-mouse
@@ -310,11 +311,13 @@ binds {
     Mod+B { spawn "firefox"; }
     Mod+A { spawn "swaync-client" "-t"; }
     Mod+P { spawn "sh" "-c" "cliphist list | wofi --dmenu | cliphist decode | wl-copy"; }
+    Mod+M { spawn "sh" "-c" "if eww active-windows | grep -q music; then eww close music; else eww open music; fi"; }
 
     // Example volume keys mappings for PipeWire & WirePlumber.
     // The allow-when-locked=true property makes them work even when the session is locked.
 
     Pause                allow-when-locked=true { spawn "playerctl" "-s" "play-pause"; }
+    Alt+Pause            allow-when-locked=true { spawn "mpc" "toggle"; }
     XF86AudioRaiseVolume allow-when-locked=true { spawn "osdslider" "volume" "up"; }
     XF86AudioLowerVolume allow-when-locked=true { spawn "osdslider" "volume" "down"; }
     XF86AudioMute        allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle"; }

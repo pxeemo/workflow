@@ -8,16 +8,22 @@ MUSIC_TIME='{"time":"0:00"}'
 get_info() {
     # set toggle icon
 	if [[ "$(mpc status)" == *"[playing]"* ]]; then
-		MUSIC_INFO="$(echo "$MUSIC_INFO" | jq -Mc '.toggle_icon="󰏤"')"
+		MUSIC_INFO=$(echo "$MUSIC_INFO" | jq -Mc '.toggle_icon="󰏤"')
 	else
-		MUSIC_INFO="$(echo "$MUSIC_INFO" | jq -Mc '.toggle_icon="󰐊"')"
+		MUSIC_INFO=$(echo "$MUSIC_INFO" | jq -Mc '.toggle_icon="󰐊"')
 	fi
 
     # Get track and artist name
-	track="$(mpc -f %title% current)"
-	artist="$(mpc -f %artist% current)"
-	MUSIC_INFO="$(echo "$MUSIC_INFO" | jq -Mc ".track=\"$track\"")"
-	MUSIC_INFO="$(echo "$MUSIC_INFO" | jq -Mc ".artist=\"$artist\"")"
+	track=$(mpc -f %title% current)
+	artist=$(mpc -f %artist% current)
+	kbitrate=$(mpc status '%kbitrate%')
+	audioformat=$(mpc status '%audioformat%')
+	MUSIC_INFO=$(echo "$MUSIC_INFO" | jq -Mc "
+		.track=\"$track\" |
+		.artist=\"$artist\" |
+		.kbitrate=\"$kbitrate\" |
+		.audioformat=\"$audioformat\"
+	")
 
     # Get cover
 	thumbnail="$(thumbnailer "$(mpc --format "$MUSIC_DIR"/%file% current)")"

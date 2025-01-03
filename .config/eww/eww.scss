@@ -1,6 +1,6 @@
-@import './colors.scss';
+@import "./colors.scss";
 window {
-  background-color: rgba(30,30,46,0.8);
+  background-color: rgba(30, 30, 46, 0.8);
   font-family: $primary-font, $nerd-font;
 }
 button {
@@ -9,13 +9,8 @@ button {
   border-radius: 999px;
   transition: all 250ms ease;
 }
-button.on {
-  background: $blue;
-  color: #0e0e1e;
-  font-weight: bold;
-}
 
-@import './bar.scss';
-@import './osd.scss';
-@import './music.scss';
-@import './launcher.scss';
+@import "./bar.scss";
+@import "./osd.scss";
+@import "./music.scss";
+@import "./launcher.scss";
