@@ -1,7 +1,7 @@
 <h1 align="center">Dotfiles of <a href="https://github.com/pxeemo">pxeemo</a>!</h1>
 <p align="center">My Linux distribution configuration files</p>
 
-## Hyprland:
+## [Hyprland](https://hyprland.org/)
 
 ![shot1](screenshots/view.avif)
 
@@ -12,8 +12,8 @@
 Needed `git` to clone this repo and `stow` to manage dotfiles:
 
 ```shell
-git clone --depth=1 https://github,com/pxeemo/workflow.git
-cd workflow
+git clone --depth=1 https://github,com/pxeemo/workflow.git ~/workflow
+cd ~/workflow
 stow .
 ```
 
@@ -23,12 +23,12 @@ stow .
 
 - [kitty](https://github.com/kovidgoyal/kitty) &#8594; Terminal emulator
 
-#### Panel Bar & OSD:
+#### Panel Bar & OSD
+
+- [eww (ElKowar's Wacky Widgets)](https://elkowar.github.io/eww/) &#8594; Widget system
 
 > [!NOTE]
 > Since there are usually some problems when building `eww`, I recommend you adding [Choatic-AUR](https://aur.chaotic.cx/) for faster installation without build.
-
-- [eww (ElKowar's Wacky Widgets)](https://elkowar.github.io/eww/) &#8594; Widget system
 
 Dependencies:
 ```
