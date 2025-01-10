@@ -12,8 +12,13 @@
 Needed `git` to clone this repo and `stow` to manage dotfiles:
 
 ```shell
+<<<<<<< HEAD
 git clone --depth=1 https://github,com/pxeemo/workflow.git ~/workflow
 cd ~/workflow
+=======
+git clone --depth=1 https://github.com/pxeemo/workflow.git
+cd workflow
+>>>>>>> 571239b (chore)
 stow .
 ```
 
@@ -31,6 +36,7 @@ stow .
 > Since there are usually some problems when building `eww`, I recommend you adding [Choatic-AUR](https://aur.chaotic.cx/) for faster installation without build.
 
 Dependencies:
+
 ```
 jq socat ncmpcpp grim slurp swaync mpc libnotify upower brightnessctl wireplumber
 ```
@@ -40,13 +46,13 @@ jq socat ncmpcpp grim slurp swaync mpc libnotify upower brightnessctl wireplumbe
 - [lf](https://github.com/gokcehan/lf) &#8594; TUI file manager based on Vim
 
 | Mimetype    | Previewer                |
-| :---------- | :------------------------ |
-| `text/*`    | `bat`                     |
-| `image/svg` | `librsvg`, `imagemagick`  |
-| `image/*`   | `imagemagick`             |
-| `video/*`   | `ffmpegthumbnailer`       |
-| `audio/*`   | `exiftool`                |
-| `*/pdf`     | `poppler`, `ghostscript`  |
+| :---------- | :----------------------- |
+| `text/*`    | `bat`                    |
+| `image/svg` | `librsvg`, `imagemagick` |
+| `image/*`   | `imagemagick`            |
+| `video/*`   | `ffmpegthumbnailer`      |
+| `audio/*`   | `exiftool`               |
+| `*/pdf`     | `poppler`, `ghostscript` |
 
 #### Music player
 

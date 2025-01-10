@@ -23,7 +23,7 @@ map X !$f
 map o &mimeopen $f
 map O $mimeopen --ask $f
 
-map W &setwallpaper.sh $f
+map W &swww img $f
 map V invert-below
 map i $bat --paging always $f
 
