@@ -322,6 +322,8 @@ binds {
     XF86AudioLowerVolume allow-when-locked=true { spawn "osdslider" "volume" "down"; }
     XF86AudioMute        allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle"; }
     XF86AudioMicMute     allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle"; }
+    Mod+apostrophe       allow-when-locked=true { spawn "osdslider" "volume" "up"; }
+    Mod+semicolon        allow-when-locked=true { spawn "osdslider" "volume" "down"; }
 
     XF86MonBrightnessUp   allow-when-locked=true { spawn "osdslider" "brightness" "up"; }
     XF86MonBrightnessDown allow-when-locked=true { spawn "osdslider" "brightness" "down"; }

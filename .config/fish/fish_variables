@@ -2,7 +2,8 @@
 # VERSION: 3.0
 SETUVAR --export EDITOR:nvim
 SETUVAR --export MANPAGER:nvim\x20\x2bMan\x21
-SETUVAR --export QT_QPA_PLATFORMTHEME:qt5ct
+SETUVAR --export QT_QPA_PLATFORM:wayland
+SETUVAR --export QT_QPA_PLATFORMTHEME:qt6ct
 SETUVAR __fish_initialized:3800
 SETUVAR fish_color_autosuggestion:brblack
 SETUVAR fish_color_cancel:\x2dr

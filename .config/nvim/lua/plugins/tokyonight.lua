@@ -1,6 +1,6 @@
 return {
   {
-    "tokyonight",
+    "tokyonight.nvim",
     opts = {
       style = "night",
       transparent = true,
