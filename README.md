@@ -3,7 +3,11 @@
 
 ## [Hyprland](https://hyprland.org/)
 
-![shot1](screenshots/view.avif)
+![hyprland screenshot](./screenshots/hyprland.avif)
+
+## [Niri](https://github.com/YaLTeR/niri)
+
+![niri screenshot](./screenshots/niri.avif)
 
 ### See [Catppuccin](https://catppuccin-website.vercel.app/) for GTK & QT themes
 
@@ -12,13 +16,8 @@
 Needed `git` to clone this repo and `stow` to manage dotfiles:
 
 ```shell
-<<<<<<< HEAD
 git clone --depth=1 https://github,com/pxeemo/workflow.git ~/workflow
 cd ~/workflow
-=======
-git clone --depth=1 https://github.com/pxeemo/workflow.git
-cd workflow
->>>>>>> 571239b (chore)
 stow .
 ```
 

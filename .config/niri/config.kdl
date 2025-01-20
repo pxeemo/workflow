@@ -194,38 +194,6 @@ layout {
     }
 }
 
-workspace "main"
-workspace "browse"
-workspace "chat"
-
-window-rule {
-    geometry-corner-radius 12
-    clip-to-geometry true
-}
-
-//window-rule {
-//    match is-active=false
-//    opacity 0.8
-//}
-
-window-rule {
-    match app-id=r#"^firefox$"#
-    open-on-workspace "browse"
-    open-maximized true
-}
-
-window-rule {
-    match app-id=r#"^org\.telegram\.desktop.*$"#
-    exclude title="^Media viewer$"
-    open-on-workspace "chat"
-    default-column-width { proportion 0.75; }
-}
-
-cursor {
-    xcursor-theme "catppuccin-mocha-blue-cursors"
-    xcursor-size 24
-}
-
 // Add lines like this to spawn processes at startup.
 // Note that running niri as a session supports xdg-desktop-autostart,
 // which may be more convenient to use.
@@ -234,6 +202,7 @@ spawn-at-startup "swww-daemon"
 spawn-at-startup "hypridle"
 spawn-at-startup "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1"
 spawn-at-startup "wl-paste" "--watch" "cliphist" "store"
+spawn-at-startup "swaync" "--config" "~/.config/swaync/niri-config.json"
 
 // Uncomment this line to ask the clients to omit their client-side decorations if possible.
 // If the client will specifically ask for CSD, the request will be honored.
@@ -259,18 +228,35 @@ animations {
     // slowdown 3.0
 }
 
+workspace "main"
+workspace "browse"
+workspace "chat"
+
 // Window rules let you adjust behavior for individual windows.
 // Find more information on the wiki:
 // https://github.com/YaLTeR/niri/wiki/Configuration:-Window-Rules
 
-// Work around WezTerm's initial configure bug
-// by setting an empty default-column-width.
 window-rule {
-    // This regular expression is intentionally made as specific as possible,
-    // since this is the default config, and we want no false positives.
-    // You can get away with just app-id="wezterm" if you want.
-    match app-id=r#"^org\.wezfurlong\.wezterm$"#
-    default-column-width {}
+    geometry-corner-radius 12
+    clip-to-geometry true
+}
+
+//window-rule {
+//    match is-active=false
+//    opacity 0.8
+//}
+
+window-rule {
+    match app-id=r#"^firefox$"#
+    open-on-workspace "browse"
+    open-maximized true
+}
+
+window-rule {
+    match app-id=r#"^org\.telegram\.desktop.*$"#
+    exclude title="^Media viewer$"
+    open-on-workspace "chat"
+    default-column-width { proportion 0.75; }
 }
 
 // Example: block out two password managers from screen capture.
@@ -283,6 +269,11 @@ window-rule {
 
     // Use this instead if you want them visible on third-party screenshot tools.
     // block-out-from "screencast"
+}
+
+cursor {
+    xcursor-theme "catppuccin-mocha-blue-cursors"
+    xcursor-size 24
 }
 
 binds {
@@ -364,14 +355,14 @@ binds {
     Mod+Ctrl+Home { move-column-to-first; }
     Mod+Ctrl+End  { move-column-to-last; }
 
-    Mod+Shift+Left  { focus-monitor-left; }
-    Mod+Shift+Down  { focus-monitor-down; }
-    Mod+Shift+Up    { focus-monitor-up; }
-    Mod+Shift+Right { focus-monitor-right; }
-    Mod+Shift+H     { focus-monitor-left; }
-    Mod+Shift+J     { focus-monitor-down; }
-    Mod+Shift+K     { focus-monitor-up; }
-    Mod+Shift+L     { focus-monitor-right; }
+    Mod+Alt+Left  { focus-monitor-left; }
+    Mod+Alt+Down  { focus-monitor-down; }
+    Mod+Alt+Up    { focus-monitor-up; }
+    Mod+Alt+Right { focus-monitor-right; }
+    Mod+Alt+H     { focus-monitor-left; }
+    Mod+Alt+J     { focus-monitor-down; }
+    Mod+Alt+K     { focus-monitor-up; }
+    Mod+Alt+L     { focus-monitor-right; }
 
     Mod+Shift+Ctrl+Left  { move-column-to-monitor-left; }
     Mod+Shift+Ctrl+Down  { move-column-to-monitor-down; }
@@ -494,12 +485,16 @@ binds {
     // * adjust width as a percentage of screen width: "-10%" or "+10%"
     // Pixel sizes use logical, or scaled, pixels. I.e. on an output with scale 2.0,
     // set-column-width "100" will make the column occupy 200 physical screen pixels.
-    Mod+Minus { set-column-width "-10%"; }
-    Mod+Equal { set-column-width "+10%"; }
+    Mod+Shift+H { set-column-width "-5%"; }
+    Mod+Shift+L { set-column-width "+5%"; }
 
     // Finer height adjustments when in column with other windows.
-    Mod+Shift+Minus { set-window-height "-10%"; }
-    Mod+Shift+Equal { set-window-height "+10%"; }
+    Mod+Shift+K { set-window-height "-5%"; }
+    Mod+Shift+J { set-window-height "+5%"; }
+
+    // Move the focused window between the floating and the tiling layout.
+    Mod+V       { toggle-window-floating; }
+    Mod+Shift+V { switch-focus-between-floating-and-tiling; }
 
     // Actions to switch layouts.
     // Note: if you uncomment these, make sure you do NOT have

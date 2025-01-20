@@ -1,18 +1,3 @@
-(defpoll time       :interval "1s" `jdate +%R`)
-(defpoll weekday    :interval "5m" `jdate +%G`)
-(defpoll dayofmonth :interval "5m" `jdate +%e\\ %V`)
-(defvar  showdate   false)
-(defwidget clock []
-(eventbox :timeout        "50ms"
-        :onhover        `eww update showdate=true`
-        :onhoverlost    `eww update showdate=false`
-    (box :space-evenly false :class "clock"
-        (revealer :transition "slideleft" :reveal "${showdate}" :duration "200ms" :class "date"
-            (overlay :width "56"
-                (label :yalign 0 :xalign 1 :text "${weekday}")
-                (label :yalign 1 :xalign 0 :text "${dayofmonth}")))
-        (label :text "${time}"))))
-
 (defwidget bar []
 (centerbox :class "bar"
     (box :space-evenly false
@@ -21,14 +6,13 @@
     (hypr-workspaces)
     (box :space-evenly false :halign "end"
         (systray :class "tray" :pack-direction "left" :icon-size "18" :spacing '5' )
-        (box :space-evenly true
-            (network)
-            (volume)
-            ;; (brightness)
-            (power)
-            (hypr-kbd)
-        )
-        (clock))))
+        (network)
+        (volume)
+        ;; (brightness)
+        (power)
+        (notification)
+        (hypr-kbd)
+        (jclock))))
 
 (defwindow bar
         :exclusive true

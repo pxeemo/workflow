@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="32"
+   height="32"
+   viewBox="0 0 8.4666665 8.4666666"
+   version="1.1"
+   id="svg1"
+   sodipodi:docname="pacman.svg"
+   inkscape:version="1.4 (e7c3feb100, 2024-10-09)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#505050"
+     bordercolor="#eeeeee"
+     borderopacity="1"
+     inkscape:showpageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     inkscape:zoom="10.560059"
+     inkscape:cx="15.624913"
+     inkscape:cy="22.253664"
+     inkscape:window-width="1447"
+     inkscape:window-height="796"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs1" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <path
+       d="m 4.4513369,4.2333407 2.9912115,2.9912115 q -0.811176,0.811176 -1.9062636,1.0950876 -1.0849479,0.2940513 -2.1800355,0 Q 2.2713014,8.0357282 1.4601254,7.2245522 0.64894941,6.4133762 0.35489811,5.3284283 q -0.2839116,-1.0950876 0,-2.1800355 0.2940513,-1.0950876 1.10522729,-1.9062636 0.811176,-0.81117599 1.8961239,-1.09508759 1.0950876,-0.2940513 2.1800355,0 1.0950876,0.2839116 1.9062636,1.09508759 z M 7.4019896,3.3816059 q -0.3346101,0 -0.5881026,0.2534925 -0.2433528,0.2433528 -0.2433528,0.5982423 0,0.3548895 0.2433528,0.608382 0.2534925,0.2433528 0.5982423,0.2433528 0.3447498,0 0.5881026,-0.2433528 0.2534925,-0.2534925 0.2534925,-0.608382 0,-0.3548895 -0.2534925,-0.5982423 Q 7.7568791,3.3816059 7.4019896,3.3816059 Z"
+       id="text2"
+       style="font-weight:800;font-size:10.1397px;font-family:Mikhak;-inkscape-font-specification:'Mikhak Ultra-Bold';fill:#ffff00;stroke-width:0.281658"
+       aria-label="󰮯" />
+  </g>
+</svg>

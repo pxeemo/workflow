@@ -1,6 +1,7 @@
 (include "./modules/network.yuck")
 (include "./modules/battery.yuck")
 (include "./modules/hclock.yuck")
+(include "./modules/jclock.yuck")
 (include "./modules/volume.yuck")
 (include "./modules/music.yuck")
 (include "./modules/notifications.yuck")

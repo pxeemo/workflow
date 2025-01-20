@@ -3,6 +3,7 @@
   :interval "99h"
   "wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{print $NF*100}'"
 )
+(defvar volume-osd-reveal false)
 
 (defwidget volume-slider []
 (overlay

@@ -12,7 +12,7 @@
 }
 
 .song {
-  color: $blue;
+  color: $primary;
   font-weight: bold;
   margin: 0px 10px;
 }
@@ -84,6 +84,7 @@
   border-radius: 4px;
   background-color: $gray;
   color: $background;
+  padding: 0;
   margin: 7px 4px;
 }
 .htime {

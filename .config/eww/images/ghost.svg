@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="32"
+   height="32"
+   viewBox="0 0 8.4666665 8.4666666"
+   version="1.1"
+   id="svg1"
+   sodipodi:docname="ghost.svg"
+   inkscape:version="1.4 (e7c3feb100, 2024-10-09)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#505050"
+     bordercolor="#eeeeee"
+     borderopacity="1"
+     inkscape:showpageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     inkscape:zoom="10.560059"
+     inkscape:cx="11.9791"
+     inkscape:cy="11.268877"
+     inkscape:window-width="1447"
+     inkscape:window-height="796"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs1" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <path
+       d="m 4.2333333,-1.3565063e-5 q -1.0379826,0 -1.9131444,0.508815005063 Q 1.4552034,1.0176164 0.9362121,1.9029545 0.4172208,2.7781163 0.4172208,3.816099 V 8.4666681 L 1.6892583,7.1946306 2.9612958,8.4666681 4.2333333,7.1946306 5.5053708,8.4666681 6.7774083,7.1946306 8.0494458,8.4666681 V 3.816099 q 0,-1.0379827 -0.5189913,-1.9131445 Q 7.0114632,1.0176164 6.1363014,0.50880144 5.2713159,-1.3565063e-5 4.2333333,-1.3565063e-5 Z M 2.9612958,2.5440614 q 0.3561705,0 0.6004017,0.2544075 0.2544075,0.2442312 0.2544075,0.5902255 0,0.3459942 -0.2544075,0.6004017 -0.2442312,0.2442312 -0.6004017,0.2442312 -0.3561705,0 -0.610578,-0.2442312 -0.2442312,-0.2544075 -0.2442312,-0.6004017 0,-0.3459943 0.2442312,-0.5902255 0.2544075,-0.2544075 0.610578,-0.2544075 z m 2.544075,0 q 0.3561705,0 0.6004017,0.2544075 0.2544075,0.2442312 0.2544075,0.5902255 0,0.3459942 -0.2544075,0.6004017 -0.2442312,0.2442312 -0.6004017,0.2442312 -0.3561705,0 -0.610578,-0.2442312 -0.2442312,-0.2544075 -0.2442312,-0.6004017 0,-0.3459943 0.2442312,-0.5902255 0.2544075,-0.2544075 0.610578,-0.2544075 z"
+       id="text4"
+       style="font-weight:800;font-size:10.1763px;font-family:Mikhak;-inkscape-font-specification:'Mikhak Ultra-Bold';fill:#da3230;stroke-width:0.282674"
+       aria-label="󰊠" />
+  </g>
+</svg>

@@ -1,11 +1,11 @@
 function ffasrt --description 'format farsi srt'
     for file in $argv
-        if ! head -30 $file | grep -q '[آ-ی]'
+        if ! cat $file | grep -q '[آ-ی]'
             python -c "
-            with open('$file', 'r', encoding='cp1256') as f:
-                content = f.read()
-            with open('$file', 'w', encoding='utf-8') as f:
-                f.write(content)"
+with open('$file', 'r', encoding='cp1256') as f:
+    content = f.read()
+with open('$file', 'w', encoding='utf-8') as f:
+    f.write(content)"
             and echo "Re-encoded."
         end
 

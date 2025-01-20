@@ -1,0 +1,14 @@
+(defpoll time       :interval "1s" `jdate +%R`)
+(defpoll weekday    :interval "5m" `jdate +%G`)
+(defpoll dayofmonth :interval "5m" `jdate +%e\\ %V`)
+(defvar  showdate   false)
+(defwidget jclock []
+(eventbox :timeout        "50ms"
+        :onhover        `eww update showdate=true`
+        :onhoverlost    `eww update showdate=false`
+    (box :space-evenly false :class "clock"
+        (revealer :transition "slideleft" :reveal "${showdate}" :duration "200ms" :class "date"
+            (overlay :width "56"
+                (label :yalign 0 :xalign 1 :text "${weekday}")
+                (label :yalign 1 :xalign 0 :text "${dayofmonth}")))
+        (label :text "${time}"))))
