@@ -3,6 +3,12 @@
   font-family: $nerd-font;
   background: rgba(0, 0, 0, 0);
 }
+.volume-box {
+  padding-right: 10px;
+}
+.brightness-box {
+  padding-left: 10px;
+}
 .volume-slider,
 .brightness-slider {
   border-radius: 999px;

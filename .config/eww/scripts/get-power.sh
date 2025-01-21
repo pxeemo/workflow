@@ -12,7 +12,7 @@ get_battery() {
     if [ "$charging" != "$IS_CHARGING" ] && [ -n "$IS_CHARGING" ]; then
         if [ "$charging" != 1 ] && [ "$IS_PLUGGED" == "yes" ]; then
             notify-send --icon "$(realpath ../images/battery/1-99.svg)" \
-                --expire-time 3000 \
+                --expire-time 3000 --replace-id 32 \
                 "Battery" "Battery is full."
         fi
     fi
@@ -20,7 +20,7 @@ get_battery() {
 
     if [ "$percentage" -eq 25 ] && [ "$PERC" -gt "$percentage" ]; then
         notify-send --icon "$(realpath ../images/battery/0-20.svg)" \
-            --expire-time 3000 \
+            --expire-time 3000 --replace-id 32 \
             "Battery" "Battery is low. Please plug in the battey."
     fi
     PERC="$percentage"
@@ -37,12 +37,12 @@ get_supply() {
         if [ "$plugged" == "yes" ]; then
             notify-send \
                 --icon "$(realpath ../images/FluentPlugConnected24Regular.svg)" \
-                --expire-time 3000 \
+                --expire-time 3000 --replace-id 32 \
                 "Battery" "Power supply plugged in."
         else
             notify-send \
                 --icon "$(realpath ../images/FluentPlugDisconnected24Regular.svg)" \
-                --expire-time 3000 \
+                --expire-time 3000 --replace-id 32 \
                 "Battery" "Power supply disconnected."
         fi
     fi

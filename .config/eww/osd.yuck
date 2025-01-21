@@ -3,7 +3,7 @@
   :interval "99h"
   "wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{print $NF*100}'"
 )
-(defvar volume-osd-reveal false)
+(defvar volume-osd-reveal true)
 
 (defwidget volume-slider []
 (overlay
@@ -29,21 +29,28 @@
       :class "slider-icon"
       :yalign 0.96
       :text "󰎈"
-    )))
+  )))
 
 (defwindow volume-osd
   :class "volume-osd"
   :exclusive false
   :monitor 0
-  :geometry (geometry :x "15px" :y "0%"
-    :width "36px" :height "180px" :anchor "center right")
+  :geometry (geometry :x "0" :y "0"
+    :width "50px" :height "180px" :anchor "center right")
   :stacking "overlay"
   :focusable false
   :namespace "volume-osd"
-(volume-slider))
+(box :space-evenly false :halign "end"
+  (revealer 
+      :class "volume-box"
+      :reveal volume-osd-reveal 
+      :transition "slideleft" 
+      :duration "500ms" 
+    (volume-slider))))
 
 ;; Brightness
 
+(defvar brightness-osd-reveal true)
 (defwidget brightness-slider []
 (overlay
   (scale
@@ -66,9 +73,15 @@
   :class "brightness-osd"
   :exclusive false
   :monitor 0
-  :geometry (geometry :x "15px" :y "0%"
-    :width "36px" :height "180px" :anchor "center left")
+  :geometry (geometry :x "0" :y "0"
+    :width "40px" :height "180px" :anchor "center left")
   :stacking "overlay"
   :focusable false
   :namespace "brightness-osd"
-(brightness-slider))
+(box :space-evenly false :halign "start"
+  (revealer 
+      :class "brightness-box"
+      :reveal brightness-osd-reveal 
+      :transition "slideright" 
+      :duration "500ms" 
+    (brightness-slider))))
