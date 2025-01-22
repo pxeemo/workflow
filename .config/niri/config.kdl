@@ -253,7 +253,7 @@ window-rule {
 }
 
 window-rule {
-    match app-id=r#"^org\.telegram\.desktop.*$"#
+    match app-id=r#"gram\.desktop"#
     exclude title="^Media viewer$"
     open-on-workspace "chat"
     default-column-width { proportion 0.75; }
