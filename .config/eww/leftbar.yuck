@@ -1,7 +1,8 @@
 (defwidget leftbar []
-(box :orientation "v"
+(box :orientation "v" :space-evenly false
+    (record-indicator)
     (niri-workspaces)
-    (box :space-evenly false :valign "end" :orientation "v"
+    (box :space-evenly false :valign "end" :vexpand true :orientation "v"
         (systray :class "tray" :orientation "v" :icon-size 18 :spacing 5)
         (network)
         (volume)
@@ -16,7 +17,7 @@
         :exclusive true
         :monitor 0
         :geometry (geometry :x "0" :y "0"
-            :width "40px" :height "100%" :anchor "left center")
+            :width "42px" :height "100%" :anchor "left center")
         :stacking "fg"
         :focusable false
         :namespace "eww"

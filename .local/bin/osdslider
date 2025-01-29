@@ -33,6 +33,7 @@ fi
 echo 1 > "$lockfile"
 trap "rm -rf $lockfile" EXIT
 eww open "$slider"
+sleep 0.01
 eww update "$slider-reveal=true"
 lastrun=0
 

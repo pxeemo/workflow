@@ -3,6 +3,7 @@
 (defpoll music_repeat   :interval "2s" `mpc status '%repeat%'`)
 (defpoll music_consume  :interval "2s" `mpc status '%consume%'`)
 (defwidget music-win []
+(box :class "music-container"
 (overlay :space-evenly false :spacing 20
     (box :class 'music-cover' :style 'background: url("${music_info.cover}");')
     (box :class 'music-pop' :height "360" 
@@ -23,7 +24,7 @@
                 (button :class music_consume :onclick 'mpc consume; eww update music_consume=$(mpc status "%consume%")' '󰍖'))
             (scale :class 'music-seeker' :value {music_time.perc} :onchange `mpc seek {}%`)))
             (sptlrx)
-    ))
+    )))
 
 (deflisten lyric-line `sptlrx pipe`)
 (defwidget sptlrx []
@@ -36,12 +37,20 @@
     )
 )
 
+(defvar music_window_reveal false)
 (defwindow music
-    :exclusive true
+    :exclusive false
     :monitor 0
-    :geometry (geometry :x "15px" :y "15px"
-        :width "400px" :height "400px" :anchor "top left")
+    :geometry (geometry :x "0" :y "0"
+        :width "420px" :height "400px" :anchor "center left")
     :stacking "fg"
     ;; :focusable true
-    :namespace "eww"
-(music-win))
+    :namespace "music-window"
+(box :space-evenly false :halign "start" :width "400px"
+  (revealer 
+      :class "left-window-revealer"
+      :reveal music_window_reveal
+      :transition "slideright" 
+      :duration "500ms" 
+    (music-win))))
+

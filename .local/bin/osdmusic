@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+if eww active-windows | grep -q music; then
+    eww update music_window_reveal=false
+    sleep 0.3
+    eww close music
+else
+    eww open music
+    eww update music_window_reveal=true
+fi

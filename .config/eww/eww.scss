@@ -1,6 +1,6 @@
 @import "./colors.scss";
 window {
-  background-color: rgba(30, 30, 46, 0.8);
+  background-color: $windowBg;
   font-family: $primary-font, $nerd-font;
 }
 button {
@@ -8,6 +8,12 @@ button {
   margin: 2px 0;
   border-radius: 999px;
   transition: all 250ms ease;
+}
+.right-window-revealer {
+  padding-right: 10px;
+}
+.left-window-revealer {
+  padding-left: 10px;
 }
 
 @import "./bar.scss";

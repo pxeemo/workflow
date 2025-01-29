@@ -6,6 +6,7 @@
 (include "./modules/music.yuck")
 (include "./modules/notifications.yuck")
 (include "./modules/power.yuck")
+(include "./modules/record-indicator.yuck")
 (include "./modules/brightness.yuck")
 (include "./modules/niri-workspaces.yuck")
 (include "./modules/niri-kbd.yuck")

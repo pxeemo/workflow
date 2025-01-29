@@ -6,7 +6,7 @@
   margin: 2px 11px;
 }
 .leftbar {
-  margin: 8px 0px;
+  margin: 0px 0px 8px 0px;
   color: $foreground;
   //border-right: 1px solid $orange;
 }
@@ -45,6 +45,7 @@
 }
 .hworkspaces {
   // padding: 8px 0;
+  margin: 6px 0px;
 }
 .hworkspace-entry {
   padding: 0;
@@ -63,6 +64,33 @@
   background-color: $red;
 }
 
+@keyframes record-blink {
+  0% {
+    background-color: $white;
+  }
+  50% {
+    background-color: $red;
+  }
+  100% {
+    background-color: $white;
+  }
+}
+.record-indicator {
+  .record-icon {
+    border-radius: 2px;
+    margin: 4px 5px 2px 5px;
+    min-height: 14px;
+    background-color: $white;
+    animation: record-blink 1s ease-out;
+    animation-iteration-count: infinite;
+  }
+  background-color: $red;
+  margin: 8px 8px 0px 8px;
+  padding: 2px 0;
+  border-radius: 4px;
+  font-size: 9pt;
+  font-weight: 800;
+}
 .tray {
   padding: 5px;
   margin: 2px;

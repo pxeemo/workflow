@@ -1,6 +1,11 @@
 .music {
+  background-color: transparent;
+}
+.music-container {
+  background-color: $windowBg;
   border: 2px solid $primary;
   border-radius: 15px;
+  min-width: 400px;
 }
 .music-pop,
 .music-cover {

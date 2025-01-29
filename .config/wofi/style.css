@@ -4,7 +4,7 @@
 
 window {
   margin: 1px;
-  border: 2px solid #893bff;
+  border: 2px solid #fca93e;
   background-color: #1e1e2e;
   border-radius: 12px;
 }
@@ -16,7 +16,7 @@ window {
   background-color: #1e1e2e;
 }
 #input:focus {
-  box-shadow: inset 0px 0px 0px 2px #983bff;
+  box-shadow: inset 0px 0px 0px 2px #fca93e;
 }
 
 #inner-box {
@@ -40,7 +40,7 @@ window {
   margin: 5px;
   border: none;
   color: #c0c1f5;
-} 
+}
 
 #entry.activatable #text {
   color: #282a36;
@@ -51,7 +51,7 @@ window {
 }
 
 #entry:selected {
-  background-color: #893bff;
+  background-color: #fca93e;
 }
 
 #entry:selected #text {

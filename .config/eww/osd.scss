@@ -1,13 +1,7 @@
 .volume-osd,
 .brightness-osd {
   font-family: $nerd-font;
-  background: rgba(0, 0, 0, 0);
-}
-.volume-box {
-  padding-right: 10px;
-}
-.brightness-box {
-  padding-left: 10px;
+  background: transparent;
 }
 .volume-slider,
 .brightness-slider {

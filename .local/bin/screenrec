@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+
+eww update "is_recording=true"
+timer() {
+    mins=0
+    while true; do
+        eww update "recorded_mins=$(printf "%02d" "$mins")"
+        for secs in {00..59}; do
+            eww update "recorded_secs=$secs"
+            sleep 1
+        done
+        mins=$(( ++mins ))
+    done
+}
+
+. "$HOME/.config/user-dirs.dirs"
+adev=$(wpctl inspect @DEFAULT_AUDIO_SINK@ | awk -F'"' '/node.name/{print $2}')
+screenrecdir="$XDG_VIDEOS_DIR/screenrec"
+[ -d "$screenrecdir" ] || mkdir -p "$screenrecdir"
+
+timer &
+timer_pid=$!
+trap "kill $timer_pid 2>/dev/null; eww update is_recording=false" EXIT
+
+pushd $screenrecdir
+wf-recorder \
+    --audio="$adev.monitor" \
+    --pixel-format=yuv420p \
+    --codec-param=crf=28 \
+    --file="$(date +%s).mkv"
+popd
+
+eww update "is_recording=false"
+kill $timer_pid 2>/dev/null

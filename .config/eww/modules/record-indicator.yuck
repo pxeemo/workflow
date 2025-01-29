@@ -1,0 +1,10 @@
+(defvar recorded_secs "00")
+(defvar recorded_mins "00")
+(defvar is_recording false)
+(defwidget record-indicator []
+(revealer :reveal is_recording :transition "slidedown"
+    (box :class "record-indicator" :space-evenly false :orientation "v"
+        (box :class "record-icon" :space-evenly false)
+            (label :text recorded_mins)
+            (label :text recorded_secs)
+        )))

@@ -212,7 +212,7 @@ prefer-no-csd
 // You can change the path where screenshots are saved.
 // A ~ at the front will be expanded to the home directory.
 // The path is formatted with strftime(3) to give you the screenshot date and time.
-screenshot-path "~/pic/screenshot/%Y-%m-%d %H-%M-%S-%N.png"
+screenshot-path "~/pic/screenshot/%Y%m%d%H%M%S.png"
 
 // You can also set this to null to disable saving screenshots to disk.
 // screenshot-path null
@@ -302,7 +302,7 @@ binds {
     Mod+B { spawn "firefox"; }
     Mod+A { spawn "swaync-client" "-t"; }
     Mod+P { spawn "sh" "-c" "cliphist list | wofi --dmenu | cliphist decode | wl-copy"; }
-    Mod+M { spawn "sh" "-c" "if eww active-windows | grep -q music; then eww close music; else eww open music; fi"; }
+    Mod+M { spawn "osdmusic"; }
 
     // Example volume keys mappings for PipeWire & WirePlumber.
     // The allow-when-locked=true property makes them work even when the session is locked.

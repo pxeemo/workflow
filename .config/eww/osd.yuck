@@ -42,7 +42,7 @@
   :namespace "volume-osd"
 (box :space-evenly false :halign "end"
   (revealer 
-      :class "volume-box"
+      :class "right-window-revealer"
       :reveal volume-osd-reveal 
       :transition "slideleft" 
       :duration "500ms" 
@@ -80,7 +80,7 @@
   :namespace "brightness-osd"
 (box :space-evenly false :halign "start"
   (revealer 
-      :class "brightness-box"
+      :class "left-window-revealer"
       :reveal brightness-osd-reveal 
       :transition "slideright" 
       :duration "500ms" 
