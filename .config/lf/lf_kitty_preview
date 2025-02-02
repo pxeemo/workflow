@@ -18,9 +18,10 @@ case "$filetype" in
 	image/*) image "$file" "$w" "$h" "$x" "$y" ;;
 	# text/html) lynx -width="$x" -display_charset=utf-8 -dump "$file"  ;;
 	troff) man ./ "$file" | col -b ;;
-	text/* | */xml | text/markdown | application/json | application/x-subrip | application/javascript) 
+	text/* | */xml | text/markdown | application/x-subrip | application/javascript) 
 		bat -n --wrap never --terminal-width "$x" -f "$file" 
 		;;
+	application/json) bat "$file" | jq --color-output ;;
 	text/troff) bat -n --wrap never -l groff --terminal-width "$x" -f "$file" ;;
 	application/*zip | application/zstd | application/x-xz | application/x-rar) 
 		als "$file" || 7z l "$file" || zcat "$file" 

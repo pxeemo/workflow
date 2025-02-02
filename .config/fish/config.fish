@@ -13,7 +13,3 @@ if status is-interactive
 
     zoxide init fish | source
 end
-
-if not contains $HOME/.local/bin $PATH
-   set -ga PATH $HOME/.local/bin
-end

@@ -2,6 +2,7 @@
 # VERSION: 3.0
 SETUVAR --export EDITOR:nvim
 SETUVAR --export MANPAGER:nvim\x20\x2bMan\x21
+SETUVAR --export NIXOS_OZONE_WL:1
 SETUVAR --export QT_QPA_PLATFORM:wayland
 SETUVAR --export QT_QPA_PLATFORMTHEME:qt6ct
 SETUVAR __fish_initialized:3800
@@ -44,3 +45,4 @@ SETUVAR fish_pager_color_selected_background:\x2dr
 SETUVAR fish_pager_color_selected_completion:\x1d
 SETUVAR fish_pager_color_selected_description:\x1d
 SETUVAR fish_pager_color_selected_prefix:\x1d
+SETUVAR fish_user_paths:/home/pxeemo/\x2elocal/bin\x1e/home/pxeemo/\x2enix\x2dprofile/bin
