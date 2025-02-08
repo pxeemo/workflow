@@ -48,7 +48,7 @@ input {
 
     // Focus windows and outputs automatically when moving the mouse into them.
     // Setting max-scroll-amount="0%" makes it work only on windows already fully on screen.
-    focus-follows-mouse
+    // focus-follows-mouse
 }
 
 // You can configure outputs by their name, which you can find
@@ -272,8 +272,8 @@ window-rule {
 }
 
 cursor {
-    xcursor-theme "catppuccin-mocha-blue-cursors"
-    xcursor-size 24
+    xcursor-theme "Bibata-Modern-Ice"
+    xcursor-size 22
 }
 
 binds {
