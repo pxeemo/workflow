@@ -16,7 +16,7 @@
 Needed `git` to clone this repo and `stow` to manage dotfiles:
 
 ```shell
-git clone --depth=1 https://github,com/pxeemo/workflow.git ~/workflow
+git clone --depth=1 https://github.com/pxeemo/workflow.git ~/workflow
 cd ~/workflow
 stow .
 ```
