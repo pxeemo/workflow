@@ -3,13 +3,15 @@
 IS_CHARGING=
 IS_PLUGGED=
 PERC=
+NOTIF_ID=0
 
 notify() {
-    notify-send --icon "$(realpath "$1")" \
+    NOTIF_ID=$(notify-send --icon "$(realpath "$1")" \
         --expire-time 3000 \
-        --replace-id 32 \
+        --print-id \
+        --replace-id "$NOTIF_ID" \
         --urgency low \
-        "Battery" "$2"
+        "Battery" "$2")
 }
 
 get_battery() {
