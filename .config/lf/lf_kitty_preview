@@ -7,28 +7,30 @@ x=$4
 y=$5
 
 filetype="$(file -Lb --mime-type "$file")"
+ext="${file##*.}"
 
 image() {
-	thumbnail="$(thumbnailer "$file")"
+	thumbnail="$(thumbnailer "${1:-$file}")"
+	[ -n "$thumbnail" ] || return 1
     kitten icat --silent --stdin no --transfer-mode file \
     	--place "${w}x${h}@${x}x${y}" "$thumbnail" < /dev/null > /dev/tty
 }
 
 case "$filetype" in
-	image/*) image "$file" "$w" "$h" "$x" "$y" ;;
+	image/*) image ;;
 	# text/html) lynx -width="$x" -display_charset=utf-8 -dump "$file"  ;;
-	troff) man ./ "$file" | col -b ;;
-	text/* | */xml | text/markdown | application/x-subrip | application/javascript) 
+	*/troff) bat -n --wrap never -l groff --terminal-width "$x" -f "$file" ;;
+	text/* | */xml | application/x-subrip | application/javascript) 
 		bat -n --wrap never --terminal-width "$x" -f "$file" 
 		;;
 	application/json) bat "$file" | jq --color-output ;;
-	text/troff) bat -n --wrap never -l groff --terminal-width "$x" -f "$file" ;;
-	application/*zip | application/zstd | application/x-xz | application/x-rar) 
+	application/zip) image || als "$file" || 7z l "$file" || zcat "$file" ;;
+	application/*zip | application/zstd | application/x-xz | application/x-rar | application/java-archive) 
 		als "$file" || 7z l "$file" || zcat "$file" 
 		;;
-	audio/* | application/octet-stream) exiftool "$file" ;;
-	video/* ) image "$file" "$w" "$h" "$x" "$y" ;;
-	*/pdf) image "$file" "$w" "$h" "$x" "$y" ;;
+	audio/* | application/octet-stream) exiftool "$file" || image ;;
+	video/* ) image ;;
+	*/pdf) image ;;
 	*opendocument*) odt2txt "$file" ;;
 	application/pgp-encrypted) gpg -d -- "$file" ;;
 esac

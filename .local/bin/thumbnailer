@@ -49,6 +49,14 @@ case $mime in
 			exit 0
 		fi
 		;;
+	application/zip) 
+		thumbInZip=$(7z l "$file" | awk '/thumbnail/{print $6}' | head -1)
+		[ -n "$thumbInZip" ] || exit 1
+		tempdir=$(mktemp -d)
+		7z e "$file" "$thumbInZip" -o"$tempdir" > /dev/null
+		mv "$tempdir/${thumbInZip##*/}" "$thumbpath"
+		rm -rf "$tempdir"
+		;;
 	*) exit 1 ;;
 esac
 

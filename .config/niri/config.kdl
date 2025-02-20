@@ -294,6 +294,7 @@ binds {
     // Suggested binds for running programs: terminal, app launcher, screen locker.
     Super+Alt+L { spawn "hyprlock" "--immediate"; }
     Mod+Q { spawn "kitty"; }
+    Mod+Shift+Q { spawn "alacritty"; }
     Mod+D { spawn "wofi" "--show" "drun"; }
     //Mod+E { spawn "emacsclient" "-ca" ""; }
     Mod+S { spawn "screentools.sh"; }
