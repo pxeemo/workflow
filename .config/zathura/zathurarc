@@ -4,6 +4,8 @@ set recolor true
 # set recolor-keephue true
 # set recolor-reverse-video true
 
+set database sqlite
+
 map I set recolor-reverse-video
 map f toggle_fullscreen
 map [fullscreen] f toggle_fullscreen

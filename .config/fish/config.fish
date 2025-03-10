@@ -7,9 +7,8 @@ if status is-interactive
     abbr runat 'systemd-run --user --on-calendar'
     abbr runafter 'systemd-run --user --on-active'
     abbr webcam 'mpv --vf=hflip --profile=low-latency --untimed av://v4l2:/dev/video0'
-    # abbr doom '~/.config/emacs/bin/doom'
-    abbr conn 'nmcli device wifi connect'
-    abbr rescan 'nmcli device wifi rescan'
+    abbr nmcon 'nmcli device wifi connect'
+    abbr nmre 'nmcli device wifi rescan'
 
     zoxide init fish | source
 end
