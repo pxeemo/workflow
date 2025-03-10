@@ -15,6 +15,7 @@ window {
   color: #c0c1f5;
   background-color: #1e1e2e;
 }
+
 #input:focus {
   box-shadow: inset 0px 0px 0px 2px #fca93e;
 }
@@ -46,7 +47,7 @@ window {
   color: #282a36;
 }
 
-#entry > * {
+#entry>* {
   color: #c0c1f5;
 }
 

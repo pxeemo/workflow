@@ -1,5 +1,6 @@
 function reml --description 'uninstall large packages need to be upgraded'
-    set -l pkgs (pacman -Qui | awk -F ': ' '
+    argparse u -- $argv
+    set -l pkgs (pacman -Qi $_flag_u | awk -F ': ' '
         /^Name/{name=$2}
         /^Installed/{size=$2}
         /MiB$/{print name, size}' | sort -nrk 2 | column -t)

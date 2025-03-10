@@ -9,7 +9,6 @@ file="$(realpath "$1")"
 mime="$(file -Lb --mime-type "$file")"
 thumbfile="$(echo "$file" | md5sum | awk '{print $1}').png"
 thumbpath="$cachedir/$thumbfile"
-[ -d "$cachedir/music" ] || mkdir -p "$cachedir/music"
 
 if [ -f "$thumbpath" ]; then
 	if [ "$(stat -c "%Y" "$thumbpath")" -gt "$(stat -c "%Y" "$file")" ]; then
@@ -38,7 +37,7 @@ case $mime in
 			-dBATCH -o "$thumbpath" -r100 "$file"
 		;;
 	audio/*)
-		defaultthumb="$cachedir/music/0.png"
+		defaultthumb="$cachedir/music.png"
 		ffmpeg -y -i "$file" -an -vf "crop=ih:ih,scale=360:360" "$thumbpath" >/dev/null 2>&1
 		if [ $? -ne 0 ]; then
 			if [ ! -e "$defaultthumb" ]; then
