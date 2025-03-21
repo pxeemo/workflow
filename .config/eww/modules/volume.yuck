@@ -2,7 +2,7 @@
 (defwidget volume []
 (eventbox :onscroll `osdslider volume {}`
     (button :onclick `wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle` :class "circ-btn"
-        (image :image-width 22
+        (image :image-width 16
             :path {
                 volperc == "[MUTED]" ? "./images/volume/m.svg" :
                 volperc < 17  ? "./images/volume/0.svg" :

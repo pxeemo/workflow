@@ -3,7 +3,7 @@
 (defwidget power [] 
 (box :class "circ-btn"
         :visible { power != "" }
-    (image :image-width "22"
+    (image :image-width 18
         :tooltip '${power.percentage}% ${power.charging == 0 ? "not " : ""
             }charging${powerdetails != "" ? " (${powerdetails})" : ""}'
         :path {

@@ -17,7 +17,7 @@
         :exclusive true
         :monitor 0
         :geometry (geometry :x "0" :y "0"
-            :width "42px" :height "100%" :anchor "left center")
+            :width "36px" :height "100%" :anchor "left center")
         :stacking "fg"
         :focusable false
         :namespace "eww"

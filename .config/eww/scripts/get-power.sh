@@ -11,6 +11,7 @@ notify() {
         --print-id \
         --replace-id "$NOTIF_ID" \
         --urgency low \
+        --transient \
         "Battery" "$2")
 }
 
