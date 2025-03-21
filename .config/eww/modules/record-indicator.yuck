@@ -3,8 +3,9 @@
 (defvar is_recording false)
 (defwidget record-indicator []
 (revealer :reveal is_recording :transition "slidedown"
-    (box :class "record-indicator" :space-evenly false :orientation "v"
-        (box :class "record-icon" :space-evenly false)
+    (button  :class "record-indicator" :onclick `if ! pkill -2 -f wf-recorder; then screenrec; fi`
+        (box :space-evenly false :orientation "v"
+            (box :class "record-icon" :space-evenly false)
             (label :text recorded_mins)
             (label :text recorded_secs)
-        )))
+        ))))

@@ -3,7 +3,7 @@
 (defwidget network []
 (box
     (button :onclick `./scripts/wifimenu.sh` :class "circ-btn"
-        (image :image-width "22"
+        (image :image-width 16
             :path {
                 essid == "" ? "./images/wifi/5.svg" :
                 net < 25    ? "./images/wifi/1.svg" :
