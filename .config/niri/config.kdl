@@ -337,7 +337,7 @@ binds {
     // Suggested binds for running programs: terminal, app launcher, screen locker.
     Super+Alt+L hotkey-overlay-title="Lock the Screen" { spawn "hyprlock" "--immediate"; }
     Mod+Q { spawn "kitty"; }
-    Mod+Shift+Q { spawn "alacritty"; }
+    Mod+Shift+Q { spawn "foot"; }
     Mod+D hotkey-overlay-title="Show Launcher" { spawn "wofi" "--show" "drun"; }
     //Mod+E { spawn "emacsclient" "-ca" ""; }
     Mod+S { spawn "screentools.sh"; }
