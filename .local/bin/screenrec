@@ -22,11 +22,11 @@ timer &
 timer_pid=$!
 trap "kill $timer_pid 2>/dev/null; eww update is_recording=false" EXIT
 
-pushd $screenrecdir
+pushd "$screenrecdir"
 wf-recorder \
     --audio="$adev.monitor" \
     --pixel-format=yuv420p \
-    --codec-param=crf=28 \
+    --codec-param=crf=32 \
     --file="$(date +%s).mkv"
 popd
 
