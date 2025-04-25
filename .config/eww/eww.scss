@@ -10,7 +10,7 @@ button {
   margin: 2px 0;
   border-radius: 999px;
   transition: all 250ms ease;
-  background-color: alpha($background-color, 0.2);
+  background-color: rgba(255, 255, 255, 0.15);
 }
 
 .right-window-revealer {
