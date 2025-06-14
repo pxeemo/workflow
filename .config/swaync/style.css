@@ -1,3 +1,4 @@
+/* vi:se ft=scss: */
 @define-color cc-bg rgba(26, 20, 26, 1);
 @define-color primary rgb(252, 169, 62);
 @define-color noti-border-color rgba(252, 169, 62, 0.8);
@@ -62,7 +63,7 @@
   /* The actual notification */
   border-radius: 12px;
   border: 2px solid @noti-border-color;
-  padding: 0;
+  padding: 0px;
   transition: background 0.15s ease-in-out;
   background-color: @noti-bg;
 }
@@ -108,24 +109,22 @@
 }
 
 .notification-row .notification-background .notification .notification-default-action .notification-content {
-  background: transparent;
   border-radius: 12px;
-  padding: 4px;
+  padding: 15px;
 }
 
 .notification-row .notification-background .notification .notification-default-action .notification-content .image {
   /* Notification Primary Image */
   -gtk-icon-effect: none;
-  border-radius: 100px;
-  /* Size in px */
-  margin: 8px;
+  border-radius: 10px;
+  margin-right: 10px;
 }
 
 .notification-row .notification-background .notification .notification-default-action .notification-content .app-icon {
   /* Notification app icon (only visible when the primary image is set) */
   -gtk-icon-effect: none;
   -gtk-icon-shadow: 0 1px 4px black;
-  margin: 6px;
+  margin: 10px;
 }
 
 .notification-row .notification-background .notification .notification-default-action .notification-content .text-box .summary {
@@ -139,10 +138,9 @@
 
 .notification-row .notification-background .notification .notification-default-action .notification-content .text-box .time {
   /* Notification time-ago */
-  font-size: 16px;
-  font-weight: bold;
+  font-size: 14px;
   background: transparent;
-  color: @text-color;
+  color: @text-color-disabled;
   text-shadow: none;
   margin-right: 30px;
 }
@@ -190,17 +188,14 @@
   color: @text-color;
 }
 
-.notification-row .notification-background .notification 
-.notification-default-action .notification-content .inline-reply 
-.inline-reply-button:disabled {
+.notification-row .notification-background .notification .notification-default-action .notification-content .inline-reply .inline-reply-button:disabled {
   background: initial;
   color: @text-color-disabled;
   border: 1px solid @noti-border-color;
   border-color: transparent;
 }
 
-.notification-row .notification-background .notification .notification-default-action 
-.notification-content .inline-reply .inline-reply-button:hover {
+.notification-row .notification-background .notification .notification-default-action .notification-content .inline-reply .inline-reply-button:hover {
   background: @noti-bg-hover;
 }
 
@@ -468,19 +463,19 @@
 }
 
 /* .AnyName { Name defined in config after #
-  background-color: @noti-bg;
-  padding: 8px;
-  margin: 8px;
-  border-radius: 12px;
+background-color: @noti-bg;
+padding: 8px;
+margin: 8px;
+border-radius: 12px;
 }
 
 .AnyName>button {
-  background: transparent;
-  border: none;
+background: transparent;
+border: none;
 }
 
 .AnyName>button:hover {
-  background-color: @noti-bg-hover;
+background-color: @noti-bg-hover;
 } */
 .topbar-buttons>button {
   /* Name defined in config after # */

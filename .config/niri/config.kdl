@@ -9,16 +9,13 @@
 input {
     keyboard {
         xkb {
-            // You can set rules, model, layout, variant and options.
-            // For more information, see xkeyboard-config(7).
-
-            // For example:
             layout "us,irc"
             options "grp:caps_toggle"
         }
         repeat-delay 250
         repeat-rate 50
         track-layout "window"
+        numlock
     }
 
     // Next sections include libinput settings.
@@ -27,13 +24,20 @@ input {
         // off
         tap
         dwt
-        drag-lock
         // dwtp
+        // drag false
+        drag-lock
         // natural-scroll
         accel-speed 0.1
         // accel-profile "flat"
-        scroll-method "two-finger"
-        disabled-on-external-mouse
+        // scroll-factor 1.0
+        // scroll-method "two-finger"
+        // scroll-button 273
+        // tap-button-map "left-middle-right"
+        // click-method "clickfinger"
+        // left-handed
+        // disabled-on-external-mouse
+        // middle-emulation
     }
 
     mouse {
@@ -41,15 +45,20 @@ input {
         // natural-scroll
         // accel-speed 0.2
         // accel-profile "flat"
+        // scroll-factor 1.0
         // scroll-method "no-scroll"
+        // scroll-button 273
+        // left-handed
+        // middle-emulation
     }
 
-    // Uncomment this to make the mouse warp to the center of newly focused windows.
-    //warp-mouse-to-focus
+    // disable-power-key-handling
+    // warp-mouse-to-focus
+    // focus-follows-mouse max-scroll-amount="0%"
+    // workspace-auto-back-and-forth
 
-    // Focus windows and outputs automatically when moving the mouse into them.
-    // Setting max-scroll-amount="0%" makes it work only on windows already fully on screen.
-    // focus-follows-mouse
+    // mod-key "Super"
+    // mod-key-nested "Alt"
 }
 
 // You can configure outputs by their name, which you can find
@@ -137,7 +146,7 @@ layout {
     // You can change how the focus ring looks.
     focus-ring {
         // Uncomment this line to disable the focus ring.
-        // off
+        off
 
         // How many logical pixels the ring extends out from the windows.
         width 2
@@ -172,11 +181,12 @@ layout {
     border {
         // The settings are the same as for the focus ring.
         // If you enable the border, you probably want to disable the focus ring.
-        off
+        // off
 
-        width 4
-        active-color "#ffc87f"
+        width 2
+        active-color "#fca93e"
         inactive-color "#505050"
+        urgent-color "#da4240"
 
         // active-gradient from="#ffbb66" to="#ffc880" angle=45 relative-to="workspace-view"
         // inactive-gradient from="#505050" to="#808080" angle=45 relative-to="workspace-view"
@@ -207,7 +217,8 @@ spawn-at-startup "swww-daemon"
 spawn-at-startup "hypridle"
 spawn-at-startup "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1"
 spawn-at-startup "wl-paste" "--watch" "cliphist" "store"
-spawn-at-startup "sh" "-c" "killall swaync; nohup swaync --config ~/.config/swaync/niri-config.json"
+// spawn-at-startup "sh" "-c" "killall swaync; nohup swaync --config ~/.config/swaync/niri-config.json"
+spawn-at-startup "xwayland-satelite"
 
 // Uncomment this line to ask the clients to omit their client-side decorations if possible.
 // If the client will specifically ask for CSD, the request will be honored.
@@ -268,19 +279,20 @@ window-rule {
 // Indicate screencasted windows with red colors.
 window-rule {
     match is-window-cast-target=true
-
-    focus-ring {
-        active-color "#bac2de"
-        inactive-color "#585B70"
-    }
-
     shadow {
         color "#7d0d2d70"
     }
-
+    focus-ring {
+        active-color "#bac2de"
+        inactive-color "#a69dc8"
+    }
+    border {
+        active-color "#bac2de"
+        inactive-color "#a69dc8"
+    }
     tab-indicator {
         active-color "#bac2de"
-        inactive-color "#585B70"
+        inactive-color "#a69dc8"
     }
 }
 // Example: block out two password managers from screen capture.
@@ -301,6 +313,7 @@ layer-rule {
     shadow {
         on
     }
+    baba-is-float true
 }
 
 environment {
@@ -310,12 +323,15 @@ environment {
     EDITOR "nvim"
     MANPAGER "nvim +Man!"
     PAGER "bat"
-    DISPLAY null
+    DISPLAY ":0"
 }
 
 cursor {
     xcursor-theme "Bibata-Modern-Ice"
     xcursor-size 22
+
+    // hide-when-typing
+    // hide-after-inactive-ms 1000
 }
 
 binds {
@@ -333,6 +349,7 @@ binds {
     // shows a list of important hotkeys.
     Mod+Shift+Slash { show-hotkey-overlay; }
     Mod+Escape { toggle-keyboard-shortcuts-inhibit; }
+    Mod+Grave { toggle-overview; }
 
     // Suggested binds for running programs: terminal, app launcher, screen locker.
     Super+Alt+L hotkey-overlay-title="Lock the Screen" { spawn "hyprlock" "--immediate"; }
@@ -433,8 +450,6 @@ binds {
 
     Mod+Page_Down      { focus-workspace-down; }
     Mod+Page_Up        { focus-workspace-up; }
-    Mod+U              { focus-workspace-down; }
-    Mod+I              { focus-workspace-up; }
     Mod+Ctrl+Page_Down { move-column-to-workspace-down; }
     Mod+Ctrl+Page_Up   { move-column-to-workspace-up; }
     Mod+Ctrl+U         { move-column-to-workspace-down; }
@@ -526,6 +541,7 @@ binds {
     Mod+F { maximize-column; }
     Mod+Ctrl+F { expand-column-to-available-width; }
     Mod+Shift+F { fullscreen-window; }
+    Mod+Ctrl+Shift+F { toggle-windowed-fullscreen; }
     Mod+C { center-column; }
 
     // Finer width adjustments.
