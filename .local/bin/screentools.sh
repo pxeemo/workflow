@@ -19,14 +19,15 @@ case "$choice" in
         wl-copy "$text" && notify-send -a Scanner "Text copied" "$text"
         ;;
     ${option[4]}) if ! pkill -2 -f wf-recorder; then screenrec; fi ;;
-    ${option[5]}) hyprpicker -a ;;
-    ${option[6]}) 
-        if [[ "$XDG_CURRENT_DESKTOP" == "niri" ]]; then
-            wooz
-        else
-            hyprmag --radius 150 --scale 2
-        fi
+    ${option[5]}) 
+        file="$(mktemp).png"
+        color=$(niri msg pick-color | grep -Eo '#[0-9a-fA-F]{6}')
+        wl-copy "$color"
+        magick -size 1x1 -background "$color" xc: "$file"
+        notify-send -a "Colorpicker" -i "$file" "Color copied" "$color"
+        rm "$file"
         ;;
+    ${option[6]}) wooz ;;
     ${option[7]}) 
         if ! pkill wshowkeys; then
             wshowkeys -F "JetBrainsMono NF,22" -a bottom

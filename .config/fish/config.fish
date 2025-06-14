@@ -10,5 +10,10 @@ if status is-interactive
     abbr nmcon 'nmcli device wifi connect'
     abbr nmre 'nmcli device wifi rescan'
 
+    bind alt-right nextd-or-forward-token
+    bind alt-left prevd-or-backward-token
+    bind alt-backspace backward-kill-token
+    bind shift-backspace backward-kill-bigword
+
     zoxide init fish | source
 end

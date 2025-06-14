@@ -5,8 +5,13 @@ set recolor true
 # set recolor-reverse-video true
 
 set database sqlite
+# set guioptions none 
 
 map I set recolor-reverse-video
 map f toggle_fullscreen
 map [fullscreen] f toggle_fullscreen
 map F follow
+# map j feedkeys "<C-Down>" 
+# map k feedkeys "<C-Up>"
+# map [fullscreen] j feedkeys "<C-Down>" 
+# map [fullscreen] k feedkeys "<C-Up>"
