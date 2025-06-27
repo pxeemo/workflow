@@ -9,6 +9,7 @@ if status is-interactive
     abbr webcam 'mpv --vf=hflip --profile=low-latency --untimed av://v4l2:/dev/video0'
     abbr nmcon 'nmcli device wifi connect'
     abbr nmre 'nmcli device wifi rescan'
+    abbr wlc wl-copy
 
     bind alt-right nextd-or-forward-token
     bind alt-left prevd-or-backward-token
